@@ -4,7 +4,7 @@
 <p align="center">
   <img src="https://edent.github.io/SuperTinyIcons/images/svg/java.svg" width="100" title="Java">
   <img src="https://edent.github.io/SuperTinyIcons/images/svg/mysql.svg" width="100" title="MySQL">
-  <img src=" https://user-images.githubusercontent.com/25181517/183894676-137319b5-1364-4b6a-ba4f-e9fc94ddc4aa.png" width="100" title="TOMCAT">
+  <img src="https://user-images.githubusercontent.com/25181517/183894676-137319b5-1364-4b6a-ba4f-e9fc94ddc4aa.png" width="100" title="Tomcat"/>
  </p>
 
 # ApexApartment Project
