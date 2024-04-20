@@ -31,7 +31,7 @@ CREATE TABLE `room` (
 )  ENGINE=INNODB DEFAULT CHARSET=UTF8MB4 COLLATE = UTF8MB4_UNICODE_CI;
 
 CREATE TABLE
-  `resident` (
+  `customer` (
     `id` int PRIMARY KEY AUTO_INCREMENT,
     `name` varchar(255) NOT NULL,
     `address` varchar(255) DEFAULT NULL,
@@ -43,13 +43,13 @@ CREATE TABLE
     `account_id` int DEFAULT NULL,
     `room_id` int DEFAULT NULL,
     `merchandise_cabinet_id` int DEFAULT NULL,
-    KEY `fk_resident_account` (`account_id`),
-    KEY `fk_resident_room` (`room_id`),
-    KEY `fk_resident_merchandise_cabinet` (`merchandise_cabinet_id`),
-    CONSTRAINT `fk_resident_merchandise_cabinet` FOREIGN KEY (`merchandise_cabinet_id`) REFERENCES `merchandise_cabinet` (`id`),
-    CONSTRAINT `fk_resident_room` FOREIGN KEY (`room_id`) REFERENCES `room` (`id`),
-    CONSTRAINT `fk_resident_account` FOREIGN KEY (`account_id`) REFERENCES `account` (`id`),
-    CONSTRAINT `resident_chk_1` CHECK (
+    KEY `fk_customer_account` (`account_id`),
+    KEY `fk_customer_room` (`room_id`),
+    KEY `fk_customer_merchandise_cabinet` (`merchandise_cabinet_id`),
+    CONSTRAINT `fk_customer_merchandise_cabinet` FOREIGN KEY (`merchandise_cabinet_id`) REFERENCES `merchandise_cabinet` (`id`),
+    CONSTRAINT `fk_customer_room` FOREIGN KEY (`room_id`) REFERENCES `room` (`id`),
+    CONSTRAINT `fk_customer_account` FOREIGN KEY (`account_id`) REFERENCES `account` (`id`),
+    CONSTRAINT `customer_chk_1` CHECK (
       (
         `gender` in (
           _utf8mb4 'male',
@@ -68,8 +68,8 @@ CREATE TABLE `park_card` (
     `active` BIT(1) DEFAULT 0,
     `cost` DECIMAL(10 , 2 ) NOT NULL,
     `resident_id` INT NOT NULL,
-    KEY `fk_park_card_resident` (`resident_id`),
-    CONSTRAINT `fk_park_card_resident` FOREIGN KEY (`resident_id`) REFERENCES `resident` (`id`)
+    KEY `fk_park_card_customer` (`customer_id`),
+    CONSTRAINT `fk_park_card_customer` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`)
 )  ENGINE=INNODB DEFAULT CHARSET=UTF8MB4 COLLATE = UTF8MB4_UNICODE_CI;
 
 CREATE TABLE `receipt` (
@@ -78,8 +78,8 @@ CREATE TABLE `receipt` (
     `total` DECIMAL(10 , 2 ) NOT NULL,
     `is_pay` BIT(1) DEFAULT 0,
     `resident_id` INT NOT NULL,
-    KEY `fk_receipt_resident` (`resident_id`),
-    CONSTRAINT `fk_receipt_resident` FOREIGN KEY (`resident_id`) REFERENCES `resident` (`id`)
+    KEY `fk_receipt_customer` (`customer_id`),
+    CONSTRAINT `fk_receipt_customer` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`)
 )  ENGINE=INNODB DEFAULT CHARSET=UTF8MB4 COLLATE = UTF8MB4_UNICODE_CI;
 
 CREATE TABLE `service_fee` (
@@ -97,11 +97,11 @@ CREATE TABLE `use_service` (
     `date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     `active` BIT(1) DEFAULT 0,
     `service_fee_id` INT NOT NULL,
-    `resident_id` INT NOT NULL,
+    `customer_id` INT NOT NULL,
     KEY `fk_use_service_service_fee` (`service_fee_id`),
-    KEY `fk_use_service_resident` (`resident_id`),
+    KEY `fk_use_service_customer` (`customer_id`),
     CONSTRAINT `fk_use_service_service_fee` FOREIGN KEY (`service_fee_id`) REFERENCES `service_fee` (`id`),
-    CONSTRAINT `fk_use_service_resident` FOREIGN KEY (`resident_id`) REFERENCES `resident` (`id`)
+    CONSTRAINT `fk_use_service_customer` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`)
 )  ENGINE=INNODB DEFAULT CHARSET=UTF8MB4 COLLATE = UTF8MB4_UNICODE_CI;
 
 CREATE TABLE `receipt_detail` (
@@ -122,8 +122,8 @@ CREATE TABLE `feedback` (
     `title` VARCHAR(255) NOT NULL,
     `content` TEXT NOT NULL,
     `resident_id` INT DEFAULT NULL,
-    KEY `fk_feedback_resident` (`resident_id`),
-    CONSTRAINT `fk_feedback_resident` FOREIGN KEY (`resident_id`) REFERENCES `resident` (`id`)
+    KEY `fk_feedback_customer` (`customer_id`),
+    CONSTRAINT `fk_feedback_customer` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`)
 )  ENGINE=INNODB DEFAULT CHARSET=UTF8MB4 COLLATE = UTF8MB4_UNICODE_CI;
 
 CREATE TABLE `merchandise` (
@@ -142,8 +142,8 @@ CREATE TABLE `merchandise_cabinet_detail` (
     `is_receive` BIT(1) DEFAULT 0,
     `merchandise_id` INT DEFAULT NULL,
     `resident_id` INT DEFAULT NULL,
-    KEY `fk_merchandise_cabinet_detail_resident` (`resident_id`),
-    CONSTRAINT `fk_merchandise_cabinet_detail_resident` FOREIGN KEY (`resident_id`) REFERENCES `resident` (`id`) ,
+    KEY `fk_merchandise_cabinet_detail_customer` (`customer_id`),
+    CONSTRAINT `fk_merchandise_cabinet_detail_customer` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`) ,
     KEY `fk_merchandise_cabinet_detail_merchandise` (`merchandise_id`),
     CONSTRAINT `fk_merchandise_cabinet_detail_merchandise` FOREIGN KEY (`merchandise_id`) REFERENCES `merchandise` (`id`)
 )  ENGINE=INNODB DEFAULT CHARSET=UTF8MB4 COLLATE = UTF8MB4_UNICODE_CI;
@@ -195,7 +195,7 @@ INSERT INTO room (code, active, cost) VALUES
 ('Room E', 1, 230.00);
 
 -- Chèn dữ liệu mẫu vào bảng resident
-INSERT INTO resident (name, address, phone_number, email, gender, birthday, active, account_id, room_id, merchandise_cabinet_id) VALUES
+INSERT INTO customer (name, address, phone_number, email, gender, birthday, active, account_id, room_id, merchandise_cabinet_id) VALUES
 ('John Doe', '123 Street, City', '123456789', 'john@example.com', 'male', '1990-01-01', 1, 1, 1, 1),
 ('Jane Smith', '456 Avenue, Town', '987654321', 'jane@example.com', 'female', '1995-05-05', 1, 2, 2, 2),
 ('Alice Johnson', '789 Road, Village', '111222333', 'alice@example.com', 'female', '1985-08-10', 1, 3, 3, 3),
@@ -203,7 +203,7 @@ INSERT INTO resident (name, address, phone_number, email, gender, birthday, acti
 ('Eva Brown', '654 Drive, Suburb', '777888999', 'eva@example.com', 'female', '1975-07-20', 1, 5, 5, 5);
 
 -- Chèn dữ liệu mẫu vào bảng park_card
-INSERT INTO park_card (description, date_create, expiry, active, cost, resident_id) VALUES
+INSERT INTO park_card (description, date_create, expiry, active, cost, customer_id) VALUES
 ('Park Card 1', '2022-01-01', '2023-01-01', 1, 100.00, 1),
 ('Park Card 2', '2022-02-01', '2023-02-01', 1, 120.00, 2),
 ('Park Card 3', '2022-03-01', '2023-03-01', 1, 110.00, 3),
@@ -211,7 +211,7 @@ INSERT INTO park_card (description, date_create, expiry, active, cost, resident_
 ('Park Card 5', '2022-05-01', '2023-05-01', 1, 115.00, 5);
 
 -- Chèn dữ liệu mẫu vào bảng receipt
-INSERT INTO receipt (date, total, is_pay, resident_id) VALUES
+INSERT INTO receipt (date, total, is_pay, customer_id) VALUES
 ('2022-01-01', 150.00, 1, 1),
 ('2022-02-01', 180.00, 1, 2),
 ('2022-03-01', 170.00, 1, 3),
@@ -227,7 +227,7 @@ INSERT INTO service_fee (name, description, unit, cost, active) VALUES
 ('Service Fee 5', 'Description 5', 'Unit 5', 55.00, 1);
 
 -- Chèn dữ liệu mẫu vào bảng use_service
-INSERT INTO use_service (active, service_fee_id, resident_id) VALUES
+INSERT INTO use_service (active, service_fee_id, customer_id) VALUES
 (1, 1, 1),
 (1, 2, 2),
 (1, 3, 3),
@@ -243,7 +243,7 @@ INSERT INTO receipt_detail (active, quantity, cost, receipt_id, service_fee_id) 
 (1, 3, 160.00, 5, 5);
 
 -- Chèn dữ liệu mẫu vào bảng feedback
-INSERT INTO feedback (title, content, resident_id) VALUES
+INSERT INTO feedback (title, content, customer_id) VALUES
 ('Feedback 1', 'Content 1', 1),
 ('Feedback 2', 'Content 2', 2),
 ('Feedback 3', 'Content 3', 3),
@@ -259,7 +259,7 @@ INSERT INTO merchandise (name, note, unit, active) VALUES
 ('Merchandise 5', 'Note 5', 'Unit 5', 1);
 
 -- Chèn dữ liệu mẫu vào bảng merchandise_cabinet_detail
-INSERT INTO merchandise_cabinet_detail (quantity, date_receive, is_receive, merchandise_id, resident_id) VALUES
+INSERT INTO merchandise_cabinet_detail (quantity, date_receive, is_receive, merchandise_id, customer_id) VALUES
 (10, '2022-01-01', 1, 1, 1),
 (15, '2022-02-01', 1, 2, 2),
 (20, '2022-03-01', 1, 3, 3),

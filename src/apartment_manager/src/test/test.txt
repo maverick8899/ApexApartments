@@ -1,0 +1,58 @@
+
+    <div class="form-floating mb-3 mt-3">
+        <form:input type="text" class="form-control"
+                    path="merchandiseCabinetId" id="merchandiseCabinetId" placeholder="merchandiseCabinetId" />
+        <label for="merchandiseCabinetId">merchandiseCabinetId</label>
+        <form:errors path="merchandiseCabinetId" element="div" cssClass="text-danger" />
+    </div>
+    <div class="form-floating mb-3 mt-3">
+        <form:input type="text" class="form-control"
+                    path="accountsId" id="accountsId" placeholder="accountsId" />
+        <label for="accountsId">accountsId</label>
+        <form:errors path="accountsId" element="div" cssClass="text-danger" />
+    </div>
+
+    <div class="form-floating mb-3 mt-3">
+        <form:input type="text" class="form-control"
+                    path="address" id="address" placeholder="Địa chỉ" />
+        <label for="address">Địa chỉ</label>
+        <form:errors path="address" element="div" cssClass="text-danger" />
+    </div>
+<div class="form-floating mb-3 mt-3">
+        <form:select class="form-select" id="room" name="room" path="roomId">
+            <c:forEach items="${room}" var="r">
+                <c:choose>
+                    <c:when test="${r.id == customer.roomId.id}">
+                        <option value="${r.id}" selected>${r.code}</option>
+                    </c:when>
+                    <c:otherwise>
+                        <option value="${r.id}">${r.code}</option>
+                    </c:otherwise>
+                </c:choose>
+
+            </c:forEach>
+        </form:select>
+        <label for="room" class="form-label">Phòng:</label>
+    </div>
+ <div class="mb-3 mt-3">
+        <label >Giới tính</label>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" id="male" name="gender" value="male" checked>
+            <label class="form-check-label" for="male">Nam</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" id="female" name="gender" value="female">
+            <label class="form-check-label" for="female">Nữ</label>
+        </div>
+    </div>
+    <div class="mb-3 mt-3">
+        <label >Kich hoat</label>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" id="active" name="status" value="active" checked>
+            <label class="form-check-label" for="active">active</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" id="inactive" name="status" value="inactive">
+            <label class="form-check-label" for="inactive">inactive</label>
+        </div>
+    </div>
