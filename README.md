@@ -23,4 +23,5 @@
 
 ## Contributors
 
-<a href="https://opencollective.com/SuperTinyIcons/organization/0/website"><img src="https://opencollective.com/SuperTinyIcons/organization/0/avatar.svg"></a>
+<a href="https://github.com/huynhduydong">
+<img src="https://github.com/huynhduydong.png" width="60px;"/><br /></a>
