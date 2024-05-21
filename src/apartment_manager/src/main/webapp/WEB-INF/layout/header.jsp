@@ -40,6 +40,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="<c:url value="/room" />">Quản lý phòng</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<c:url value="/receipt" />">Quản lý hóa đơn</a>
+            </li>
         </ul>
     </div>
 

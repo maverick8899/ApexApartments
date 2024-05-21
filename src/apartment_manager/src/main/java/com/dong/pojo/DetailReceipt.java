@@ -136,5 +136,5 @@ public class DetailReceipt implements Serializable {
     public String toString() {
         return "com.dong.pojo.DetailReceipt[ id=" + id + " ]";
     }
-    
+
 }

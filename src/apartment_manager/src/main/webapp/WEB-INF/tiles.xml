@@ -53,9 +53,19 @@
         <put-attribute name="content"
                        value="/WEB-INF/pages/accounts.jsp" />
     </definition>
-    <definition name="detailreceipt" extends="baseLayout">
-        <put-attribute name="detailreceipt" value="Quản lí hoa don" />
+    <definition name="receiptDetail" extends="baseLayout">
+        <put-attribute name="receiptDetail" value="Quản lí hoa don" />
         <put-attribute name="content"
-                       value="/WEB-INF/pages/detailreceipt.jsp" />
+                       value="/WEB-INF/pages/receiptDetail.jsp" />
+    </definition>
+    <definition name="receipt" extends="baseLayout">
+        <put-attribute name="receipt" value="Quản lí hoa don" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/receipt.jsp" />
+    </definition>
+    <definition name="addReceipt" extends="baseLayout">
+        <put-attribute name="receipt" value="Quản lí hoa don" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/addReceipt.jsp" />
     </definition>
 </tiles-definitions>
