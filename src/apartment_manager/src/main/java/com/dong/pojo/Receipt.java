@@ -34,7 +34,7 @@ public class Receipt implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @NotNull
+//    @NotNull
     @Column(name = "date")
     @Temporal(TemporalType.DATE)
     private Date date;
@@ -50,8 +50,8 @@ public class Receipt implements Serializable {
 
     private Collection<DetailReceipt> detailReceiptCollection;
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    @JsonIgnore
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+//    @JsonIgnore
 
     private Customer customerId;
 
@@ -140,5 +140,5 @@ public class Receipt implements Serializable {
     public String toString() {
         return "com.dong.pojo.Receipt[ id=" + id + " ]";
     }
-    
+
 }

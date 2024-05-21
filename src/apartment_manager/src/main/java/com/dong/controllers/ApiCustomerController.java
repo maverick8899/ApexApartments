@@ -22,17 +22,19 @@ public class ApiCustomerController {
     CustomerService cusSerivce;
     @Autowired
     RoomService roomSer;
+    
     @DeleteMapping("/customers/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable(value = "id") int id) {
         this.cusSerivce.deleteCustomer(id);
     }
 
-    @RequestMapping("/customers/")
+    @RequestMapping(path = "/customers" ,  produces = MediaType.APPLICATION_JSON_VALUE)
     @CrossOrigin
     public ResponseEntity<List<Customer>> list(@RequestParam Map<String, String> params) {
         return new ResponseEntity<>(this.cusSerivce.getCustomers(params), HttpStatus.OK);
     }
+    
     @RequestMapping(path = "/customers/{customerId}/", produces = MediaType.APPLICATION_JSON_VALUE)
     @CrossOrigin
     public ResponseEntity<Customer> details(@PathVariable(value = "customerId") int id) {

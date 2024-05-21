@@ -23,8 +23,10 @@ import java.util.Objects;
 @Repository
 @Transactional
 public class CustomerRepositoryImpl implements CustomerRepository {
+
     @Autowired
     private LocalSessionFactoryBean factory;
+
     @Override
     public List<Customer> getCustomer(Map<String, String> params) {
         Session session = this.factory.getObject().getCurrentSession();
@@ -57,9 +59,11 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 
         Session session = this.factory.getObject().getCurrentSession();
         CriteriaBuilder b = session.getCriteriaBuilder();
-        CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
-        Root rC= q.from(Customer.class);
-        q.multiselect(rC.get("id"), rC.get("name"));
+        CriteriaQuery q = b.createQuery(Customer.class);
+        Root rC = q.from(Customer.class);
+        q.select(rC);
+
+//        q.multiselect(rC.get("id"), rC.get("name"));
         Query query = session.createQuery(q);
         return query.getResultList();
     }
@@ -77,7 +81,8 @@ public class CustomerRepositoryImpl implements CustomerRepository {
         } catch (HibernateException ex) {
             ex.printStackTrace();
             return false;
-        }    }
+        }
+    }
 
     @Override
     public Customer getCustomerById(int id) {

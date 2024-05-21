@@ -14,6 +14,7 @@
     <class>com.dong.pojo.RelativeParkCard</class>
     <class>com.dong.pojo.Receipt</class>
     <class>com.dong.pojo.Feedback</class>
+    <class>com.dong.pojo.Merchandise</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/apartment_db?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
