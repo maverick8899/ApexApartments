@@ -27,7 +27,7 @@
                 <a class="nav-link" href="<c:url value="/account" />">Quản lý tài khoản</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Quản lý tủ đồ</a>
+                <a class="nav-link" href="<c:url value="/merchandisecabinet" />">Quản lý tủ đồ</a>
             </li>
 
             <li class="nav-item">

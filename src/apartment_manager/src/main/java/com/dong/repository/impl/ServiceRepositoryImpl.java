@@ -24,15 +24,20 @@ public class ServiceRepositoryImpl implements ServiceRepository {
     @Override
     public List<Service> getServicesByIdCustomer(int customerId) {
         Session session = this.factory.getObject().getCurrentSession();
-        CriteriaBuilder b = session.getCriteriaBuilder();
-        CriteriaQuery<Service> q = b.createQuery(Service.class);
-        Root rS= q.from(Service.class);
-        Root rUs= q.from(UseService.class);
-        q.select(rS);
-        q.where(b.equal(rS.get("id"),rUs.get("serviceId")));
-        q.where(b.equal(rUs.get("customerId"), customerId));
-        Query query = session.createQuery(q);
-        return query.getResultList();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Service> query = builder.createQuery(Service.class);
+        Root<Service> serviceRoot = query.from(Service.class);
+        Root<UseService> useServiceRoot = query.from(UseService.class);
+        query.select(serviceRoot)
+                .where(
+                        builder.and(
+                                builder.equal(serviceRoot.get("id"), useServiceRoot.get("serviceId")),
+                                builder.equal(useServiceRoot.get("customerId"), customerId)
+                        )
+                );
+
+        Query q = session.createQuery(query);
+        return q.getResultList();
     }
     @Override
     public boolean addOrUpdateService(Service r) {
@@ -61,6 +66,13 @@ public class ServiceRepositoryImpl implements ServiceRepository {
         Session session = Objects.requireNonNull(this.factory.getObject()).getCurrentSession();
         return session.get(Service.class, id);
     }
+
+    @Override
+    public void save(UseService useService) {
+        Session s = this.factory.getObject().getCurrentSession();
+        s.save(useService);
+    }
+
     @Override
     public boolean deleteSer(int id) {
         Session session = Objects.requireNonNull(this.factory.getObject()).getCurrentSession();
@@ -73,4 +85,38 @@ public class ServiceRepositoryImpl implements ServiceRepository {
             return false;
         }
     }
+    @Override
+    public UseService getUseServiceByCustomerIdAndServiceId(int customerId, int serviceId) {
+        Session session = Objects.requireNonNull(this.factory.getObject()).getCurrentSession();
+        String hql = "FROM UseService u WHERE u.customerId.id = :customerId AND u.serviceId.id = :serviceId";
+        Query query = session.createQuery(hql, UseService.class);
+        query.setParameter("customerId", customerId);
+        query.setParameter("serviceId", serviceId);
+        List<UseService> results = query.getResultList();
+        if (results != null && !results.isEmpty()) {
+            return results.get(0);
+        } else {
+            return null;
+        }
+    }
+    @Override
+    public UseService getUseServiceById(int id) {
+        Session session = Objects.requireNonNull(this.factory.getObject()).getCurrentSession();
+        return session.get(UseService.class, id);
+    }
+    @Override
+    public boolean deleteUseSer(int id) {
+        Session session = Objects.requireNonNull(this.factory.getObject()).getCurrentSession();
+        UseService c = this.getUseServiceById(id);
+        try {
+            session.delete(c);
+            return true;
+        } catch (HibernateException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+        }
+
+
+
 }

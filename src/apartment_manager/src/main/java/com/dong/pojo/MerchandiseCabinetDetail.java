@@ -40,12 +40,10 @@ public class MerchandiseCabinetDetail implements Serializable {
     private Boolean isReceive;
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     @ManyToOne
-    @JsonIgnore
 
     private Customer customerId;
     @JoinColumn(name = "merchandise_id", referencedColumnName = "id")
     @ManyToOne
-    @JsonIgnore
 
     private Merchandise merchandiseId;
 

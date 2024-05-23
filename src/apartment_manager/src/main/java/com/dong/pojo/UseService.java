@@ -36,12 +36,12 @@ public class UseService implements Serializable {
     private Boolean active;
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    @JsonIgnore
+
 
     private Customer customerId;
     @JoinColumn(name = "service_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    @JsonIgnore
+
     private Service serviceId;
 
     public UseService() {
