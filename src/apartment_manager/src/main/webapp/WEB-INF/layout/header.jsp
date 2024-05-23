@@ -43,9 +43,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="<c:url value="/receipt" />">Quản lý hóa đơn</a>
             </li>
-<!--            <li class="nav-item">
+            <li class="nav-item">
                 <a class="nav-link" href="<c:url value="/feedback" />">Feedback</a>
-            </li>-->
+            </li>
         </ul>
     </div>
 
