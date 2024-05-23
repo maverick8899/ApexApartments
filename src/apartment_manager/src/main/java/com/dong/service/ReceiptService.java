@@ -14,5 +14,5 @@ public interface ReceiptService {
 
     Receipt getReceiptById(int id);
     
-    List<ReceiptDTO> getReceiptDetail(Map<String, String> params);
+//    List<ReceiptDTO> getReceiptDetail(Map<String, String> params);
 }
