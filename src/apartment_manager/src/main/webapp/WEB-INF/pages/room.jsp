@@ -7,7 +7,6 @@
     <tr>
         <th>Id</th>
         <th>>Mã Phòng</th>
-        <th>Gia</th>
         <th></th>
 
     </tr>
@@ -18,7 +17,6 @@
 
             <td>${c.id}</td>
             <td>${c.code}</td>
-            <td>${c.cost}</td>
             <td>
                 <c:url value="/api/room/${c.id}" var="apiDel" />
                 <a href="<c:url value="/addroom/${c.id}" />" class="btn btn-success">Cập nhật</a>

@@ -11,10 +11,7 @@ import org.springframework.format.FormatterRegistry;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
-import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.*;
 
 @Configuration
 @EnableWebMvc
@@ -27,6 +24,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @PropertySource("classpath:configs.properties")
 public class WebAppContextConfig implements WebMvcConfigurer {
 
+
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
         configurer.enable();
@@ -38,7 +36,9 @@ public class WebAppContextConfig implements WebMvcConfigurer {
         registry.addFormatter(new RoomFormatter());
         registry.addFormatter(new AccountsFormatter());
         registry.addFormatter(new ServiceFormat());
-        registry.addFormatter(new MerchandiseCabinetFormatter());
+        registry.addFormatter(new MerchandiseFormatter());
+
+
     }
 
     @Override
@@ -62,5 +62,14 @@ public class WebAppContextConfig implements WebMvcConfigurer {
     @Bean
     public MappingJackson2HttpMessageConverter converter() {
         return new MappingJackson2HttpMessageConverter();
+    }
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins("http://localhost:3000")
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "HEAD")
+                .allowedHeaders("*")
+                .allowCredentials(true);
     }
 }

@@ -92,7 +92,7 @@ public class Customer implements Serializable {
     private Accounts accountId;
     @JoinColumn(name = "merchandise_cabinet_id", referencedColumnName = "id")
     @ManyToOne(cascade=CascadeType.ALL)
-    @JsonIgnore
+//    @JsonIgnore
 
     private MerchandiseCabinet merchandiseCabinetId;
     @JoinColumn(name = "room_id", referencedColumnName = "id")

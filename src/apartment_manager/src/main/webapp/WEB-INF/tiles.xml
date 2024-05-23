@@ -68,6 +68,21 @@
         <put-attribute name="content"
                        value="/WEB-INF/pages/addReceipt.jsp" />
     </definition>
+    <definition name="cabinetdetails" extends="baseLayout">
+        <put-attribute name="cabinetdetails" value="Quản lí cabinetdetails" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/cabinetdetails.jsp" />
+    </definition>
+    <definition name="merchandisecabinet" extends="baseLayout">
+        <put-attribute name="cabinetdetails" value="Quản lí merchandisecabinet" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/merchandisecabinet.jsp" />
+    </definition>
+    <definition name="merchandise" extends="baseLayout">
+        <put-attribute name="merchandise" value="Quản lí merchandisecabinet" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/merchandise.jsp" />
+    </definition>
     <definition name="feedback" extends="baseLayout">
         <put-attribute name="feedback" value="Feedback" />
         <put-attribute name="content"

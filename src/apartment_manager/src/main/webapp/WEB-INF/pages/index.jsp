@@ -26,6 +26,7 @@
         <tbody>
         <c:forEach items="${customer}" var="c">
             <tr>
+
                 <td>${c.id}</td>
                 <td>${c.name}</td>
                 <td>${c.address}</td>

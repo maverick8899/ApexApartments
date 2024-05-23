@@ -1,6 +1,7 @@
 package com.dong.service.impl;
 
 import com.dong.pojo.Service;
+import com.dong.pojo.UseService;
 import com.dong.repository.ServiceRepository;
 import com.dong.service.ServiceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,5 +35,20 @@ public class ServiceServiceImpl implements ServiceService {
     @Override
     public boolean deleteSer(int id) {
         return this.Seser.deleteSer(id);
+    }
+
+    @Override
+    public boolean deleteUseSer(int id) {
+        return this.Seser.deleteUseSer(id);
+    }
+
+    @Override
+    public void save(UseService useService) {
+    this.Seser.save(useService);
+    }
+
+    @Override
+    public UseService getUseServiceByCustomerIdAndServiceId(int customerId, int serviceId) {
+        return this.Seser.getUseServiceByCustomerIdAndServiceId(customerId,serviceId);
     }
 }
