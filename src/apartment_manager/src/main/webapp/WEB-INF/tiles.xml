@@ -68,4 +68,9 @@
         <put-attribute name="content"
                        value="/WEB-INF/pages/addReceipt.jsp" />
     </definition>
+    <definition name="feedback" extends="baseLayout">
+        <put-attribute name="feedback" value="Feedback" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/feedback.jsp" />
+    </definition>
 </tiles-definitions>
