@@ -68,4 +68,9 @@
         <put-attribute name="content"
                        value="/WEB-INF/pages/addReceipt.jsp" />
     </definition>
+    <definition name="addReceipt" extends="baseLayout">
+        <put-attribute name="receipt" value="Quản lí hoa don" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/addReceipt.jsp" />
+    </definition>
 </tiles-definitions>
