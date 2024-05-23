@@ -48,7 +48,7 @@ public class ApiReceiptController {
     public ResponseEntity<List<ReceiptDTO>> list(
             @RequestParam Map<String, String> params
     ) {
-        return new ResponseEntity<>(this.recSerivce.getReceiptDetail(params), HttpStatus.OK);
+        return new ResponseEntity<>(this.recSerivce.getReceipt(params), HttpStatus.OK);
 
     }
     //    @RequestMapping(path = "/customers/{customerId}/", produces = MediaType.APPLICATION_JSON_VALUE)
