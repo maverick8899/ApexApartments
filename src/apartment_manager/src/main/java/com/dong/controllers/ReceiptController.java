@@ -74,7 +74,7 @@ public class ReceiptController {
     @GetMapping("/receiptDetail")
     public String getReceiptDetail(@RequestParam Map<String, String> params,
             Model model) {
-        model.addAttribute("receipts", this.receiptService.getReceiptDetail(params));
+        model.addAttribute("receipts", this.receiptService.getReceipt(params));
         return "receiptDetail";
     }
      

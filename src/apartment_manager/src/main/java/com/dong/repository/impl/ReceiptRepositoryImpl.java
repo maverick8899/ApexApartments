@@ -98,6 +98,16 @@ public class ReceiptRepositoryImpl implements ReceiptRepository {
             }
             if (type == 3) {
                 predicates.add(b.equal(r.get("id"), kw));
+                predicates.add(b.equal(uS.get("active"), 1));
+                predicates.add(b.equal(r.get("id"), rD.get("receiptId")));
+                predicates.add(b.equal(rD.get("serviceId").get("id"), s.get("id")));
+                predicates.add(b.equal(s.get("id"), uS.get("serviceId")));
+
+                q.where(predicates.toArray(Predicate[]::new));
+                q.groupBy(r.get("id"),
+                        r.get("customerId").get("id"),
+                        s.get("id"));
+                q.orderBy(b.asc(r.get("id")));
             }
             if (type == 4) {
                 predicates.add(
@@ -126,21 +136,22 @@ public class ReceiptRepositoryImpl implements ReceiptRepository {
             predicates.add(b.equal(r.get("isPay"), 1));
         }
 
-        //* join receipt to receipt detail
-        predicates.add(b.equal(r.get("id"), rD.get("receiptId")));
-        //* join receipt detail to service
-        predicates.add(b.equal(rD.get("serviceId").get("id"), s.get("id")));
+        if (type != 3) {
+            //* join receipt to receipt detail
+            predicates.add(b.equal(r.get("id"), rD.get("receiptId")));
+            //* join receipt detail to service
+            predicates.add(b.equal(rD.get("serviceId").get("id"), s.get("id")));
 //
 //        //* join service to use_service
-        predicates.add(b.equal(s.get("id"), uS.get("serviceId")));
+            predicates.add(b.equal(s.get("id"), uS.get("serviceId")));
 
 //        //? recepit is not pay yet
 //        predicates.add(b.equal(rD.get("active"), 1));
-        q.where(predicates.toArray(Predicate[]::new));
-        q.groupBy(r.get("id"));
+            q.where(predicates.toArray(Predicate[]::new));
+            q.groupBy(r.get("id"));
 
-        q.orderBy(b.asc(r.get("id")));
-
+            q.orderBy(b.asc(r.get("id")));
+        }
         Query query = session.createQuery(q);
         List<ReceiptDTO> invoices = new ArrayList<>();
 
@@ -195,88 +206,87 @@ public class ReceiptRepositoryImpl implements ReceiptRepository {
             return false;
         }
     }
-
-    @Override
-    public List<ReceiptDTO> getReceiptDetail(Map<String, String> params) {
-        //? isPay ở đây là selection chứ không phải là giá trị isPay trong db
-        int type = 0;
-        String kw = "";
-        if (params.get("kw") != null
-                && !params.get("kw").isEmpty()
-                && params.get("type") != null
-                && !params.get("type").isEmpty()) {
-            type = Integer.parseInt(params.get("type"));
-            kw = params.get("kw");
-        }
-
-        Session session = this.factory.getObject().getCurrentSession();
-        CriteriaBuilder b = session.getCriteriaBuilder();
-        CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
-        List<Predicate> predicates = new ArrayList<>();
-
-        Root r = q.from(Receipt.class);
-        Root rD = q.from(DetailReceipt.class);
-        Root s = q.from(Service.class);
-        Root uS = q.from(UseService.class);
-
-        //        q.select(r);
-        q.multiselect(
-                r.get("id"),
-                r.get("total"),
-                r.get("date"),
-                r.get("customerId").get("id"),
-                r.get("customerId").get("name"),
-                r.get("customerId").get("email"),
-                rD.get("quantity"),
-                s.get("id"),
-                s.get("name"),
-                s.get("description"),
-                s.get("unit"),
-                uS.get("date"),
-                rD.get("cost")
-        );
-        predicates.add(b.equal(r.get("id"), kw));
-//        predicates.add(b.equal(r.get("customerId"), uS.get("customerId")));
-        predicates.add(b.equal(uS.get("active"), 1));
-        predicates.add(b.equal(r.get("id"), rD.get("receiptId")));
-        predicates.add(b.equal(rD.get("serviceId").get("id"), s.get("id")));
-        predicates.add(b.equal(s.get("id"), uS.get("serviceId")));
-
-        q.where(predicates.toArray(Predicate[]::new));
-        q.groupBy(r.get("id"),
-                r.get("customerId").get("id"),
-                s.get("id"));
-        q.orderBy(b.asc(r.get("id")));
-        Query query = session.createQuery(q);
-
-        ////@
-        List<ReceiptDTO> invoices = new ArrayList<>();
-
-        for (Object item : query.getResultList()) {
-            if (item instanceof Object[]) {
-                Object[] itemArray = (Object[]) item;
-                Long dateTimestamp = itemArray[2] instanceof Date ? ((Date) itemArray[2]).getTime() : Long.parseLong(itemArray[2].toString());
-                Long discountDateTimestamp = itemArray[11] instanceof Date ? ((Date) itemArray[11]).getTime() : Long.parseLong(itemArray[11].toString());
-
-                invoices.add(
-                        new ReceiptDTO(
-                                itemArray[0], // receiptId
-                                itemArray[1], // receiptDate
-                                parseIntToDate(dateTimestamp),
-                                itemArray[3], // customerId
-                                itemArray[4], // customerName
-                                itemArray[5], // customerEmail
-                                itemArray[6], // receiptDetailQuantity
-                                itemArray[7], // serviceId
-                                itemArray[8], // serviceName
-                                itemArray[9], // serviceDescription
-                                itemArray[10], // serviceUnit
-                                parseIntToDate(discountDateTimestamp), // discountDescription (giả sử là discountDescription)
-                                itemArray[12] // receiptDetailCost
-                        )
-                );
-            }
-        }
-        return invoices;
-    }
+//
+//    @Override
+//    public List<ReceiptDTO> getReceiptDetail(Map<String, String> params) {
+//        //? isPay ở đây là selection chứ không phải là giá trị isPay trong db
+//        int type = 0;
+//        String kw = "";
+//        if (params.get("kw") != null
+//                && !params.get("kw").isEmpty()
+//                && params.get("type") != null
+//                && !params.get("type").isEmpty()) {
+//            type = Integer.parseInt(params.get("type"));
+//            kw = params.get("kw");
+//        }
+//
+//        Session session = this.factory.getObject().getCurrentSession();
+//        CriteriaBuilder b = session.getCriteriaBuilder();
+//        CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
+//        List<Predicate> predicates = new ArrayList<>();
+//
+//        Root r = q.from(Receipt.class);
+//        Root rD = q.from(DetailReceipt.class);
+//        Root s = q.from(Service.class);
+//        Root uS = q.from(UseService.class);
+//
+//        //        q.select(r);
+//        q.multiselect(
+//                r.get("id"),
+//                r.get("total"),
+//                r.get("date"),
+//                r.get("customerId").get("id"),
+//                r.get("customerId").get("name"),
+//                r.get("customerId").get("email"),
+//                rD.get("quantity"),
+//                s.get("id"),
+//                s.get("name"),
+//                s.get("description"),
+//                s.get("unit"),
+//                uS.get("date"),
+//                rD.get("cost")
+//        );
+//        predicates.add(b.equal(r.get("id"), kw));
+//        predicates.add(b.equal(uS.get("active"), 1));
+//        predicates.add(b.equal(r.get("id"), rD.get("receiptId")));
+//        predicates.add(b.equal(rD.get("serviceId").get("id"), s.get("id")));
+//        predicates.add(b.equal(s.get("id"), uS.get("serviceId")));
+//
+//        q.where(predicates.toArray(Predicate[]::new));
+//        q.groupBy(r.get("id"),
+//                r.get("customerId").get("id"),
+//                s.get("id"));
+//        q.orderBy(b.asc(r.get("id")));
+//        Query query = session.createQuery(q);
+//
+//        ////@
+//        List<ReceiptDTO> invoices = new ArrayList<>();
+//
+//        for (Object item : query.getResultList()) {
+//            if (item instanceof Object[]) {
+//                Object[] itemArray = (Object[]) item;
+//                Long dateTimestamp = itemArray[2] instanceof Date ? ((Date) itemArray[2]).getTime() : Long.parseLong(itemArray[2].toString());
+//                Long discountDateTimestamp = itemArray[11] instanceof Date ? ((Date) itemArray[11]).getTime() : Long.parseLong(itemArray[11].toString());
+//
+//                invoices.add(
+//                        new ReceiptDTO(
+//                                itemArray[0], // receiptId
+//                                itemArray[1], // receiptDate
+//                                parseIntToDate(dateTimestamp),
+//                                itemArray[3], // customerId
+//                                itemArray[4], // customerName
+//                                itemArray[5], // customerEmail
+//                                itemArray[6], // receiptDetailQuantity
+//                                itemArray[7], // serviceId
+//                                itemArray[8], // serviceName
+//                                itemArray[9], // serviceDescription
+//                                itemArray[10], // serviceUnit
+//                                parseIntToDate(discountDateTimestamp), // discountDescription (giả sử là discountDescription)
+//                                itemArray[12] // receiptDetailCost
+//                        )
+//                );
+//            }
+//        }
+//        return invoices;
+//    }
 }
