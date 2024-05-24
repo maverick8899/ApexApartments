@@ -30,6 +30,35 @@ CREATE TABLE `room` (
     `date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )  ENGINE=INNODB DEFAULT CHARSET=UTF8MB4 COLLATE = UTF8MB4_UNICODE_CI;
 
+CREATE TABLE `survey_detail` (
+    `id` INT PRIMARY KEY AUTO_INCREMENT,
+    `question` varchar(255) DEFAULT NULL,
+    `answer` TINYINT NOT NULL CHECK (`answer` BETWEEN 1 AND 5),
+    `type` VARCHAR(255) NOT NULL,
+    `date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+     CONSTRAINT `account_chk_1` CHECK (
+      (
+        `type` in (
+          _utf8mb4 'hygiene',
+          _utf8mb4 'infrastructure',
+          _utf8mb4 'service'
+        )
+      )
+    )
+)  ENGINE=INNODB DEFAULT CHARSET=UTF8MB4 COLLATE = UTF8MB4_UNICODE_CI;
+
+
+CREATE TABLE `survey` (
+    `id` INT PRIMARY KEY AUTO_INCREMENT,
+    `customer_id` int UNIQUE KEY NOT NULL,
+    `survey_detail_id` int UNIQUE KEY NOT NULL, 
+    `personal_opinion` varchar(255) DEFAULT NULL,
+    KEY `fk_survey_customer` (`customer_id`),
+    CONSTRAINT `fk_survey_customer` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`),
+    KEY `fk_survey_survey_detail` (`survey_detail_id`),
+    CONSTRAINT `fk_survey_survey_detail` FOREIGN KEY (`survey_detail_id`) REFERENCES `survey_detail` (`id`)
+)  ENGINE=INNODB DEFAULT CHARSET=UTF8MB4 COLLATE = UTF8MB4_UNICODE_CI;
+
 CREATE TABLE
   `customer` (
     `id` int PRIMARY KEY AUTO_INCREMENT,
@@ -147,13 +176,7 @@ CREATE TABLE `merchandise_cabinet_detail` (
     KEY `fk_merchandise_cabinet_detail_merchandise` (`merchandise_id`),
     CONSTRAINT `fk_merchandise_cabinet_detail_merchandise` FOREIGN KEY (`merchandise_id`) REFERENCES `merchandise` (`id`)
 )  ENGINE=INNODB DEFAULT CHARSET=UTF8MB4 COLLATE = UTF8MB4_UNICODE_CI;
-
-CREATE TABLE `survey_form` (
-    `id` INT PRIMARY KEY AUTO_INCREMENT,
-    `link` VARCHAR(255) NOT NULL,
-    `is_survey` BIT(1) DEFAULT 0
-)  ENGINE=INNODB DEFAULT CHARSET=UTF8MB4 COLLATE = UTF8MB4_UNICODE_CI;
-
+ 
 
 --  @Trigger
 -- ?If upddate is_receive=1 then assign CURRENT_TIMESTAMP to this.date_receive --- else ...
@@ -266,12 +289,18 @@ INSERT INTO merchandise_cabinet_detail (quantity, date_receive, is_receive, merc
 (25, '2022-04-01', 1, 4, 4),
 (30, '2022-05-01', 1, 5, 5);
 
--- Chèn dữ liệu mẫu vào bảng survey_form
-INSERT INTO survey_form (link, is_survey) VALUES
-('https://survey.com/form1', 1),
-('https://survey.com/form2', 1),
-('https://survey.com/form3', 1),
-('https://survey.com/form4', 1),
-('https://survey.com/form5', 1);
 
+INSERT INTO `survey_detail` (`question`, `answer`, `type`) VALUES
+("How satisfied are you with the overall cleanliness of the facilities?", 4, "hygiene"),
+("Do you find the facilities to be well-maintained and up-to-date?", 3, "infrastructure"),
+("How would you rate the quality of service provided by the staff?", 5, "service"),
+("How likely are you to recommend our services to others?", 4, "service"),
+("Add your own question here", 2, "hygiene"); -- Thêm câu hỏi tùy chỉnh
+
+
+INSERT INTO `survey` (`customer_id`, `survey_detail_id`, `personal_opinion`) VALUES
+(1, 1, "The washrooms could be cleaner."),  -- Thay thế 123 bằng ID khách hàng
+(2, 2, "The staff was very helpful."),     -- Thay thế 456 bằng ID khách hàng
+(3, 3, "I will definitely use your service again."),  -- Thay thế 789 bằng ID khách hàng
+(4, 4, "I highly recommend this company to my friends.");  -- Khách hàng 123 trả lời thêm câu hỏi 4
 
