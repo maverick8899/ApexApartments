@@ -286,18 +286,18 @@ INSERT INTO merchandise_cabinet_detail (quantity, date_receive, is_receive, merc
 (25, '2022-04-01', 1, 4, 4),
 (30, '2022-05-01', 1, 5, 5);
 
+INSERT INTO question_answer (question, answer, type) VALUES
+('How would you rate the hygiene?', 4, 'hygiene'),
+('How would you rate the infrastructure?', 3, 'infrastructure'),
+('How would you rate the service?', 2, 'service');
 
-INSERT INTO `survey_detail` (`question`, `answer`, `type`) VALUES
-("How satisfied are you with the overall cleanliness of the facilities?", 4, "hygiene"),
-("Do you find the facilities to be well-maintained and up-to-date?", 3, "infrastructure"),
-("How would you rate the quality of service provided by the staff?", 5, "service"),
-("How likely are you to recommend our services to others?", 4, "service"),
-("Add your own question here", 2, "hygiene"); -- Thêm câu hỏi tùy chỉnh
+INSERT INTO survey (customer_id, personal_opinion) VALUES
+(1, 'It''s alright'),
+(2, 'Could be better'),
+(3, 'Service needs improvement');
 
-
-INSERT INTO `survey` (`customer_id`, `survey_detail_id`, `personal_opinion`) VALUES
-(1, 1, "The washrooms could be cleaner."),  -- Thay thế 123 bằng ID khách hàng
-(2, 2, "The staff was very helpful."),     -- Thay thế 456 bằng ID khách hàng
-(3, 3, "I will definitely use your service again."),  -- Thay thế 789 bằng ID khách hàng
-(4, 4, "I highly recommend this company to my friends.");  -- Khách hàng 123 trả lời thêm câu hỏi 4
-
+-- Giả sử bạn có các giá trị ID tương ứng từ bảng question_answer và survey
+INSERT INTO survey_detail (question_answer_id, survey_id) VALUES
+(1, 1),
+(2, 2),
+(3, 3);
