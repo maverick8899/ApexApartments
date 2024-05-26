@@ -21,6 +21,7 @@ import java.util.List;
 
 @Controller
 public class CustomerController {
+
     @Autowired
     private CustomerService cusService;
     @Autowired
@@ -29,31 +30,42 @@ public class CustomerController {
     ServiceService se;
     @Autowired
     private AccountsService accSer;
+
     @GetMapping("/customers")
     public String list(Model model) {
-        model.addAttribute("customer",new Customer());
-        return "customers";
+//        model.addAttribute("customer", new Customer());
+        model.addAttribute("customer", this.cusService.getCustomers(null));
+        return "customer";
     }
 
+    @GetMapping("/addCustomer")
+    public String addCustomer(Model model) {
+        model.addAttribute("customer", new Customer());
+        return "addCustomer";
+    }
     @ModelAttribute
-        public void commonAttr(Model model) {
+    public void commonAttr(Model model) {
         model.addAttribute("room", this.roomService.getRoom()
         );
     }
+
     @PostMapping("/customers")
     public String add(@ModelAttribute(value = "customer") @Valid Customer c,
-                      BindingResult rs) {
-        if (!rs.hasErrors())
-            if (cusService.addOrUpdateCustomer(c) == true)
+            BindingResult rs) {
+        if (!rs.hasErrors()) {
+            if (cusService.addOrUpdateCustomer(c) == true) {
                 return "redirect:/";
+            }
+        }
 
         return "customers";
     }
+
     @GetMapping("/customers/{id}")
-    public String update(Model model, @PathVariable(value = "id") int id)  {
+    public String update(Model model, @PathVariable(value = "id") int id) {
 //        model.addAttribute("customer", this.cusService.getCustomerById(id));
         model.addAttribute("service", this.se.getServicesByIdCustomer(id));
-        model.addAttribute("customer",this.accSer.getAccountsByIdCustomer(id));
+        model.addAttribute("customer", this.accSer.getAccountsByIdCustomer(id));
         return "customers";
     }
 }

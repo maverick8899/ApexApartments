@@ -35,7 +35,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="#">Tạo khảo sát</a>
+                <a class="nav-link" href="<c:url value="/survey" />">Tạo khảo sát</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="<c:url value="/room" />">Quản lý phòng</a>

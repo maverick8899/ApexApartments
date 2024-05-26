@@ -25,8 +25,8 @@ public class FeedbackServiceImpl implements FeedbackService {
     }
 
     @Override
-    public Feedback createReceipt(Map<String, String> params) {
-        return this.feedbackRepo.createReceipt(params);
+    public Feedback createFeedback(Map<String, String> params) {
+        return this.feedbackRepo.createFeedback(params);
     }
 
 }

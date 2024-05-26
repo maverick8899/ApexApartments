@@ -30,6 +30,35 @@ CREATE TABLE `room` (
     `date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )  ENGINE=INNODB DEFAULT CHARSET=UTF8MB4 COLLATE = UTF8MB4_UNICODE_CI;
 
+CREATE TABLE `survey_detail` (
+    `id` INT PRIMARY KEY AUTO_INCREMENT,
+    `question` varchar(255) DEFAULT NULL,
+    `answer` TINYINT CHECK (`answer` BETWEEN 1 AND 5),
+    `type` VARCHAR(255) NOT NULL,
+    `date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    --  CONSTRAINT `account_chk_1` CHECK (
+    --   (
+    --     `type` in (
+    --       _utf8mb4 'hygiene',
+    --       _utf8mb4 'infrastructure',
+    --       _utf8mb4 'service'
+    --     )
+    --   )
+    -- )
+)  ENGINE=INNODB DEFAULT CHARSET=UTF8MB4 COLLATE = UTF8MB4_UNICODE_CI;
+
+
+CREATE TABLE `survey` (
+    `id` INT PRIMARY KEY AUTO_INCREMENT,
+    `customer_id` int UNIQUE KEY NOT NULL,
+    `survey_detail_id` int UNIQUE KEY NOT NULL, 
+    `personal_opinion` varchar(255) DEFAULT NULL,
+    KEY `fk_survey_customer` (`customer_id`),
+    CONSTRAINT `fk_survey_customer` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`),
+    KEY `fk_survey_survey_detail` (`survey_detail_id`),
+    CONSTRAINT `fk_survey_survey_detail` FOREIGN KEY (`survey_detail_id`) REFERENCES `survey_detail` (`id`)
+)  ENGINE=INNODB DEFAULT CHARSET=UTF8MB4 COLLATE = UTF8MB4_UNICODE_CI;
+
 CREATE TABLE
   `customer` (
     `id` int PRIMARY KEY AUTO_INCREMENT,
@@ -180,7 +209,7 @@ CREATE TABLE `merchandise_cabinet_detail` (
     KEY `fk_merchandise_cabinet_detail_merchandise` (`merchandise_id`),
     CONSTRAINT `fk_merchandise_cabinet_detail_merchandise` FOREIGN KEY (`merchandise_id`) REFERENCES `merchandise` (`id`)
 )  ENGINE=INNODB DEFAULT CHARSET=UTF8MB4 COLLATE = UTF8MB4_UNICODE_CI;
- 
+
 
 --  @Trigger
 -- ?If upddate is_receive=1 then assign CURRENT_TIMESTAMP to this.date_receive --- else ...
@@ -294,11 +323,11 @@ INSERT INTO merchandise_cabinet_detail (quantity, date_receive, is_receive, merc
 (30, '2022-05-01', 1, 5, 5);
 
 
-INSERT INTO question (question, type) VALUES 
-('Bạn hài lòng với sản phẩm này không?', 'hygiene'),
-('Đánh giá về chất lượng dịch vụ của chúng tôi?', 'infrastructure'),
-('Bạn sẽ giới thiệu sản phẩm này cho bạn bè không?', 'service');
-
+INSERT INTO `survey` (`customer_id`, `survey_detail_id`, `personal_opinion`) VALUES
+(1, 1, "The washrooms could be cleaner."),  -- Thay thế 123 bằng ID khách hàng
+(2, 2, "The staff was very helpful."),     -- Thay thế 456 bằng ID khách hàng
+(3, 3, "I will definitely use your service again."),  -- Thay thế 789 bằng ID khách hàng
+(4, 4, "I highly recommend this company to my friends.");  -- Khách hàng 123 trả lời thêm câu hỏi 4
 
 INSERT INTO question (question, type) VALUES 
 ('Bạn hài lòng với sản phẩm này không?', 'hygiene'),

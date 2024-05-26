@@ -4,21 +4,36 @@
  */
 package com.dong.pojo;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Date;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author ASUS
+ * @author MAVERICK
  */
 @Entity
 @Table(name = "receipt")
+@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Receipt.findAll", query = "SELECT r FROM Receipt r"),
     @NamedQuery(name = "Receipt.findById", query = "SELECT r FROM Receipt r WHERE r.id = :id"),
@@ -34,7 +49,7 @@ public class Receipt implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-//    @NotNull
+    @NotNull
     @Column(name = "date")
     @Temporal(TemporalType.DATE)
     private Date date;
@@ -46,13 +61,9 @@ public class Receipt implements Serializable {
     @Column(name = "is_pay")
     private Boolean isPay;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "receiptId")
-    @JsonIgnore
-
     private Collection<DetailReceipt> detailReceiptCollection;
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
-//    @JsonIgnore
-
+    @ManyToOne(optional = false)
     private Customer customerId;
 
     public Receipt() {
@@ -100,6 +111,7 @@ public class Receipt implements Serializable {
         this.isPay = isPay;
     }
 
+    @XmlTransient
     public Collection<DetailReceipt> getDetailReceiptCollection() {
         return detailReceiptCollection;
     }
@@ -140,5 +152,5 @@ public class Receipt implements Serializable {
     public String toString() {
         return "com.dong.pojo.Receipt[ id=" + id + " ]";
     }
-
+    
 }

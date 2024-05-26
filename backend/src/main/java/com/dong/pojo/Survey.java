@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,7 +20,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -29,15 +29,14 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author MAVERICK
  */
 @Entity
-@Table(name = "room")
+@Table(name = "survey")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Room.findAll", query = "SELECT r FROM Room r"),
-    @NamedQuery(name = "Room.findById", query = "SELECT r FROM Room r WHERE r.id = :id"),
-    @NamedQuery(name = "Room.findByCode", query = "SELECT r FROM Room r WHERE r.code = :code"),
-    @NamedQuery(name = "Room.findByActive", query = "SELECT r FROM Room r WHERE r.active = :active"),
-    @NamedQuery(name = "Room.findByDate", query = "SELECT r FROM Room r WHERE r.date = :date")})
-public class Room implements Serializable {
+    @NamedQuery(name = "Survey.findAll", query = "SELECT s FROM Survey s"),
+    @NamedQuery(name = "Survey.findById", query = "SELECT s FROM Survey s WHERE s.id = :id"),
+    @NamedQuery(name = "Survey.findByDate", query = "SELECT s FROM Survey s WHERE s.date = :date"),
+    @NamedQuery(name = "Survey.findByPersonalOpinion", query = "SELECT s FROM Survey s WHERE s.personalOpinion = :personalOpinion")})
+public class Survey implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -45,29 +44,20 @@ public class Room implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 20)
-    @Column(name = "code")
-    private String code;
-    @Column(name = "active")
-    private Boolean active;
     @Column(name = "date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
-    @OneToMany(mappedBy = "roomId")
-    private Collection<Customer> customerCollection;
+    @Size(max = 255)
+    @Column(name = "personal_opinion")
+    private String personalOpinion;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "surveyId")
+    private Collection<CustomerSurvey> customerSurveyCollection;
 
-    public Room() {
+    public Survey() {
     }
 
-    public Room(Integer id) {
+    public Survey(Integer id) {
         this.id = id;
-    }
-
-    public Room(Integer id, String code) {
-        this.id = id;
-        this.code = code;
     }
 
     public Integer getId() {
@@ -78,22 +68,6 @@ public class Room implements Serializable {
         this.id = id;
     }
 
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public Boolean getActive() {
-        return active;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
-
     public Date getDate() {
         return date;
     }
@@ -102,13 +76,21 @@ public class Room implements Serializable {
         this.date = date;
     }
 
-    @XmlTransient
-    public Collection<Customer> getCustomerCollection() {
-        return customerCollection;
+    public String getPersonalOpinion() {
+        return personalOpinion;
     }
 
-    public void setCustomerCollection(Collection<Customer> customerCollection) {
-        this.customerCollection = customerCollection;
+    public void setPersonalOpinion(String personalOpinion) {
+        this.personalOpinion = personalOpinion;
+    }
+
+    @XmlTransient
+    public Collection<CustomerSurvey> getCustomerSurveyCollection() {
+        return customerSurveyCollection;
+    }
+
+    public void setCustomerSurveyCollection(Collection<CustomerSurvey> customerSurveyCollection) {
+        this.customerSurveyCollection = customerSurveyCollection;
     }
 
     @Override
@@ -121,10 +103,10 @@ public class Room implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Room)) {
+        if (!(object instanceof Survey)) {
             return false;
         }
-        Room other = (Room) object;
+        Survey other = (Survey) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -133,7 +115,7 @@ public class Room implements Serializable {
 
     @Override
     public String toString() {
-        return "com.dong.pojo.Room[ id=" + id + " ]";
+        return "com.dong.pojo.Survey[ id=" + id + " ]";
     }
     
 }

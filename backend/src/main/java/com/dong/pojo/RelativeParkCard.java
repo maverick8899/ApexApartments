@@ -4,21 +4,33 @@
  */
 package com.dong.pojo;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author ASUS
+ * @author MAVERICK
  */
 @Entity
 @Table(name = "relative_park_card")
+@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "RelativeParkCard.findAll", query = "SELECT r FROM RelativeParkCard r"),
     @NamedQuery(name = "RelativeParkCard.findById", query = "SELECT r FROM RelativeParkCard r WHERE r.id = :id"),
@@ -57,9 +69,6 @@ public class RelativeParkCard implements Serializable {
     private BigDecimal cost;
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    @JsonIgnore
-
-
     private Customer customerId;
 
     public RelativeParkCard() {

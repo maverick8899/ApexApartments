@@ -8,5 +8,5 @@ public interface FeedbackRepository {
 
     List<Object> getFeedback(Map<String, String> params);
 
-    Feedback createReceipt(Map<String, String> params);
+    Feedback createFeedback(Map<String, String> params);
 }

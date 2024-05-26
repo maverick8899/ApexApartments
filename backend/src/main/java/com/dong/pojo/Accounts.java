@@ -4,20 +4,30 @@
  */
 package com.dong.pojo;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Collection;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author ASUS
+ * @author MAVERICK
  */
 @Entity
 @Table(name = "accounts")
+@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Accounts.findAll", query = "SELECT a FROM Accounts a"),
     @NamedQuery(name = "Accounts.findById", query = "SELECT a FROM Accounts a WHERE a.id = :id"),
@@ -55,7 +65,6 @@ public class Accounts implements Serializable {
     @Column(name = "avatar")
     private String avatar;
     @OneToMany(mappedBy = "accountId")
-    @JsonIgnore
     private Collection<Customer> customerCollection;
 
     public Accounts() {
@@ -120,6 +129,7 @@ public class Accounts implements Serializable {
         this.avatar = avatar;
     }
 
+    @XmlTransient
     public Collection<Customer> getCustomerCollection() {
         return customerCollection;
     }

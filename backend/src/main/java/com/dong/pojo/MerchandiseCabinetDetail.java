@@ -4,18 +4,30 @@
  */
 package com.dong.pojo;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author ASUS
+ * @author MAVERICK
  */
 @Entity
 @Table(name = "merchandise_cabinet_detail")
+@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "MerchandiseCabinetDetail.findAll", query = "SELECT m FROM MerchandiseCabinetDetail m"),
     @NamedQuery(name = "MerchandiseCabinetDetail.findById", query = "SELECT m FROM MerchandiseCabinetDetail m WHERE m.id = :id"),
@@ -40,11 +52,9 @@ public class MerchandiseCabinetDetail implements Serializable {
     private Boolean isReceive;
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     @ManyToOne
-
     private Customer customerId;
     @JoinColumn(name = "merchandise_id", referencedColumnName = "id")
     @ManyToOne
-
     private Merchandise merchandiseId;
 
     public MerchandiseCabinetDetail() {
