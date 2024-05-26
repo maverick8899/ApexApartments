@@ -88,6 +88,39 @@ CREATE TABLE
       )
     )
   ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+  
+CREATE TABLE `question` (
+    `id` INT PRIMARY KEY AUTO_INCREMENT,
+    `question` VARCHAR(255) DEFAULT NULL,
+    `type` VARCHAR(255) NOT NULL
+)  ENGINE=INNODB DEFAULT CHARSET=UTF8MB4 COLLATE = UTF8MB4_UNICODE_CI;
+
+CREATE TABLE `answer` (
+    `id` INT PRIMARY KEY AUTO_INCREMENT,
+    `answer` TINYINT CHECK (`answer` BETWEEN 1 AND 5)
+)  ENGINE=INNODB DEFAULT CHARSET=UTF8MB4 COLLATE = UTF8MB4_UNICODE_CI;
+
+CREATE TABLE `survey` (
+    `id` INT PRIMARY KEY AUTO_INCREMENT,
+    `date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `personal_opinion` varchar(255) DEFAULT NULL
+)  ENGINE=INNODB DEFAULT CHARSET=UTF8MB4 COLLATE = UTF8MB4_UNICODE_CI;
+
+CREATE TABLE `customer_survey` (
+    `id` INT PRIMARY KEY AUTO_INCREMENT,
+    `answer_id` int NOT NULL,
+    `question_id` int NOT NULL, 
+    `customer_id` int NOT NULL,
+	`survey_id` int NOT NULL,
+    KEY `fk_customer_survey_answer` (`answer_id`),
+    CONSTRAINT `fk_customer_survey_answer` FOREIGN KEY (`answer_id`) REFERENCES `answer` (`id`),
+    KEY `fk_customer_survey_question` (`question_id`),
+    CONSTRAINT `fk_customer_survey_question` FOREIGN KEY (`question_id`) REFERENCES `question` (`id`), 
+    KEY `fk_customer_survey_customer` (`customer_id`),
+    CONSTRAINT `fk_customer_survey_customer` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`),
+    KEY `fk_customer_survey_survey` (`survey_id`),
+    CONSTRAINT `fk_customer_survey_survey` FOREIGN KEY (`survey_id`) REFERENCES `survey` (`id`)
+)  ENGINE=INNODB DEFAULT CHARSET=UTF8MB4 COLLATE = UTF8MB4_UNICODE_CI;
 
 CREATE TABLE `park_card` (
     `id` INT PRIMARY KEY AUTO_INCREMENT,
@@ -176,6 +209,7 @@ CREATE TABLE `merchandise_cabinet_detail` (
     KEY `fk_merchandise_cabinet_detail_merchandise` (`merchandise_id`),
     CONSTRAINT `fk_merchandise_cabinet_detail_merchandise` FOREIGN KEY (`merchandise_id`) REFERENCES `merchandise` (`id`)
 )  ENGINE=INNODB DEFAULT CHARSET=UTF8MB4 COLLATE = UTF8MB4_UNICODE_CI;
+
 
 --  @Trigger
 -- ?If upddate is_receive=1 then assign CURRENT_TIMESTAMP to this.date_receive --- else ...
@@ -289,17 +323,36 @@ INSERT INTO merchandise_cabinet_detail (quantity, date_receive, is_receive, merc
 (30, '2022-05-01', 1, 5, 5);
 
 
-INSERT INTO `survey_detail` (`question`, `answer`, `type`) VALUES
-("How satisfied are you with the overall cleanliness of the facilities?", 4, "hygiene"),
-("Do you find the facilities to be well-maintained and up-to-date?", 3, "infrastructure"),
-("How would you rate the quality of service provided by the staff?", 5, "service"),
-("How likely are you to recommend our services to others?", 4, "service"),
-("Add your own question here", 2, "hygiene"); -- Thêm câu hỏi tùy chỉnh
-
-
 INSERT INTO `survey` (`customer_id`, `survey_detail_id`, `personal_opinion`) VALUES
 (1, 1, "The washrooms could be cleaner."),  -- Thay thế 123 bằng ID khách hàng
 (2, 2, "The staff was very helpful."),     -- Thay thế 456 bằng ID khách hàng
 (3, 3, "I will definitely use your service again."),  -- Thay thế 789 bằng ID khách hàng
 (4, 4, "I highly recommend this company to my friends.");  -- Khách hàng 123 trả lời thêm câu hỏi 4
 
+INSERT INTO question (question, type) VALUES 
+('Bạn hài lòng với sản phẩm này không?', 'hygiene'),
+('Đánh giá về chất lượng dịch vụ của chúng tôi?', 'infrastructure'),
+('Bạn sẽ giới thiệu sản phẩm này cho bạn bè không?', 'service');
+
+INSERT INTO answer (answer) VALUES 
+(1), (2), (3), (4), (5);
+
+INSERT INTO survey (  personal_opinion) VALUES 
+-- Liên kết các cuộc khảo sát với dữ liệu từ bảng customer_survey
+('Rất hài lòng'),
+( 'Hài lòng'),
+( 'Trung bình');
+
+INSERT INTO customer_survey (answer_id, question_id, customer_id, survey_id) VALUES 
+-- Dữ liệu mẫu cho khách hàng 1
+(5, 1, 1,1),
+(4, 2, 1,2),
+(3, 3, 1,3),
+-- Dữ liệu mẫu cho khách hàng 2
+(4, 1, 2,1),
+(3, 2, 2,2),
+(2, 3, 2,3),
+-- Dữ liệu mẫu cho khách hàng 3
+(3, 1, 3,1),
+(2, 2, 3,2),
+(1, 3, 3,3);
