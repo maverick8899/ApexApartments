@@ -59,31 +59,38 @@ CREATE TABLE
       )
     )
   ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
-
-CREATE TABLE `question_answer` (
+  
+CREATE TABLE `question` (
     `id` INT PRIMARY KEY AUTO_INCREMENT,
     `question` VARCHAR(255) DEFAULT NULL,
-    `answer` TINYINT CHECK (`answer` BETWEEN 1 AND 5),
     `type` VARCHAR(255) NOT NULL
+)  ENGINE=INNODB DEFAULT CHARSET=UTF8MB4 COLLATE = UTF8MB4_UNICODE_CI;
+
+CREATE TABLE `answer` (
+    `id` INT PRIMARY KEY AUTO_INCREMENT,
+    `answer` TINYINT CHECK (`answer` BETWEEN 1 AND 5)
 )  ENGINE=INNODB DEFAULT CHARSET=UTF8MB4 COLLATE = UTF8MB4_UNICODE_CI;
 
 CREATE TABLE `survey` (
     `id` INT PRIMARY KEY AUTO_INCREMENT,
     `date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    `customer_id` int UNIQUE KEY NOT NULL,
-    `personal_opinion` varchar(255) DEFAULT NULL,
-    KEY `fk_survey_customer` (`customer_id`),
-    CONSTRAINT `fk_survey_customer` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`)
+    `personal_opinion` varchar(255) DEFAULT NULL
 )  ENGINE=INNODB DEFAULT CHARSET=UTF8MB4 COLLATE = UTF8MB4_UNICODE_CI;
 
-CREATE TABLE `survey_detail` (
+CREATE TABLE `customer_survey` (
     `id` INT PRIMARY KEY AUTO_INCREMENT,
-    `question_answer_id` int NOT NULL,
-    `survey_id` int NOT NULL,
-    KEY `fk_survey_detail_question_answer` (`question_answer_id`),
-    CONSTRAINT `fk_survey_detail_question_answer` FOREIGN KEY (`question_answer_id`) REFERENCES `question_answer` (`id`),
-    KEY `fk_survey_detail_survey` (`survey_id`),
-    CONSTRAINT `fk_survey_detail_survey` FOREIGN KEY (`survey_id`) REFERENCES `survey` (`id`)
+    `answer_id` int NOT NULL,
+    `question_id` int NOT NULL, 
+    `customer_id` int NOT NULL,
+	`survey_id` int NOT NULL,
+    KEY `fk_customer_survey_answer` (`answer_id`),
+    CONSTRAINT `fk_customer_survey_answer` FOREIGN KEY (`answer_id`) REFERENCES `answer` (`id`),
+    KEY `fk_customer_survey_question` (`question_id`),
+    CONSTRAINT `fk_customer_survey_question` FOREIGN KEY (`question_id`) REFERENCES `question` (`id`), 
+    KEY `fk_customer_survey_customer` (`customer_id`),
+    CONSTRAINT `fk_customer_survey_customer` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`),
+    KEY `fk_customer_survey_survey` (`survey_id`),
+    CONSTRAINT `fk_customer_survey_survey` FOREIGN KEY (`survey_id`) REFERENCES `survey` (`id`)
 )  ENGINE=INNODB DEFAULT CHARSET=UTF8MB4 COLLATE = UTF8MB4_UNICODE_CI;
 
 CREATE TABLE `park_card` (
@@ -286,18 +293,37 @@ INSERT INTO merchandise_cabinet_detail (quantity, date_receive, is_receive, merc
 (25, '2022-04-01', 1, 4, 4),
 (30, '2022-05-01', 1, 5, 5);
 
-INSERT INTO question_answer (question, answer, type) VALUES
-('How would you rate the hygiene?', 4, 'hygiene'),
-('How would you rate the infrastructure?', 3, 'infrastructure'),
-('How would you rate the service?', 2, 'service');
 
-INSERT INTO survey (customer_id, personal_opinion) VALUES
-(1, 'It''s alright'),
-(2, 'Could be better'),
-(3, 'Service needs improvement');
+INSERT INTO question (question, type) VALUES 
+('Bạn hài lòng với sản phẩm này không?', 'hygiene'),
+('Đánh giá về chất lượng dịch vụ của chúng tôi?', 'infrastructure'),
+('Bạn sẽ giới thiệu sản phẩm này cho bạn bè không?', 'service');
 
--- Giả sử bạn có các giá trị ID tương ứng từ bảng question_answer và survey
-INSERT INTO survey_detail (question_answer_id, survey_id) VALUES
-(1, 1),
-(2, 2),
-(3, 3);
+
+INSERT INTO question (question, type) VALUES 
+('Bạn hài lòng với sản phẩm này không?', 'hygiene'),
+('Đánh giá về chất lượng dịch vụ của chúng tôi?', 'infrastructure'),
+('Bạn sẽ giới thiệu sản phẩm này cho bạn bè không?', 'service');
+
+INSERT INTO answer (answer) VALUES 
+(1), (2), (3), (4), (5);
+
+INSERT INTO survey (  personal_opinion) VALUES 
+-- Liên kết các cuộc khảo sát với dữ liệu từ bảng customer_survey
+('Rất hài lòng'),
+( 'Hài lòng'),
+( 'Trung bình');
+
+INSERT INTO customer_survey (answer_id, question_id, customer_id, survey_id) VALUES 
+-- Dữ liệu mẫu cho khách hàng 1
+(5, 1, 1,1),
+(4, 2, 1,2),
+(3, 3, 1,3),
+-- Dữ liệu mẫu cho khách hàng 2
+(4, 1, 2,1),
+(3, 2, 2,2),
+(2, 3, 2,3),
+-- Dữ liệu mẫu cho khách hàng 3
+(3, 1, 3,1),
+(2, 2, 3,2),
+(1, 3, 3,3);
