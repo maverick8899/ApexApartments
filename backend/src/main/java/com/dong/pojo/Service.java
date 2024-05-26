@@ -4,22 +4,35 @@
  */
 package com.dong.pojo;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Date;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author ASUS
+ * @author MAVERICK
  */
 @Entity
 @Table(name = "service")
+@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Service.findAll", query = "SELECT s FROM Service s"),
     @NamedQuery(name = "Service.findById", query = "SELECT s FROM Service s WHERE s.id = :id"),
@@ -63,12 +76,8 @@ public class Service implements Serializable {
     @Column(name = "active")
     private Boolean active;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "serviceId")
-    @JsonIgnore
-
     private Collection<DetailReceipt> detailReceiptCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "serviceId")
-    @JsonIgnore
-
     private Collection<UseService> useServiceCollection;
 
     public Service() {
@@ -142,6 +151,7 @@ public class Service implements Serializable {
         this.active = active;
     }
 
+    @XmlTransient
     public Collection<DetailReceipt> getDetailReceiptCollection() {
         return detailReceiptCollection;
     }
@@ -150,6 +160,7 @@ public class Service implements Serializable {
         this.detailReceiptCollection = detailReceiptCollection;
     }
 
+    @XmlTransient
     public Collection<UseService> getUseServiceCollection() {
         return useServiceCollection;
     }

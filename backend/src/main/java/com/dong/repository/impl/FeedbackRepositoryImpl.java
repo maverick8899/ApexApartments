@@ -66,7 +66,7 @@ public class FeedbackRepositoryImpl implements FeedbackRepository {
     }
 
     @Override
-    public Feedback createReceipt(Map<String, String> params) {
+    public Feedback createFeedback(Map<String, String> params) {
         try {
             Session session = this.factory.getObject().getCurrentSession();
             CriteriaBuilder b = session.getCriteriaBuilder();

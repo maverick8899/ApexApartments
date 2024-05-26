@@ -11,7 +11,7 @@
 <h1 class="text-center text-info mt-1">QUẢN TRỊ KHÁCH HÀNG</h1>
 
 <section class="container">
-    <a href="<c:url value="/customers" />" class="btn btn-info">Thêm sản phẩm</a>
+    <a href="<c:url value="/addCustomer" />" class="btn btn-info">Thêm người dân</a>
     <table class="table table-hover">
         <thead>
         <tr>

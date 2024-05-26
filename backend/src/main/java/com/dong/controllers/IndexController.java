@@ -33,8 +33,8 @@ public class IndexController {
 
     @RequestMapping("/")
     public String index(Model model){
-        model.addAttribute("customer",this.cusService.getCustomers(null));
-        return "index";
+       
+        return "statistics";
     }
 
     @RequestMapping("/test")

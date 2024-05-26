@@ -18,10 +18,15 @@
         <put-attribute name="content"
                        value="/WEB-INF/pages/index.jsp" />
     </definition>
-    <definition name="customers" extends="baseLayout">
+    <definition name="customer" extends="baseLayout">
+        <put-attribute name="customer" value="Quản trị khách hàng" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/customer.jsp" />
+    </definition>
+    <definition name="addCustomer" extends="baseLayout">
         <put-attribute name="title" value="Quản trị khách hàng" />
         <put-attribute name="content"
-                       value="/WEB-INF/pages/customers.jsp" />
+                       value="/WEB-INF/pages/addCustomer.jsp" />
     </definition>
     <definition name="service" extends="baseLayout">
         <put-attribute name="title" value="Quản li dich vu" />
@@ -87,5 +92,15 @@
         <put-attribute name="feedback" value="Feedback" />
         <put-attribute name="content"
                        value="/WEB-INF/pages/feedback.jsp" />
+    </definition>
+    <definition name="survey" extends="baseLayout">
+        <put-attribute name="survey" value="Survey" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/survey.jsp" />
+    </definition>
+    <definition name="statistics" extends="baseLayout">
+        <put-attribute name="statistics" value="Statistics" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/statistics.jsp" />
     </definition>
 </tiles-definitions>

@@ -1,9 +1,11 @@
 package com.dong.controllers;
 
 import com.dong.DTO.ReceiptDTO;
+import com.dong.DTO.SurveyDTO;
 import com.dong.pojo.Customer;
 import com.dong.pojo.Feedback;
 import com.dong.pojo.Receipt;
+import com.dong.pojo.Survey;
 import com.dong.repository.impl.FeedbackRepositoryImpl;
 import com.dong.repository.impl.ReceiptRepositoryImpl;
 import com.dong.service.CustomerService;
@@ -11,6 +13,7 @@ import com.dong.service.DetailReceiptService;
 import com.dong.service.FeedbackService;
 import com.dong.service.ReceiptService;
 import com.dong.service.RoomService;
+import com.dong.service.SurveyService;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Date;
@@ -27,29 +30,29 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/api")
-public class ApiFeedbackController {
+public class ApiSurveyController {
 
     @Autowired
-    private FeedbackService feedbackService; 
+    private SurveyService surveyService; 
     
     @PostMapping(
-            path = "/addFeedback",
+            path = "/answers",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     @CrossOrigin
-    public ResponseEntity<Feedback> list(@RequestBody Map<String, String> params) {
-        return new ResponseEntity<>(this.feedbackService.createFeedback(params), HttpStatus.OK);
+    public ResponseEntity<Survey> list(@RequestBody SurveyDTO params) {
+        return new ResponseEntity<>(this.surveyService.answerSurvey(params), HttpStatus.OK);
 
     }
     
     
     @RequestMapping(
-            path = "/feedback",
+            path = "/questions",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     @CrossOrigin
     public ResponseEntity<List<Object>> list2(@RequestParam Map<String, String> params) {
-        return new ResponseEntity<>(this.feedbackService.getFeedback(params), HttpStatus.OK);
+        return new ResponseEntity<>(this.surveyService.getSurvey(null), HttpStatus.OK);
 
     }
 }

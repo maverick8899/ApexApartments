@@ -33,18 +33,18 @@ CREATE TABLE `room` (
 CREATE TABLE `survey_detail` (
     `id` INT PRIMARY KEY AUTO_INCREMENT,
     `question` varchar(255) DEFAULT NULL,
-    `answer` TINYINT NOT NULL CHECK (`answer` BETWEEN 1 AND 5),
+    `answer` TINYINT CHECK (`answer` BETWEEN 1 AND 5),
     `type` VARCHAR(255) NOT NULL,
     `date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-     CONSTRAINT `account_chk_1` CHECK (
-      (
-        `type` in (
-          _utf8mb4 'hygiene',
-          _utf8mb4 'infrastructure',
-          _utf8mb4 'service'
-        )
-      )
-    )
+    --  CONSTRAINT `account_chk_1` CHECK (
+    --   (
+    --     `type` in (
+    --       _utf8mb4 'hygiene',
+    --       _utf8mb4 'infrastructure',
+    --       _utf8mb4 'service'
+    --     )
+    --   )
+    -- )
 )  ENGINE=INNODB DEFAULT CHARSET=UTF8MB4 COLLATE = UTF8MB4_UNICODE_CI;
 
 
@@ -176,7 +176,6 @@ CREATE TABLE `merchandise_cabinet_detail` (
     KEY `fk_merchandise_cabinet_detail_merchandise` (`merchandise_id`),
     CONSTRAINT `fk_merchandise_cabinet_detail_merchandise` FOREIGN KEY (`merchandise_id`) REFERENCES `merchandise` (`id`)
 )  ENGINE=INNODB DEFAULT CHARSET=UTF8MB4 COLLATE = UTF8MB4_UNICODE_CI;
- 
 
 --  @Trigger
 -- ?If upddate is_receive=1 then assign CURRENT_TIMESTAMP to this.date_receive --- else ...

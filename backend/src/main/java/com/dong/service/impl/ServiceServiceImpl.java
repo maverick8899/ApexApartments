@@ -10,8 +10,10 @@ import java.util.List;
 
 @org.springframework.stereotype.Service
 public class ServiceServiceImpl implements ServiceService {
+
     @Autowired
     private ServiceRepository Seser;
+
     @Override
     public List<Service> getServicesByIdCustomer(int customerId) {
         return this.Seser.getServicesByIdCustomer(customerId);
@@ -44,11 +46,11 @@ public class ServiceServiceImpl implements ServiceService {
 
     @Override
     public void save(UseService useService) {
-    this.Seser.save(useService);
+        this.Seser.save(useService);
     }
 
     @Override
     public UseService getUseServiceByCustomerIdAndServiceId(int customerId, int serviceId) {
-        return this.Seser.getUseServiceByCustomerIdAndServiceId(customerId,serviceId);
+        return this.Seser.getUseServiceByCustomerIdAndServiceId(customerId, serviceId);
     }
 }

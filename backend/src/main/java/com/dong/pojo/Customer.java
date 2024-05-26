@@ -4,20 +4,32 @@
  */
 package com.dong.pojo;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.Date;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import java.io.Serializable;
-import java.util.Collection;
-import java.util.Date;
 
 /**
  *
- * @author ASUS
+ * @author MAVERICK
  */
 @Entity
 @Table(name = "customer")
@@ -65,40 +77,26 @@ public class Customer implements Serializable {
     private Date birthday;
     @Column(name = "active")
     private Boolean active;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "customerId")
+    private Collection<CustomerSurvey> customerSurveyCollection;
     @OneToMany(mappedBy = "customerId")
-    @JsonIgnore
-
     private Collection<MerchandiseCabinetDetail> merchandiseCabinetDetailCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "customerId")
-    @JsonIgnore
-
     private Collection<UseService> useServiceCollection;
     @OneToMany(mappedBy = "customerId")
-    @JsonIgnore
-
     private Collection<Feedback> feedbackCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "customerId")
-    @JsonIgnore
-
     private Collection<RelativeParkCard> relativeParkCardCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "customerId")
-    @JsonIgnore
-
     private Collection<Receipt> receiptCollection;
     @JoinColumn(name = "account_id", referencedColumnName = "id")
-    @ManyToOne(cascade=CascadeType.ALL)
-    @JsonIgnore
-
+    @ManyToOne
     private Accounts accountId;
     @JoinColumn(name = "merchandise_cabinet_id", referencedColumnName = "id")
-    @ManyToOne(cascade=CascadeType.ALL)
-//    @JsonIgnore
-
+    @ManyToOne
     private MerchandiseCabinet merchandiseCabinetId;
     @JoinColumn(name = "room_id", referencedColumnName = "id")
     @ManyToOne
-    @JsonIgnore
-
     private Room roomId;
 
     public Customer() {
@@ -177,8 +175,17 @@ public class Customer implements Serializable {
     public void setActive(Boolean active) {
         this.active = active;
     }
-    @XmlTransient
 
+    @XmlTransient
+    public Collection<CustomerSurvey> getCustomerSurveyCollection() {
+        return customerSurveyCollection;
+    }
+
+    public void setCustomerSurveyCollection(Collection<CustomerSurvey> customerSurveyCollection) {
+        this.customerSurveyCollection = customerSurveyCollection;
+    }
+
+    @XmlTransient
     public Collection<MerchandiseCabinetDetail> getMerchandiseCabinetDetailCollection() {
         return merchandiseCabinetDetailCollection;
     }
@@ -186,8 +193,8 @@ public class Customer implements Serializable {
     public void setMerchandiseCabinetDetailCollection(Collection<MerchandiseCabinetDetail> merchandiseCabinetDetailCollection) {
         this.merchandiseCabinetDetailCollection = merchandiseCabinetDetailCollection;
     }
-    @XmlTransient
 
+    @XmlTransient
     public Collection<UseService> getUseServiceCollection() {
         return useServiceCollection;
     }
@@ -195,8 +202,8 @@ public class Customer implements Serializable {
     public void setUseServiceCollection(Collection<UseService> useServiceCollection) {
         this.useServiceCollection = useServiceCollection;
     }
-    @XmlTransient
 
+    @XmlTransient
     public Collection<Feedback> getFeedbackCollection() {
         return feedbackCollection;
     }
@@ -204,8 +211,8 @@ public class Customer implements Serializable {
     public void setFeedbackCollection(Collection<Feedback> feedbackCollection) {
         this.feedbackCollection = feedbackCollection;
     }
-    @XmlTransient
 
+    @XmlTransient
     public Collection<RelativeParkCard> getRelativeParkCardCollection() {
         return relativeParkCardCollection;
     }
@@ -213,8 +220,8 @@ public class Customer implements Serializable {
     public void setRelativeParkCardCollection(Collection<RelativeParkCard> relativeParkCardCollection) {
         this.relativeParkCardCollection = relativeParkCardCollection;
     }
-    @XmlTransient
 
+    @XmlTransient
     public Collection<Receipt> getReceiptCollection() {
         return receiptCollection;
     }

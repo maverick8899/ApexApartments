@@ -7,6 +7,5 @@
 --%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <div class="mt-4 p-5 bg-primary text-white rounded">
-    <h1>Huynh Duy Dong &copy; 2024</h1>
-    <p>Khoa CNTT, Đại học Mở Tp.HCM</p>
+    <h1>Apex Apartment &copy; 2024</h1> 
 </div>

@@ -15,6 +15,15 @@
     <class>com.dong.pojo.Receipt</class>
     <class>com.dong.pojo.Feedback</class>
     <class>com.dong.pojo.Merchandise</class>
+    <class>com.dong.pojo.SurveyDetail</class>
+    <class>com.dong.pojo.Survey</class>
+    <class>com.dong.pojo.QuestionAnswer</class>
+    <class>com.dong.pojo.Answer</class>
+    <class>com.dong.pojo.Question</class>
+    <class>com.dong.pojo.CustomerSurvey</class>
+    <class>com.dong.pojo.Accounts_1</class>
+    <class>com.dong.pojo.Room_1</class>
+    <class>com.dong.pojo.MerchandiseCabinet_1</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/apartment_db?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
