@@ -61,11 +61,11 @@ public class CustomerController {
         return "customers";
     }
 
-    @GetMapping("/customers/{id}")
+    @GetMapping("/addCustomer/{id}")
     public String update(Model model, @PathVariable(value = "id") int id) {
 //        model.addAttribute("customer", this.cusService.getCustomerById(id));
         model.addAttribute("service", this.se.getServicesByIdCustomer(id));
         model.addAttribute("customer", this.accSer.getAccountsByIdCustomer(id));
-        return "customers";
+        return "addCustomer";
     }
 }

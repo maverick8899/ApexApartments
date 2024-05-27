@@ -79,12 +79,12 @@ public class ReceiptController {
     }
      
     
-//    @PostMapping("/receipt/{id}")
-//    public String getReceiptById(Model model, @RequestParam Map<String, String> params) {
-//        model.addAttribute("receipts", this.receiptService.getReceipt(params));
-//
-//        return "receipt";
-//    }
+    @GetMapping("/receipt/{id}")
+    public String getReceiptById(Model model,@PathVariable("id")  int id, @RequestParam Map<String, String> params) {
+        model.addAttribute("receipts", this.receiptService.getReceiptById(id));
+
+        return "receiptDetail";
+    }
 
 //    @ModelAttribute
 //        public void commonAttr(Model model) {

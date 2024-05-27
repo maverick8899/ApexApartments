@@ -6,6 +6,7 @@
 package com.dong.service.impl;
 
 import com.dong.pojo.Merchandise;
+import com.dong.pojo.MerchandiseCabinetDetail;
 import com.dong.repository.MerchandiseRepository;
 import com.dong.service.MerchandiseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,5 +26,10 @@ public class MerchandiseServiceImpl implements MerchandiseService {
 
     public boolean addOrUpdateMerchandise(Merchandise r) {
         return this.MerRep.addOrUpdateMerchandise(r);
+    }
+
+    @Override
+    public boolean addOrUpdateMerchandiseCabinetDetail(MerchandiseCabinetDetail r) {
+        return this.MerRep.addOrUpdateMerchandiseCabinetDetail(r);
     }
 }

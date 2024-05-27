@@ -12,6 +12,43 @@ function delPro(path, id) {
     }
 }
 
+document.addEventListener('DOMContentLoaded', function() {
+    const customerId = document.getElementById('customerId').value;
+
+    document.querySelectorAll('.update-btn').forEach(button => {
+        button.addEventListener('click', function(event) {
+            event.preventDefault();
+
+            const merchandiseId = this.getAttribute('data-id');
+            const apiUrl = `http://localhost:8080/apartment_manager/api/notify/${customerId}/${merchandiseId}`;
+
+            fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    message: 'Cập nhật thông tin hàng hóa'
+                })
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok ' + response.statusText);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Success:', data);
+                    // Thực hiện các hành động khác sau khi cập nhật thành công
+                })
+                .catch((error) => {
+                    console.error('Fetch error:', error);
+                });
+        });
+    });
+});
+
+
 async function delReceipt(path) {
     if (confirm("Bạn chắc chắn muốn xóa không?")) {
         try {

@@ -32,7 +32,7 @@ public class MerchandiseCabinetController {
 
     @RequestMapping({"merchandisecabinet"})
     public String index(Model model) {
-        model.addAttribute("merchandisecabinet", this.cusSer.getCustomers((Map)null));
+        model.addAttribute("merchandisecabinet", this.cusSer.getCustomers((null)));
         return "merchandisecabinet";
     }
 
@@ -45,6 +45,7 @@ public class MerchandiseCabinetController {
     @GetMapping({"/cabinetdetails/{id}"})
     public String update(Model model, @PathVariable("id") int id) {
         model.addAttribute("cabinetdetails", this.MerSer.getMerchandiseByCustomerId(id));
+        model.addAttribute("id", id);
         return "cabinetdetails";
     }
 }

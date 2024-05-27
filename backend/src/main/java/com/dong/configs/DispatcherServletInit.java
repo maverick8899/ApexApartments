@@ -18,6 +18,8 @@ public class DispatcherServletInit extends AbstractAnnotationConfigDispatcherSer
                 HibernateConfig.class,
                 TilesConfigs.class,
                 WebSocketConfig.class
+                ,
+                ConfigVNPay.class
         };
     }
 

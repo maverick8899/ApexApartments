@@ -13,7 +13,11 @@
                 <option selected>Tên cư dân</option>
                 <c:if test="${customers != null}">
                     <c:forEach items="${customers}" var="customer">
+<<<<<<< HEAD:src/apartment_manager/src/main/webapp/WEB-INF/pages/addReceipt.jsp
+                        <option value="${customer.id}">${customer.id} - ${customer.name}</option>
+=======
                         <option value="${customer.id}">${customer.id} - ${customer.name}</option> 
+>>>>>>> ce18b7eb1dc8c262b98de3ed42fd8ed3140aba0b:backend/src/main/webapp/WEB-INF/pages/addReceipt.jsp
                     </c:forEach>
                 </c:if>
             </select>
@@ -25,7 +29,11 @@
                     <select class="form-select" aria-label="Default select example" name="services[0].service_id">
                         <option selected>Tên dịch vụ</option>
                         <c:forEach items="${services}" var="service">
+<<<<<<< HEAD:src/apartment_manager/src/main/webapp/WEB-INF/pages/addReceipt.jsp
+                            <option value="${service.id}">${service.id} - ${service.name}</option>
+=======
                             <option value="${service.id}">${service.id} - ${service.name}</option> 
+>>>>>>> ce18b7eb1dc8c262b98de3ed42fd8ed3140aba0b:backend/src/main/webapp/WEB-INF/pages/addReceipt.jsp
                         </c:forEach>
                     </select>
                 </div>
@@ -51,8 +59,13 @@
         <div class="mb-3">
             <select class="form-select" aria-label="Default select example"  name="receipt_isPay">
                 <option selected>Tình trạng thanh toán</option>
+<<<<<<< HEAD:src/apartment_manager/src/main/webapp/WEB-INF/pages/addReceipt.jsp
+                <option value="0">Chưa thanh toán</option>
+                <option value="1">Đã thanh toán</option>
+=======
                 <option value="0">Chưa thanh toán</option> 
                 <option value="1">Đã thanh toán</option> 
+>>>>>>> ce18b7eb1dc8c262b98de3ed42fd8ed3140aba0b:backend/src/main/webapp/WEB-INF/pages/addReceipt.jsp
             </select>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
@@ -61,17 +74,29 @@
 
 <script>
     $(document).ready(function() {
+<<<<<<< HEAD:src/apartment_manager/src/main/webapp/WEB-INF/pages/addReceipt.jsp
+        let serviceIndex = 1;
+        // Thêm khối dịch vụ mới
+        $('.add-service-btn').click(function() {
+
+            let newService = `
+=======
     let serviceIndex = 1;
     // Thêm khối dịch vụ mới
     $('.add-service-btn').click(function() {
 
     let newService = `
+>>>>>>> ce18b7eb1dc8c262b98de3ed42fd8ed3140aba0b:backend/src/main/webapp/WEB-INF/pages/addReceipt.jsp
             <div class="mb-3 mt-3 d-flex gap-3 w-100% align-items-center service-element" style="height: 50px">
                 <div class="mb-2">
                     <select class="form-select" aria-label="Default select example" name="services[` + serviceIndex + `].service_id">
                         <option selected>Tên dịch vụ</option>
     <c:forEach items="${services}" var="service">
+<<<<<<< HEAD:src/apartment_manager/src/main/webapp/WEB-INF/pages/addReceipt.jsp
+                            <option value="${service.id}">${service.id} - ${service.name}</option>
+=======
                             <option value="${service.id}">${service.id} - ${service.name}</option> 
+>>>>>>> ce18b7eb1dc8c262b98de3ed42fd8ed3140aba0b:backend/src/main/webapp/WEB-INF/pages/addReceipt.jsp
     </c:forEach>
                     </select>
                 </div>
@@ -89,6 +114,15 @@
                 </div>
                 <button type="button" class="btn btn-danger remove-service-btn">Xóa</button>
             </div>`;
+<<<<<<< HEAD:src/apartment_manager/src/main/webapp/WEB-INF/pages/addReceipt.jsp
+            $('#services-container').append(newService);
+            serviceIndex++;
+        });
+        // Xóa khối dịch vụ
+        $('#services-container').on('click', '.remove-service-btn', function() {
+            $(this).closest('.service-element').remove();
+        });
+=======
     $('#services-container').append(newService);
     serviceIndex++;
     });
@@ -96,5 +130,6 @@
     $('#services-container').on('click', '.remove-service-btn', function() {
     $(this).closest('.service-element').remove();
     });
+>>>>>>> ce18b7eb1dc8c262b98de3ed42fd8ed3140aba0b:backend/src/main/webapp/WEB-INF/pages/addReceipt.jsp
     });
 </script>

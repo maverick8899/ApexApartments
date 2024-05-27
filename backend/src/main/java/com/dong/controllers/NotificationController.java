@@ -2,6 +2,8 @@ package com.dong.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,15 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/notification")
 public class NotificationController {
 
-    @Autowired
-    private SimpMessagingTemplate messagingTemplate;
-
-    @PostMapping("/send")
-    public void sendNotification(@RequestBody String message){
-        messagingTemplate.convertAndSend("/topic/notifications", message);
-
+    @MessageMapping("/notify")
+    @SendTo("/topic/notifications")
+    public String sendNotification(String message) {
+        return message;
     }
-    public void notifyFrontend(String message) {
-        messagingTemplate.convertAndSend("/topic/notifications", message);
-    }
+
 }

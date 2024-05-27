@@ -34,7 +34,7 @@
                 <td></td>
                 <td>
                     <c:url value="/api/customers/${c.id}" var="apiDel" />
-                    <a href="<c:url value="/customers/${c.id}" />" class="btn btn-success">Cập nhật</a>
+                    <a href="<c:url value="/addCustomer/${c.id}" />" class="btn btn-success">Cập nhật</a>
                     <button class="btn btn-danger" onclick="delPro('${apiDel}', ${c.id})">Xóa</button>
                 </td>
             </tr>
