@@ -3,10 +3,11 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <c:url value="/merchandise" var="action" />
 <%--@elvariable id="merchandise" type=""--%>
+<h1>${id}</h1>
 <form:form id="merchandiseForm" method="post" action="${action}" modelAttribute="merchandise" enctype="multipart/form-data">
     <form:errors path="*" element="div" cssClass="alert alert-danger" />
     <form:hidden path="id" />
-    <input type="hidden" name="customerId" value="${id}" />
+
     <div class="form-floating mb-3 mt-3">
         <form:input type="text" class="form-control" path="name" id="name" placeholder="Tên hàng hóa" />
         <label for="name">Tên hàng hóa</label>
@@ -22,6 +23,7 @@
         <label for="unit">unit</label>
         <form:errors path="unit" element="div" cssClass="text-danger" />
     </div>
+
     <div class="form-floating mb-3 mt-3">
         <form:input type="date" class="form-control" path="date" id="date" placeholder="date" />
         <label for="date">date</label>
@@ -55,7 +57,7 @@
         let submitButton = document.getElementById('submitButton');
 
         if (submitButton.textContent.trim() === 'Thêm Hàng') {
-            let message = "Ban co don hang moi vua duoc admin cap nhat";
+            let message = "Bạn có thông báo mới về tủ đồ ";
 
             fetch('http://localhost:8080/apartment_manager/api/notify', {
                 method: 'POST',
@@ -72,13 +74,13 @@
                 })
                 .then(text => {
                     console.log('Success:', text);
-                    document.getElementById('merchandiseForm').submit();
+                    document.getElementById('merchandiseForm').submit(); // Tiếp tục gửi form sau khi fetch thành công
                 })
                 .catch((error) => {
                     console.error('Fetch error:', error);
                 });
         } else {
-            document.getElementById('merchandiseForm').submit();
+            document.getElementById('merchandiseForm').submit(); // Tiếp tục gửi form đối với cập nhật
         }
     });
 </script>

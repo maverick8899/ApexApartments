@@ -88,4 +88,10 @@
         <put-attribute name="content"
                        value="/WEB-INF/pages/feedback.jsp" />
     </definition>
+    <definition name="add_merchandise" extends="baseLayout">
+        <put-attribute name="add_merchandise" value="add_merchandise" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/add_merchandise.jsp" />
+    </definition>
+
 </tiles-definitions>

@@ -6,6 +6,7 @@
 package com.dong.repository.impl;
 
 import com.dong.pojo.Merchandise;
+import com.dong.pojo.MerchandiseCabinetDetail;
 import com.dong.repository.MerchandiseRepository;
 import java.util.Objects;
 import javax.transaction.Transactional;
@@ -31,6 +32,24 @@ public class MerchandiseRepositoryImpl implements MerchandiseRepository {
     }
 
     public boolean addOrUpdateMerchandise(Merchandise r) {
+        Session s = this.factory.getObject().getCurrentSession();
+
+        try {
+            if (r.getId() == null) {
+                s.save(r);
+            } else {
+                s.update(r);
+            }
+
+            return true;
+        } catch (HibernateException var4) {
+            var4.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean addOrUpdateMerchandiseCabinetDetail(MerchandiseCabinetDetail r) {
         Session s = this.factory.getObject().getCurrentSession();
 
         try {

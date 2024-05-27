@@ -131,6 +131,10 @@ public class RelativeParkCard implements Serializable {
     public void setCustomerId(Customer customerId) {
         this.customerId = customerId;
     }
+    @PrePersist
+    protected void onCreate() {
+        dateCreate = new Date();
+    }
 
     @Override
     public int hashCode() {

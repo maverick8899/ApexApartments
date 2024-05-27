@@ -121,7 +121,10 @@ public class Merchandise implements Serializable {
     public void setActive(Boolean active) {
         this.active = active;
     }
-
+    @PrePersist
+    protected void onCreate() {
+        date = new Date();
+    }
     public Collection<MerchandiseCabinetDetail> getMerchandiseCabinetDetailCollection() {
         return merchandiseCabinetDetailCollection;
     }

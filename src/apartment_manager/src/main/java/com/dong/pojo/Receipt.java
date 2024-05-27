@@ -107,7 +107,10 @@ public class Receipt implements Serializable {
     public void setDetailReceiptCollection(Collection<DetailReceipt> detailReceiptCollection) {
         this.detailReceiptCollection = detailReceiptCollection;
     }
-
+    @PrePersist
+    protected void onCreate() {
+        date = new Date();
+    }
     public Customer getCustomerId() {
         return customerId;
     }

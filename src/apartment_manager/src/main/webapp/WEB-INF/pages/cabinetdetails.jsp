@@ -1,16 +1,18 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<a href="<c:url value="/merchandise"/>" class="btn btn-info">Thêm Hàng </a>
+
+<form:hidden path="id" value="${id}"/>
+<a href="<c:url value="/merchandise?id=${id}" />" class="btn btn-info">Thêm Hàng</a>
 
 <table class="table table-hover">
     <thead>
     <tr>
         <th>Ten Cabinet </th>
-        <th> note</th>
-        <th>unit </th>
-        <th> date </th>
-        <th>active  </th>
+        <th>note</th>
+        <th>unit</th>
+        <th>date</th>
+        <th>active</th>
         <th></th>
     </tr>
     </thead>
@@ -25,14 +27,9 @@
             <td>
                 <a href="<c:url value="/merchandise/${c.merchandiseId.id}" />" class="btn btn-success">Cập nhật</a>
             </td>
-
-
-
-        <%--            <td>--%>
-<%--                <a href="<c:url value="/cabinetdetails/${c.customerId.id}" />" class="btn btn-success">Cập nhật</a>--%>
-<%--            </td>--%>
         </tr>
     </c:forEach>
     </tbody>
 </table>
+
 <script src="<c:url value="/js/main.js" />"></script>

@@ -90,7 +90,10 @@ public class UseService implements Serializable {
     public void setServiceId(Service serviceId) {
         this.serviceId = serviceId;
     }
-
+    @PrePersist
+    protected void onCreate() {
+        date = new Date();
+    }
     @Override
     public int hashCode() {
         int hash = 0;

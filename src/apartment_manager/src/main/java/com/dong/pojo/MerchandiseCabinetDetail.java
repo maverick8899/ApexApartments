@@ -81,7 +81,10 @@ public class MerchandiseCabinetDetail implements Serializable {
     public Boolean getIsReceive() {
         return isReceive;
     }
-
+    @PrePersist
+    protected void onCreate() {
+         dateReceive = new Date();
+    }
     public void setIsReceive(Boolean isReceive) {
         this.isReceive = isReceive;
     }

@@ -1,17 +1,23 @@
 package com.dong.controllers;
+import com.dong.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 @RestController
+@RequestMapping("/api")
 
 public class ApiNotificationController {
-    @Autowired
-    private NotificationController notificationController;
 
-    @RequestMapping(value = "/push", method = RequestMethod.GET)
-    public String pushNotification() {
-        notificationController.notifyFrontend("This is a test notification!");
-        return "Notification sent!";
+    private final NotificationService notificationService;
+
+    @Autowired
+    public ApiNotificationController(NotificationService notificationService) {
+        this.notificationService = notificationService;
+    }
+
+    @PostMapping("/notify")
+    public void handleEvent(@RequestBody String event) {
+
+        notificationService.sendNotification(event);
     }
 }

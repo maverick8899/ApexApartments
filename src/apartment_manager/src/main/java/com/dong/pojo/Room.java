@@ -94,6 +94,10 @@ public class Room implements Serializable {
     public void setDate(Date date) {
         this.date = date;
     }
+    @PrePersist
+    protected void onCreate() {
+        date = new Date();
+    }
 
     public Collection<Customer> getCustomerCollection() {
         return customerCollection;

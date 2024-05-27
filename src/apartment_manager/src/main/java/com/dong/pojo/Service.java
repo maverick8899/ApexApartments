@@ -141,6 +141,10 @@ public class Service implements Serializable {
     public void setActive(Boolean active) {
         this.active = active;
     }
+    @PrePersist
+    protected void onCreate() {
+        date = new Date();
+    }
 
     public Collection<DetailReceipt> getDetailReceiptCollection() {
         return detailReceiptCollection;
