@@ -74,6 +74,7 @@ public class Merchandise implements Serializable {
     @Column(name = "active")
     private Boolean active;
     @OneToMany(mappedBy = "merchandiseId")
+    @JsonIgnore
     private Collection<MerchandiseCabinetDetail> merchandiseCabinetDetailCollection;
 
     public Merchandise() {
