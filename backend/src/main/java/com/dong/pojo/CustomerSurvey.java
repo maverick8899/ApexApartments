@@ -26,8 +26,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "customer_survey")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "CustomerSurvey.findAll", query = "SELECT c FROM CustomerSurvey c"),
-    @NamedQuery(name = "CustomerSurvey.findById", query = "SELECT c FROM CustomerSurvey c WHERE c.id = :id")})
+        @NamedQuery(name = "CustomerSurvey.findAll", query = "SELECT c FROM CustomerSurvey c"),
+        @NamedQuery(name = "CustomerSurvey.findById", query = "SELECT c FROM CustomerSurvey c WHERE c.id = :id")})
 public class CustomerSurvey implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -120,5 +120,5 @@ public class CustomerSurvey implements Serializable {
     public String toString() {
         return "com.dong.pojo.CustomerSurvey[ id=" + id + " ]";
     }
-    
+
 }

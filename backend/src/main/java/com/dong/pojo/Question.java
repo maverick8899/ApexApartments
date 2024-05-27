@@ -4,6 +4,8 @@
  */
 package com.dong.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -51,6 +53,8 @@ public class Question implements Serializable {
     @Column(name = "type")
     private String type;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "questionId")
+    @JsonIgnore
+
     private Collection<CustomerSurvey> customerSurveyCollection;
 
     public Question() {
