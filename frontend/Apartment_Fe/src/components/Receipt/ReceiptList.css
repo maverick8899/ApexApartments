@@ -1,0 +1,58 @@
+.receipt-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 18px;
+    text-align: left;
+}
+
+.receipt-table thead tr {
+    background-color: #009879;
+    color: #ffffff;
+    text-align: left;
+    font-weight: bold;
+}
+
+.receipt-table th,
+.receipt-table td {
+    padding: 12px 15px;
+    border: 1px solid #dddddd;
+}
+
+.receipt-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.receipt-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.receipt-table tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
+}
+.button {
+    padding: 10px 20px;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.button.payment {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.button.payment:hover {
+    background-color: #45a049;
+}
+
+.button.details {
+    background-color: #008CBA;
+    color: white;
+}
+
+.button.details:hover {
+    background-color: #007bb5;
+}
