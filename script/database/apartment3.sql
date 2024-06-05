@@ -184,22 +184,10 @@ CREATE TABLE `merchandise_cabinet_detail` (
 )  ENGINE=INNODB DEFAULT CHARSET=UTF8MB4 COLLATE = UTF8MB4_UNICODE_CI;
 
 
---  @Trigger
--- ?If upddate is_receive=1 then assign CURRENT_TIMESTAMP to this.date_receive --- else ...
-DELIMITER //
-CREATE TRIGGER update_timestamp BEFORE UPDATE ON merchandise_cabinet_detail FOR EACH ROW 
-BEGIN 
-    IF NEW.is_receive = 1 THEN
-        SET NEW.date_receive = CURRENT_TIMESTAMP;
-    ELSE
-        SET NEW.date_receive = NULL;
-    END IF;
-END;
-// DELIMITER ;
  
 
--- @Insert data
--- Chèn dữ liệu mẫu vào bảng account
+ 
+
 INSERT INTO account (username, password, active, role, avatar) VALUES
 ('user1', 'password1', 1, 'user', 'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg'),
 ('admin1', 'password1', 1, 'admin', 'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg'),

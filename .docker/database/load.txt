@@ -1,0 +1,18 @@
+#!/bin/sh
+
+# waiting for mysql is ready
+# sleep 30
+
+#? source file SQL to MySQL
+# mysql -u root -p apartments </docker-entrypoint-initdb.d/apartment2.sql
+#? related to groupBy
+echo "🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥RUN SCRIPT🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥"
+#/ mysql -u root -proot -e "SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));"
+#? The above line is required type passs, so this equivalent type pass: "root" in cmd
+mysql -u root -proot -e "SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));"
+
+#/ mysql -u root -proot apartments
+#/ show tables; select * from accounts;
+#/ mysql -u root -proot -e "DROP DATABASE IF EXISTS apartments;" &&  mysql -u root -proot -e "CREATE DATABASE IF NOT EXISTS apartments;"
+#/ mysql -u root -proot -e "CREATE DATABASE IF NOT EXISTS apartments;"
+#/ mysql -u root -proot -e "SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));"
