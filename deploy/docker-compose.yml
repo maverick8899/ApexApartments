@@ -1,0 +1,29 @@
+services:
+    db:
+        image: mysql:8.0.33-oracle
+        container_name: mysql
+        ports:
+            - '3307:3306' #/ '3306:3306'
+        volumes:
+            - dbdata:/var/lib/mysql
+            - ../.docker/database/:/docker-entrypoint-initdb.d/
+            # - ../.docker/database/config:/etc/mysql/conf.d
+        # command: mysql -u root -proot -e "SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))"
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: apartments
+            # MYSQL_INIT_COMMAND: "SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));"
+
+    backend:
+        image: maverick0809/tomcat
+        container_name: tomcat
+        ports:
+            - '8081:8080'
+        restart: unless-stopped
+        volumes:
+            - ./webapps:/opt/tomcat/webapps
+        depends_on:
+            - db
+
+volumes:
+    dbdata:

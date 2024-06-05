@@ -1,4 +1,4 @@
-CREATE TABLE `account` (
+CREATE TABLE `accounts` (
     `id` INT PRIMARY KEY AUTO_INCREMENT,
     `username` VARCHAR(255) UNIQUE NOT NULL,
     `password` VARCHAR(255) NOT NULL,
@@ -30,8 +30,7 @@ CREATE TABLE `room` (
     `date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )  ENGINE=INNODB DEFAULT CHARSET=UTF8MB4 COLLATE = UTF8MB4_UNICODE_CI;
 
-CREATE TABLE
-  `customer` (
+CREATE TABLE `customer` (
     `id` int PRIMARY KEY AUTO_INCREMENT,
     `name` varchar(255) NOT NULL,
     `address` varchar(255) DEFAULT NULL,
@@ -48,7 +47,7 @@ CREATE TABLE
     KEY `fk_customer_merchandise_cabinet` (`merchandise_cabinet_id`),
     CONSTRAINT `fk_customer_merchandise_cabinet` FOREIGN KEY (`merchandise_cabinet_id`) REFERENCES `merchandise_cabinet` (`id`),
     CONSTRAINT `fk_customer_room` FOREIGN KEY (`room_id`) REFERENCES `room` (`id`),
-    CONSTRAINT `fk_customer_account` FOREIGN KEY (`account_id`) REFERENCES `account` (`id`),
+    CONSTRAINT `fk_customer_account` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`id`),
     CONSTRAINT `customer_chk_1` CHECK (
       (
         `gender` in (
@@ -117,7 +116,7 @@ CREATE TABLE `receipt` (
     CONSTRAINT `fk_receipt_customer` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`)
 )  ENGINE=INNODB DEFAULT CHARSET=UTF8MB4 COLLATE = UTF8MB4_UNICODE_CI;
 
-CREATE TABLE `service_fee` (
+CREATE TABLE `service` (
     `id` INT PRIMARY KEY AUTO_INCREMENT,
     `name` VARCHAR(59) NOT NULL,
     `description` VARCHAR(255) NOT NULL,
@@ -131,24 +130,24 @@ CREATE TABLE `use_service` (
     `id` INT PRIMARY KEY AUTO_INCREMENT,
     `date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     `active` BIT(1) DEFAULT 0,
-    `service_fee_id` INT NOT NULL,
+    `service_id` INT NOT NULL,
     `customer_id` INT NOT NULL,
-    KEY `fk_use_service_service_fee` (`service_fee_id`),
+    KEY `fk_use_service_service` (`service_id`),
     KEY `fk_use_service_customer` (`customer_id`),
-    CONSTRAINT `fk_use_service_service_fee` FOREIGN KEY (`service_fee_id`) REFERENCES `service_fee` (`id`),
+    CONSTRAINT `fk_use_service_service` FOREIGN KEY (`service_id`) REFERENCES `service` (`id`),
     CONSTRAINT `fk_use_service_customer` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`)
 )  ENGINE=INNODB DEFAULT CHARSET=UTF8MB4 COLLATE = UTF8MB4_UNICODE_CI;
 
-CREATE TABLE `receipt_detail` (
+CREATE TABLE `detail_receipt` (
     `id` INT PRIMARY KEY AUTO_INCREMENT,
     `active` BIT(1) DEFAULT 0,
     `quantity` FLOAT NOT NULL,
     `cost` DECIMAL(10 , 2 ) NOT NULL,
     `receipt_id` INT NOT NULL,      
-    `service_fee_id` INT NOT NULL,
-    KEY `fk_receipt_detail_service_fee` (`service_fee_id`),
+    `service_id` INT NOT NULL,
+    KEY `fk_receipt_detail_service` (`service_id`),
     KEY `fk_receipt_detail_receipt` (`receipt_id`),
-    CONSTRAINT `fk_receipt_detail_service_fee` FOREIGN KEY (`service_fee_id`) REFERENCES `service_fee` (`id`),
+    CONSTRAINT `fk_receipt_detail_service` FOREIGN KEY (`service_id`) REFERENCES `service` (`id`),
     CONSTRAINT `fk_receipt_detail_receipt` FOREIGN KEY (`receipt_id`) REFERENCES `receipt` (`id`)
 )  ENGINE=INNODB DEFAULT CHARSET=UTF8MB4 COLLATE = UTF8MB4_UNICODE_CI;
 
@@ -182,25 +181,10 @@ CREATE TABLE `merchandise_cabinet_detail` (
     KEY `fk_merchandise_cabinet_detail_merchandise` (`merchandise_id`),
     CONSTRAINT `fk_merchandise_cabinet_detail_merchandise` FOREIGN KEY (`merchandise_id`) REFERENCES `merchandise` (`id`)
 )  ENGINE=INNODB DEFAULT CHARSET=UTF8MB4 COLLATE = UTF8MB4_UNICODE_CI;
-
-
---  @Trigger
--- ?If upddate is_receive=1 then assign CURRENT_TIMESTAMP to this.date_receive --- else ...
-DELIMITER //
-CREATE TRIGGER update_timestamp BEFORE UPDATE ON merchandise_cabinet_detail FOR EACH ROW 
-BEGIN 
-    IF NEW.is_receive = 1 THEN
-        SET NEW.date_receive = CURRENT_TIMESTAMP;
-    ELSE
-        SET NEW.date_receive = NULL;
-    END IF;
-END;
-// DELIMITER ;
  
 
--- @Insert data
--- Chèn dữ liệu mẫu vào bảng account
-INSERT INTO account (username, password, active, role, avatar) VALUES
+ 
+INSERT INTO accounts (username, password, active, role, avatar) VALUES
 ('user1', 'password1', 1, 'user', 'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg'),
 ('admin1', 'password1', 1, 'admin', 'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg'),
 ('user2', 'password2', 1, 'user', 'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg'),
@@ -247,8 +231,8 @@ INSERT INTO receipt (date, total, is_pay, customer_id) VALUES
 ('2022-04-01', 200.00, 1, 4),
 ('2022-05-01', 160.00, 1, 5);
 
--- Chèn dữ liệu mẫu vào bảng service_fee
-INSERT INTO service_fee (name, description, unit, cost, active) VALUES
+-- Chèn dữ liệu mẫu vào bảng service
+INSERT INTO service (name, description, unit, cost, active) VALUES
 ('Service Fee 1', 'Description 1', 'Unit 1', 50.00, 1),
 ('Service Fee 2', 'Description 2', 'Unit 2', 70.00, 1),
 ('Service Fee 3', 'Description 3', 'Unit 3', 60.00, 1),
@@ -256,7 +240,7 @@ INSERT INTO service_fee (name, description, unit, cost, active) VALUES
 ('Service Fee 5', 'Description 5', 'Unit 5', 55.00, 1);
 
 -- Chèn dữ liệu mẫu vào bảng use_service
-INSERT INTO use_service (active, service_fee_id, customer_id) VALUES
+INSERT INTO use_service (active, service_id, customer_id) VALUES
 (1, 1, 1),
 (1, 2, 2),
 (1, 3, 3),
@@ -264,7 +248,7 @@ INSERT INTO use_service (active, service_fee_id, customer_id) VALUES
 (1, 5, 5);
 
 -- Chèn dữ liệu mẫu vào bảng receipt_detail
-INSERT INTO receipt_detail (active, quantity, cost, receipt_id, service_fee_id) VALUES
+INSERT INTO detail_receipt (active, quantity, cost, receipt_id, service_id) VALUES
 (1, 3, 150.00, 1, 1),
 (1, 2, 180.00, 2, 2),
 (1, 2, 170.00, 3, 3),
@@ -322,3 +306,4 @@ INSERT INTO customer_survey (answer_id, question_id, customer_id, survey_id) VAL
 (3, 1, 3,1),
 (2, 2, 3,2),
 (1, 3, 3,3);
+
