@@ -25,6 +25,8 @@ import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
+
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
@@ -41,6 +43,22 @@ public class ReceiptRepositoryImpl implements ReceiptRepository {
     public Receipt getReceiptById(int id) {
         Session session = this.factory.getObject().getCurrentSession();
         return session.get(Receipt.class, id);
+    }
+
+    @Override
+    public boolean addOrUpdateReceipt(Receipt r) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try {
+            if (r.getId() == null) {
+                s.save(r);
+            } else {
+                s.update(r);
+            }
+            return true;
+        } catch (HibernateException ex) {
+            ex.printStackTrace();
+            return false;
+        }
     }
 
     @Override
