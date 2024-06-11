@@ -7,6 +7,7 @@ package com.dong.controllers;
 import com.dong.pojo.Service;
 import com.dong.service.CustomerService;
 import com.dong.service.ServiceService;
+import com.dong.service.SurveyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Map;
+import org.springframework.web.bind.annotation.GetMapping;
 
 /**
  *
@@ -26,23 +28,20 @@ import java.util.Map;
 @ControllerAdvice
 @PropertySource("classpath:configs.properties")
 public class IndexController {
+
     @Autowired
     private CustomerService cusService;
     @Autowired
-    private ServiceService  se;
+    private ServiceService se;
+    @Autowired
+    private SurveyService surveyService;
 
-    @RequestMapping("/")
-    public String index(Model model){
-       
-        return "statistics";
+    @GetMapping("/")
+    public String index(Model model, @RequestParam Map<String, String> params) {
+        model.addAttribute("statistics", this.surveyService.getSurvey(params));
+        model.addAttribute("personalOpinions", this.surveyService.getPersonalOpinion(params));
+
+        return "surveyStatistic";
     }
-
-    @RequestMapping("/test")
-    public String test()
-    {
-//        List <Service> service = se.getServicesByIdCustomer();
-        return "123";
-    }
-
 
 }
