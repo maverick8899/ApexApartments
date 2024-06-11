@@ -25,17 +25,17 @@
 
             <c:if test="${receipts != null}">
                 <%--<c:forEach items="${receipts}" var="r">--%>
-                    <tr>
-                        <td>${receipts[0].receiptId}</td>
-                        <td>${receipts[0].customerId}</td>
-                        <td>${receipts[0].customerName}</td>
-                        <td>${receipts[0].customerEmail}</td>
-                        <td>
-                            <c:url value="${action}/${receipts[0].receiptId}" var="apiDel" />
-                            <!--<a href="<c:url value="/receipt/${receipts[0].receiptId}" />" class="btn btn-success">Cập nhật</a>-->
-                            <!--<button class="btn btn-danger" onclick=delReceipt('api/receipt/${r.receiptId}')">Xóa</button>-->
-                        </td>
-                    </tr>
+                <tr>
+                    <td>${receipts[0].receiptId}</td>
+                    <td>${receipts[0].customerId}</td>
+                    <td>${receipts[0].customerName}</td>
+                    <td>${receipts[0].customerEmail}</td>
+                    <td>
+                        <c:url value="${action}/${receipts[0].receiptId}" var="apiDel" />
+                        <!--<a href="<c:url value="/receipt/${receipts[0].receiptId}" />" class="btn btn-success">Cập nhật</a>-->
+                        <!--<button class="btn btn-danger" onclick=delReceipt('api/receipt/${r.receiptId}')">Xóa</button>-->
+                    </td>
+                </tr>
                 <%--</c:forEach>--%>
             </c:if>
 
@@ -74,6 +74,32 @@
                             <!--<a href="<c:url value="/receipt/${r.receiptId}" />" class="btn btn-success">Cập nhật</a>-->
                             <!--<button class="btn btn-danger" onclick=delReceipt('api/receipt/${r.receiptId}')">Xóa</button>-->
                         </td>
+                    </tr>
+                </c:forEach>
+            </c:if>
+
+            <%--<form:hidden path="id" />--%>
+        </tbody>
+    </table>
+    <table class="table table-hover ">
+        <thead>
+            <tr>
+                <th>Mã Thẻ Xe</th>     
+                <th>Mô Tả</th> 
+                <th>Ngày dùng đầu</th>
+                <th>Ngày dùng cuối</th>
+                <th>Tổng</th>
+            </tr>
+        </thead>
+        <tbody>
+            <c:if test="${parkCards != null}">
+                <c:forEach items="${parkCards}" var="r">
+                    <tr>
+                        <td>${r.id}</td>
+                        <td>${r.description}</td> 
+                        <td>${r.dateCreate}</td>
+                        <td>${r.expiry}</td>  
+                        <td>${r.cost}</td> 
                     </tr>
                 </c:forEach>
             </c:if>

@@ -75,8 +75,7 @@ public class FeedbackRepositoryImpl implements FeedbackRepository {
 
             Customer c = session.get(
                     Customer.class,
-                    Integer.parseInt(params.get("customer_id"))
-            );
+                    Integer.parseInt(params.get("customer_id")));
             f.setContent(params.get("feedback_content"));
             f.setTitle(params.get("feedback_title"));
             f.setCustomerId(c);

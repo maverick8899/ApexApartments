@@ -66,8 +66,15 @@ public class DetailReceiptRepositoryImpl implements DetailReceiptRepository {
                 System.out.println(params.get("services[" + i1 + "].detail_receipt_quantity"));
 
                 //? receipt_total
-                total += (Double.valueOf(params.get("services[" + i1 + "].detail_receipt_cost")));
+                total += (Double.valueOf(params.get("services[" + i1 + "].detail_receipt_cost"))
+                        * Double.valueOf(params.get("services[" + i1 + "].detail_receipt_quantity")));
                 i1++;
+            }
+            int i11 = 0;
+            while (params.containsKey("parkCards[" + i11 + "].id")) { 
+                // add park_fee 
+                total += (Double.valueOf(params.get("parkCards[" + i11 + "].cost")));
+                i11++;
             }
 //            System.out.println("total" + new BigDecimal(total));
 //            //? receipt
@@ -82,15 +89,14 @@ public class DetailReceiptRepositoryImpl implements DetailReceiptRepository {
             int i2 = 0;
             while (params.containsKey("services[" + i2 + "].service_id")) {
                 DetailReceipt dR = new DetailReceipt();
-                UseService uS = new UseService();
+//                UseService uS = session.get(UseService.class, Integer.parseInt(params.get("services[" + i2 + "].service_id")));
                 Service s = session.get(Service.class, Integer.parseInt(params.get("services[" + i2 + "].service_id")));
 
                 //? use Service
-                uS.setDate(formatter.parse(params.get("services[" + i2 + "].date")));
-                uS.setCustomerId(c);
-                uS.setServiceId(s);
-                uS.setActive(Boolean.TRUE);
-
+//                uS.setDate(formatter.parse(params.get("services[" + i2 + "].date")));
+//                uS.setCustomerId(c);
+//                uS.setServiceId(s);
+//                uS.setActive(Boolean.TRUE);
                 //? detail receipt
                 dR.setQuantity(Integer.parseInt(params.get("services[" + i2 + "].detail_receipt_quantity")));
                 dR.setServiceId(s);
@@ -100,10 +106,10 @@ public class DetailReceiptRepositoryImpl implements DetailReceiptRepository {
                 //? Nếu hóa đơn chưa trả thì active
                 dR.setActive(!isPay);
                 // Lưu các đối tượng
-                session.save(uS); // Lưu Service nếu đây là đối tượng mới
+//                session.update(uS); // Lưu Service nếu đây là đối tượng mới
                 session.save(dR); // Lưu DetailReceipt
                 i2++;
-            } 
+            }
             return true;
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -116,7 +122,7 @@ public class DetailReceiptRepositoryImpl implements DetailReceiptRepository {
         Session session = this.factory.getObject().getCurrentSession();
         return session.get(DetailReceipt.class, id);
     }
-    
+
     @Override
     public boolean deleteDetailReceipt(int id) {
         Session session = this.factory.getObject().getCurrentSession();

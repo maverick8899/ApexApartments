@@ -4,13 +4,16 @@ import com.dong.pojo.Customer;
 import com.dong.pojo.DetailReceipt;
 import com.dong.pojo.Receipt;
 import com.dong.pojo.Service;
+import com.dong.pojo.UseService;
 import com.dong.repository.impl.ReceiptRepositoryImpl;
 import com.dong.service.AccountsService;
 import com.dong.service.CustomerService;
 import com.dong.service.DetailReceiptService;
 import com.dong.service.ReceiptService;
+import com.dong.service.RelativeParkCardService;
 import com.dong.service.RoomService;
 import com.dong.service.ServiceService;
+import com.dong.service.UseServiceService;
 import com.dong.service.impl.ReceiptServiceImpl;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +44,10 @@ public class ReceiptController {
     private CustomerService customerService;
 
     @Autowired
-    private ServiceService serviceService;
+    private RelativeParkCardService relativeParkCardService;
+
+    @Autowired
+    private UseServiceService useServiceService;
 
     @GetMapping("/receipt")
     public String getReceipts(Model model, @RequestParam Map<String, String> params) {
@@ -53,9 +59,10 @@ public class ReceiptController {
     @GetMapping("/addReceipt")
     public String addReceipts(Model model, @RequestParam Map<String, String> params) {
 //        model.addAttribute("receipt", new Receipt());
-//        model.addAttribute("receipts",this.receiptService.getReceipt(params));
-        model.addAttribute("customers", this.customerService.getCustomers(null));
-        model.addAttribute("services", this.serviceService.getServices());
+        model.addAttribute("parkCards", this.relativeParkCardService.getRelativeParkCard(params));
+//        model.addAttribute("useServices", this.receiptService.getReceipt(params));
+        model.addAttribute("useServices", this.useServiceService.getUseServices(params));
+//        model.addAttribute("services", this.serviceService.getServices());
         return "addReceipt";
     }
 
@@ -65,7 +72,9 @@ public class ReceiptController {
     //that might occur during the validation process with @Valid.
     @PostMapping("/addReceipt")
     public String addOrUpdateReceipts(Model model, @RequestParam Map<String, String> params) {
-        if (this.detailReceiptService.addOrUpdateDetailReceipt(params) == true) {
+        if (this.detailReceiptService.addOrUpdateDetailReceipt(params) == true 
+                && this.relativeParkCardService.updateRelativeParkCard(params)
+                && this.useServiceService.UpdateUseService(params) ) {
             return "redirect:/receipt";
         }
         return "addReceipt";
@@ -75,29 +84,16 @@ public class ReceiptController {
     public String getReceiptDetail(@RequestParam Map<String, String> params,
             Model model) {
         model.addAttribute("receipts", this.receiptService.getReceipt(params));
+        model.addAttribute("parkCards", this.relativeParkCardService.getRelativeParkCard(params));
+        
+
         return "receiptDetail";
     }
-     
-    
+
     @GetMapping("/receipt/{id}")
-    public String getReceiptById(Model model,@PathVariable("id")  int id, @RequestParam Map<String, String> params) {
+    public String getReceiptById(Model model, @PathVariable("id") int id, @RequestParam Map<String, String> params) {
         model.addAttribute("receipts", this.receiptService.getReceiptById(id));
 
         return "receiptDetail";
     }
-
-//    @ModelAttribute
-//        public void commonAttr(Model model) {
-//        model.addAttribute("room", this.roomService.getRoom()
-//        );
-//    }
-//    @PostMapping("/customers")
-//    public String add(@ModelAttribute(value = "customer") @Valid Customer c,
-//                      BindingResult rs) {
-//        if (!rs.hasErrors())
-//            if (cusService.addOrUpdateCustomer(c) == true)
-//                return "redirect:/";
-//
-//        return "customers";
-//    }
 }

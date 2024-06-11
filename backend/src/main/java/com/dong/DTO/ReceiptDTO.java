@@ -19,6 +19,7 @@ public class ReceiptDTO {
     private Object receiptId;
     private Object receiptDate;
     private Object receiptTotal;
+    private Object receiptPay;
     private Object customerId;
     private Object customerName;
     private Object customerEmail;
@@ -34,6 +35,7 @@ public class ReceiptDTO {
             Object receiptId,
             Object receiptTotal,
             Object receiptDate,
+            Object receiptPay,
             Object customerId,
             Object customerName,
             Object customerEmail,
@@ -48,6 +50,7 @@ public class ReceiptDTO {
         this.receiptId = receiptId;
         this.receiptDate = receiptDate;
         this.receiptTotal = receiptTotal;
+        this.receiptPay = receiptPay;
         this.customerId = customerId;
         this.customerName = customerName;
         this.customerEmail = customerEmail;

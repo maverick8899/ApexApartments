@@ -111,4 +111,9 @@
     </definition>
     <definition name="return_url"  template="/WEB-INF/pages/return_url.jsp">
     </definition>
+    <definition name="useService" extends="baseLayout">
+        <put-attribute name="useService" value="useService" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/useService.jsp" />
+    </definition>
 </tiles-definitions>

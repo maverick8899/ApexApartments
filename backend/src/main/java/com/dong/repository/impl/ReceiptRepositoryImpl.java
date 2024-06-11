@@ -91,6 +91,7 @@ public class ReceiptRepositoryImpl implements ReceiptRepository {
                 r.get("id"),
                 r.get("total"),
                 r.get("date"),
+                r.get("isPay"),
                 r.get("customerId").get("id"),
                 r.get("customerId").get("name"),
                 r.get("customerId").get("email"),
@@ -100,8 +101,7 @@ public class ReceiptRepositoryImpl implements ReceiptRepository {
                 s.get("description"),
                 s.get("unit"),
                 uS.get("date"),
-                //                ,
-                //                b.sum(rD.get("quantity")),
+                //                b.sum(r.get("cost"))
                 rD.get("cost")
         );
 
@@ -177,14 +177,14 @@ public class ReceiptRepositoryImpl implements ReceiptRepository {
             if (item instanceof Object[]) {
                 Object[] itemArray = (Object[]) item;
                 Long dateTimestamp = itemArray[2] instanceof Date ? ((Date) itemArray[2]).getTime() : Long.parseLong(itemArray[2].toString());
-                Long discountDateTimestamp = itemArray[11] instanceof Date ? ((Date) itemArray[11]).getTime() : Long.parseLong(itemArray[11].toString());
+                Long discountDateTimestamp = itemArray[12] instanceof Date ? ((Date) itemArray[12]).getTime() : Long.parseLong(itemArray[12].toString());
 
                 invoices.add(
                         new ReceiptDTO(
                                 itemArray[0], // receiptId
                                 itemArray[1], // receiptDate
                                 parseIntToDate(dateTimestamp),
-                                itemArray[3], // customerId
+                                itemArray[3], //isPay customerId
                                 itemArray[4], // customerName
                                 itemArray[5], // customerEmail
                                 itemArray[6], // receiptDetailQuantity
@@ -192,8 +192,10 @@ public class ReceiptRepositoryImpl implements ReceiptRepository {
                                 itemArray[8], // serviceName
                                 itemArray[9], // serviceDescription
                                 itemArray[10], // serviceUnit
+                                itemArray[11],// receiptDetailCost
                                 parseIntToDate(discountDateTimestamp), // discountDescription (giả sử là discountDescription)
-                                itemArray[12] // receiptDetailCost
+                                itemArray[13] // receiptDetailCost
+
                         )
                 );
             }
@@ -224,87 +226,18 @@ public class ReceiptRepositoryImpl implements ReceiptRepository {
             return false;
         }
     }
-//
-//    @Override
-//    public List<ReceiptDTO> getReceiptDetail(Map<String, String> params) {
-//        //? isPay ở đây là selection chứ không phải là giá trị isPay trong db
-//        int type = 0;
-//        String kw = "";
-//        if (params.get("kw") != null
-//                && !params.get("kw").isEmpty()
-//                && params.get("type") != null
-//                && !params.get("type").isEmpty()) {
-//            type = Integer.parseInt(params.get("type"));
-//            kw = params.get("kw");
-//        }
-//
-//        Session session = this.factory.getObject().getCurrentSession();
-//        CriteriaBuilder b = session.getCriteriaBuilder();
-//        CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
-//        List<Predicate> predicates = new ArrayList<>();
-//
-//        Root r = q.from(Receipt.class);
-//        Root rD = q.from(DetailReceipt.class);
-//        Root s = q.from(Service.class);
-//        Root uS = q.from(UseService.class);
-//
-//        //        q.select(r);
-//        q.multiselect(
-//                r.get("id"),
-//                r.get("total"),
-//                r.get("date"),
-//                r.get("customerId").get("id"),
-//                r.get("customerId").get("name"),
-//                r.get("customerId").get("email"),
-//                rD.get("quantity"),
-//                s.get("id"),
-//                s.get("name"),
-//                s.get("description"),
-//                s.get("unit"),
-//                uS.get("date"),
-//                rD.get("cost")
-//        );
-//        predicates.add(b.equal(r.get("id"), kw));
-//        predicates.add(b.equal(uS.get("active"), 1));
-//        predicates.add(b.equal(r.get("id"), rD.get("receiptId")));
-//        predicates.add(b.equal(rD.get("serviceId").get("id"), s.get("id")));
-//        predicates.add(b.equal(s.get("id"), uS.get("serviceId")));
-//
-//        q.where(predicates.toArray(Predicate[]::new));
-//        q.groupBy(r.get("id"),
-//                r.get("customerId").get("id"),
-//                s.get("id"));
-//        q.orderBy(b.asc(r.get("id")));
-//        Query query = session.createQuery(q);
-//
-//        ////@
-//        List<ReceiptDTO> invoices = new ArrayList<>();
-//
-//        for (Object item : query.getResultList()) {
-//            if (item instanceof Object[]) {
-//                Object[] itemArray = (Object[]) item;
-//                Long dateTimestamp = itemArray[2] instanceof Date ? ((Date) itemArray[2]).getTime() : Long.parseLong(itemArray[2].toString());
-//                Long discountDateTimestamp = itemArray[11] instanceof Date ? ((Date) itemArray[11]).getTime() : Long.parseLong(itemArray[11].toString());
-//
-//                invoices.add(
-//                        new ReceiptDTO(
-//                                itemArray[0], // receiptId
-//                                itemArray[1], // receiptDate
-//                                parseIntToDate(dateTimestamp),
-//                                itemArray[3], // customerId
-//                                itemArray[4], // customerName
-//                                itemArray[5], // customerEmail
-//                                itemArray[6], // receiptDetailQuantity
-//                                itemArray[7], // serviceId
-//                                itemArray[8], // serviceName
-//                                itemArray[9], // serviceDescription
-//                                itemArray[10], // serviceUnit
-//                                parseIntToDate(discountDateTimestamp), // discountDescription (giả sử là discountDescription)
-//                                itemArray[12] // receiptDetailCost
-//                        )
-//                );
-//            }
-//        }
-//        return invoices;
-//    }
+
+    @Override
+    public boolean payment(Map<String, String> params) {
+        Session session = this.factory.getObject().getCurrentSession();
+        Receipt r = this.getReceiptById(Integer.parseInt(params.get("receiptId")));
+        try {
+            r.setIsPay(Boolean.TRUE);
+            session.update(r);
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
 }
