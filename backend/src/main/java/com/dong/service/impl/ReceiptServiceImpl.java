@@ -40,5 +40,9 @@ public class ReceiptServiceImpl implements ReceiptService {
 //    public List<ReceiptDTO> getReceiptDetail(Map<String, String> params) {
 //        return this.receiptRepo.getReceiptDetail(params);
 //    }
+    @Override
+    public boolean payment(Map<String, String> params) {
+        return this.receiptRepo.payment(params);
+    }
 
 }

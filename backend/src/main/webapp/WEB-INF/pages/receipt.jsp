@@ -28,7 +28,7 @@
                     <span class="glyphicon glyphicon-search form-control-feedback"></span>
                 </div>
                 <button type="submit" class="btn btn-info"> Tìm</button>
-                <a href="<c:url value="/addReceipt" />" class="btn btn-info">Thêm Hóa Đơn</a>                    
+                <a href="<c:url value="/useService" />" class="btn btn-info">Thêm Hóa Đơn</a>                    
             </form>
         </div>
     </div>
@@ -42,6 +42,8 @@
                 <th>email</th>
                 <th>Tổng HĐ</th>
                 <th>ngày</th>
+                <th>thanh toán</th>
+
 
             </tr>
         </thead>
@@ -53,13 +55,23 @@
                         <td>${r.receiptId}</td>
                         <td>${r.customerId}</td>
                         <td>${r.customerName}</td>
-                        <td>${r.customerEmail}</td>
-                        <td>${r.receiptTotal} VNĐ</td>
+                        <td>${r.customerEmail}</td> 
+                        <td>${r.receiptTotal} VNĐ</td> 
+
                         <td>${r.receiptDate}</td>
+                        <c:choose>
+                            <c:when test="${r.receiptPay == true}">
+                                <td>rồi</td>
+                            </c:when>
+                            <c:otherwise>
+                                <td>chưa</td>
+                            </c:otherwise>
+                        </c:choose>
                         <td>
                             <c:url value="${action}/${r.receiptId}" var="apiDel" />
-                            <a href="<c:url value="/receiptDetail/?type=3&kw=${r.receiptId}" />" class="btn btn-info">Chi Tiết</a>                            
-                            <a href="<c:url value="/receipt/${r.receiptId}" />" class="btn btn-success">Cập nhật</a>
+                                    <!--<a href="<c:url value="/receipt/${r.receiptId}" />" class="btn btn-success">Cập nhật</a>-->
+                            <a href="<c:url value="/receiptDetail/?type=3&kw=${r.receiptId}&cusId=${r.customerId}" />" class="btn btn-success">Chi Tiết</a> 
+
                             <button class="btn btn-danger" onclick="delReceipt('api/receipt/${r.receiptId}')">Xóa</button>
                         </td>
                     </tr>

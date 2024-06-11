@@ -34,4 +34,8 @@ public class RelativeParkCardServiceImpl implements RelativeParkCardService {
     public RelativeParkCard addRelativeParkCard(RelativeParkCard var1) {
         return this.receiptRepo.addRelativeParkCard(var1);
     }
+
+    @Override
+    public boolean updateRelativeParkCard(Map<String, String> params) {
+      return this.receiptRepo.updateRelativeParkCard(params);}
 }

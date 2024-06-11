@@ -42,7 +42,7 @@ public class Answer implements Serializable {
     private Integer id;
     @Column(name = "answer")
     private Short answer;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "answerId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "answerId", fetch = FetchType.EAGER)
     private Collection<CustomerSurvey> customerSurveyCollection;
 
     public Answer() {

@@ -94,13 +94,13 @@ CREATE TABLE `customer_survey` (
 )  ENGINE=INNODB DEFAULT CHARSET=UTF8MB4 COLLATE = UTF8MB4_UNICODE_CI;
 
   
-CREATE TABLE `park_card` (
+CREATE TABLE `relative_park_card` (
     `id` INT PRIMARY KEY AUTO_INCREMENT,
     `description` VARCHAR(255) DEFAULT NULL,
     `date_create` DATE NOT NULL,
     `expiry` DATE NOT NULL,
     `active` BIT(1) DEFAULT 0,
-    `cost` DECIMAL(10 , 2 ) NOT NULL,
+    `cost` DECIMAL(10 , 2 ),
     `customer_id` INT NOT NULL,
     KEY `fk_park_card_customer` (`customer_id`),
     CONSTRAINT `fk_park_card_customer` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`)
@@ -109,7 +109,7 @@ CREATE TABLE `park_card` (
 CREATE TABLE `receipt` (
     `id` INT PRIMARY KEY AUTO_INCREMENT,
     `date` DATE NOT NULL,
-    `total` DECIMAL(10 , 2 ) NOT NULL,
+    `total` DECIMAL(10 , 2 ) NOT,
     `is_pay` BIT(1) DEFAULT 0,
     `customer_id` INT NOT NULL,
     KEY `fk_receipt_customer` (`customer_id`),
@@ -231,11 +231,11 @@ INSERT INTO customer (name, address, phone_number, email, gender, birthday, acti
 ('Eva Brown', '654 Drive, Suburb', '777888999', 'eva@example.com', 'female', '1975-07-20', 1, 5, 5, 5);
 
 -- Chèn dữ liệu mẫu vào bảng park_card
-INSERT INTO park_card (description, date_create, expiry, active, cost, customer_id) VALUES
-('Park Card 1', '2022-01-01', '2023-01-01', 1, 100.00, 1),
-('Park Card 2', '2022-02-01', '2023-02-01', 1, 120.00, 2),
-('Park Card 3', '2022-03-01', '2023-03-01', 1, 110.00, 3),
-('Park Card 4', '2022-04-01', '2023-04-01', 1, 130.00, 4),
+INSERT INTO relative_park_card (description, date_create, expiry, active, cost, customer_id) VALUES
+('Park Card 1', '2022-01-01', '2023-01-01', 0, null, 1),
+('Park Card 2', '2022-02-01', '2023-02-01', 0, null, 2),
+('Park Card 3', '2022-03-01', '2023-03-01', 0, null, 3),
+('Park Card 4', '2022-04-01', '2023-04-01', 0, null, 4),
 ('Park Card 5', '2022-05-01', '2023-05-01', 1, 115.00, 5);
 
 -- Chèn dữ liệu mẫu vào bảng receipt
