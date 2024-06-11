@@ -116,4 +116,9 @@
         <put-attribute name="content"
                        value="/WEB-INF/pages/useService.jsp" />
     </definition>
+    <definition name="surveyStatistic" extends="baseLayout">
+        <put-attribute name="surveyStatistic" value="surveyStatistic" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/surveyStatistic.jsp" />
+    </definition>
 </tiles-definitions>

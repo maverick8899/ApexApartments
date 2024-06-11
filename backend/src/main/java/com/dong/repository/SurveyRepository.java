@@ -12,6 +12,8 @@ public interface SurveyRepository {
 
     List<Object> getSurvey(Map<String, String> params);
 
+    List<Object> getPersonalOpinion(Map<String, String> params);
+
     boolean createSurvey(Map<String, String> params);
 
     Survey answerSurvey(SurveyDTO params);

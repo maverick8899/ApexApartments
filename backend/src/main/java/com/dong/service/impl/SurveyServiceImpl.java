@@ -40,4 +40,8 @@ public class SurveyServiceImpl implements SurveyService {
 //        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
 //    }
 
+    @Override
+    public List<Object> getPersonalOpinion(Map<String, String> params) {
+  return this.surveyRepo.getPersonalOpinion(params);    }
+
 }

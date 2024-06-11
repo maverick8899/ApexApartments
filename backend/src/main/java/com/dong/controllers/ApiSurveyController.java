@@ -52,7 +52,7 @@ public class ApiSurveyController {
     )
     @CrossOrigin
     public ResponseEntity<List<Object>> list2(@RequestParam Map<String, String> params) {
-        return new ResponseEntity<>(this.surveyService.getSurvey(null), HttpStatus.OK);
+        return new ResponseEntity<>(this.surveyService.getSurvey(params), HttpStatus.OK);
 
     }
 }

@@ -15,6 +15,7 @@ public interface SurveyService {
     boolean createSurvey(Map<String, String> params);
 
     Survey answerSurvey(SurveyDTO params);
+    List<Object> getPersonalOpinion(Map<String, String> params);
 
 //    public Survey getRecById(int id);
 }
