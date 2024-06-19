@@ -24,6 +24,7 @@
     <class>com.dong.pojo.Accounts_1</class>
     <class>com.dong.pojo.Room_1</class>
     <class>com.dong.pojo.MerchandiseCabinet_1</class>
+    <class>com.dong.pojo.User</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/apartment_db?zeroDateTimeBehavior=CONVERT_TO_NULL"/>

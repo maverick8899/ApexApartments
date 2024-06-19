@@ -121,4 +121,9 @@
         <put-attribute name="content"
                        value="/WEB-INF/pages/surveyStatistic.jsp" />
     </definition>
+      <definition name="login" extends="baseLayout">
+        <put-attribute name="login" value="login" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/login.jsp" />
+    </definition>
 </tiles-definitions>
