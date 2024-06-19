@@ -32,18 +32,38 @@ public class CustomerRepositoryImpl implements CustomerRepository {
         Session session = this.factory.getObject().getCurrentSession();
         CriteriaBuilder b = session.getCriteriaBuilder();
         CriteriaQuery<Customer> q = b.createQuery(Customer.class);
-        Root root = q.from(Customer.class);
+        Root<Customer> root = q.from(Customer.class);
         q.select(root);
 
         if (params != null && !params.isEmpty()) {
             List<Predicate> predicates = new ArrayList<>();
-
+            String type = params.get("type");
             String kw = params.get("kw");
+
+
             if (kw != null && !kw.isEmpty()) {
-                predicates.add(b.like(root.get("name"), String.format("%%%s%%", kw)));
+                switch (type) {
+                    case "1": // Search by id
+                        try {
+                            int id = Integer.parseInt(kw);
+                            predicates.add(b.equal(root.get("id"), id));
+                        } catch (NumberFormatException e) {
+                            // Handle invalid id format
+                            predicates.add(b.equal(root.get("id"), -1)); // This will return no results
+                        }
+                        break;
+                    case "2": // Search by name
+                        predicates.add(b.like(root.get("name"), "%" + kw + "%"));
+                        break;
+                    case "3": // Search by phone number
+                        predicates.add(b.like(root.get("phoneNumber"), "%" + kw + "%"));
+                        break;
+                }
             }
-            q.where(predicates.toArray(Predicate[]::new));
+
+            q.where(predicates.toArray(new Predicate[0]));
         }
+
         q.orderBy(b.desc(root.get("id")));
         Query query = session.createQuery(q);
         return query.getResultList();
@@ -101,4 +121,15 @@ public class CustomerRepositoryImpl implements CustomerRepository {
             return false;
         }
     }
+
+    @Override
+    public List<Customer> getCustomersByAccountId(Integer accountId) {
+        Session session = this.factory.getObject().getCurrentSession();
+        String hql = "FROM Customer c WHERE c.accountId.id = :accountId";
+        List<Customer> customers = session.createQuery(hql, Customer.class)
+                .setParameter("accountId", accountId)
+                .getResultList();
+        return customers;
+    }
+
 }

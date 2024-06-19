@@ -13,4 +13,6 @@ public interface CustomerRepository {
     boolean addOrUpdateCustomer(Customer c);
     Customer getCustomerById(int id);
     boolean deleteCustomer(int id);
+
+    List<Customer> getCustomersByAccountId(Integer accountId);
 }

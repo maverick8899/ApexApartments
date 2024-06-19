@@ -5,19 +5,11 @@
 package com.dong.pojo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
 import java.util.Collection;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -66,10 +58,11 @@ public class Accounts implements Serializable {
     @Size(max = 255)
     @Column(name = "avatar")
     private String avatar;
-    @OneToMany(mappedBy = "accountId")
+    @OneToMany(mappedBy = "accountId", fetch = FetchType.EAGER)
     @JsonIgnore
     private Collection<Customer> customerCollection;
-
+    @Transient
+    private MultipartFile file;
     public Accounts() {
     }
 
@@ -83,7 +76,16 @@ public class Accounts implements Serializable {
         this.password = password;
         this.role = role;
     }
+    public MultipartFile getFile() {
+        return file;
+    }
 
+    /**
+     * @param file the file to set
+     */
+    public void setFile(MultipartFile file) {
+        this.file = file;
+    }
     public Integer getId() {
         return id;
     }

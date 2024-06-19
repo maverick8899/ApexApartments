@@ -11,4 +11,5 @@ public interface CustomerService {
     Customer getCustomerById(int id);
     boolean deleteCustomer(int id);
     public List<Customer> getCustomer();
+    public List<Customer> findCustomersByAccountId(Integer accountId);
 }

@@ -8,7 +8,7 @@ const SERVER = "http://localhost:8080";
 export const endpoints = {
     "customer": `${SERVER_CONTEXT}/api/customers/`,
     "relativeparkcard": `${SERVER_CONTEXT}/api/relativeparkcard/`,
-    "merchandisecabinet": `${SERVER_CONTEXT}/api/merchandisecabinet`,
+    "merchandisecabinet":(customerId)=> `${SERVER_CONTEXT}/api/merchandisecabinet/${customerId}`,
     "service": `${SERVER_CONTEXT}/api/service/`,
     "add_use_service": `${SERVER_CONTEXT}/api/use-services`,
 
@@ -18,8 +18,6 @@ export const endpoints = {
     'use_service': (id) => `${SERVER_CONTEXT}/api/use_service/${id}`,
     'receipt_paid':(customerId)=> `${SERVER_CONTEXT}/api/receipts?type=1&isPay=2&kw=${customerId}`,
     'receipt_unpaid':(customerId)=> `${SERVER_CONTEXT}/api/receipts?type=1&isPay=1&kw=${customerId}`,
-
-    // http://localhost:8080/apartment_manager/api/vnpay/create_payment?amount=300000
     'payment': (amount,receiptId,month) => `${SERVER_CONTEXT}/api/vnpay/create_payment?amount=${amount}&receiptId=${receiptId}&month=${month}`
     
 

@@ -118,6 +118,12 @@ public class Receipt implements Serializable {
     public void setIsPay(Boolean isPay) {
         this.isPay = isPay;
     }
+    @PrePersist
+    protected void onCreate() {
+        if (this.date == null) {
+            this.date = new Date();
+        }
+    }
 
     @XmlTransient
     public Collection<DetailReceipt> getDetailReceiptCollection() {

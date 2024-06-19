@@ -1,24 +1,12 @@
 
 package com.dong.pojo;
 
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -137,7 +125,12 @@ public class RelativeParkCard implements Serializable {
     public void setCustomerId(Customer customerId) {
         this.customerId = customerId;
     }
-
+    @PrePersist
+    protected void onCreate() {
+        if (this.dateCreate == null) {
+            this.dateCreate = new Date();
+        }
+    }
     @Override
     public int hashCode() {
         int hash = 0;

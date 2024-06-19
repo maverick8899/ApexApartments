@@ -4,6 +4,8 @@ import java.util.Properties;
 import javax.sql.DataSource;
 import static org.hibernate.cfg.AvailableSettings.DIALECT;
 import static org.hibernate.cfg.AvailableSettings.SHOW_SQL;
+
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -59,5 +61,11 @@ public class HibernateConfig {
         transactionManager.setSessionFactory(
                 getSessionFactory().getObject());
         return transactionManager;
+    }
+    @Bean
+    public ModelMapper modelMapper() {
+        ModelMapper modelMapper = new ModelMapper();
+
+        return modelMapper;
     }
 }

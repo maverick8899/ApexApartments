@@ -14,4 +14,6 @@ public interface AccountsRepository {
     boolean deleteAccounts(int id);
     List<Accounts> getAccountsUser();
      Customer getAccountsByIdCustomer(int customerId);
+
+    List<Accounts> getByIds(List<Integer> ids);
 }

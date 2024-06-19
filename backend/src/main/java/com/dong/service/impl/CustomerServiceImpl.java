@@ -36,4 +36,9 @@ public class CustomerServiceImpl implements CustomerService {
     public List<Customer> getCustomer() {
         return this.customerRepo.getCustomer();
     }
+
+    @Override
+    public List<Customer> findCustomersByAccountId(Integer accountId) {
+        return this.customerRepo.getCustomersByAccountId(accountId);
+    }
 }

@@ -138,7 +138,12 @@ public class Merchandise implements Serializable {
     public void setActive(Boolean active) {
         this.active = active;
     }
-
+    @PrePersist
+    protected void onCreate() {
+        if (this.date == null) {
+            this.date = new Date();
+        }
+    }
     @XmlTransient
     public Collection<MerchandiseCabinetDetail> getMerchandiseCabinetDetailCollection() {
         return merchandiseCabinetDetailCollection;
