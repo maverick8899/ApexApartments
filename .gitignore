@@ -12,4 +12,5 @@ frontend/node_modules
 frontend/package-lock.json
 backend/src/main/resources/databases.properties
 deploy/webapps
-src
+./src
+frontend/src

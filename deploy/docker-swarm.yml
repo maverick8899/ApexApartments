@@ -4,8 +4,7 @@ services:
         container_name: mysql
         ports:
             - '3307:3306' #/ '3306:3306'
-        networks:
-            - webapp
+        networks: [traefik]
         volumes:
             - dbdata:/var/lib/mysql
             - .docker/database/:/docker-entrypoint-initdb.d/
@@ -22,9 +21,7 @@ services:
         ports:
             - '8081:8080'
         restart: unless-stopped
-        networks:
-            - webapp
-            # - webapp
+        networks: [ traefik]
         volumes:
             # - ../backend/target:/opt/tomcat/webapps
             - ./webapps:/opt/tomcat/webapps
@@ -50,7 +47,7 @@ services:
 
             #@ Middleware
             #* 1 BasicAuth Middleware
-            # - "traefik.http.middlewares.basic-auth.basicauth.users=${TRAEFIK_BASIC_AUTH}"
+            # - 'traefik.http.middlewares.basic-auth.basicauth.users=maverick:$$apr1$$BKUDBqtJ$$xvJvdGGEL0mkfGlXgUJXj0'
             # #?  remove the authorization header before forwarding the request to your service
             # - 'traefik.http.middlewares.test-auth.basicauth.removeheader=true'
             # user1: traefik password: training
@@ -79,8 +76,7 @@ services:
     #) https://github.com/guillaumebriday/traefik-custom-error-pages
     error:
         image: guillaumebriday/traefik-custom-error-pages
-        networks:
-            - webapp
+        networks: [traefik]
         labels:
             - 'traefik.enable=true'
             - 'traefik.http.routers.error.rule=Host(`error.localhost`)'
@@ -111,9 +107,7 @@ services:
             - '8000:80'
             - '8443:443'
             - '8080:8080'
-        networks:
-            - traefik
-            - webapp
+        networks: [traefik]
         volumes:
             #? So that Traefik can listen to the Docker events
             - /var/run/docker.sock:/var/run/docker.sock
@@ -127,55 +121,70 @@ services:
             timeout: 2s
             retries: 3
             start_period: 5s
-   
     prometheus:
-        image: prom/prometheus:v2.52.0
-        networks:
-            - webapp
+        image: prom/prometheus:v2.52.0 #) v2.22.1
+        networks: [traefik]
         volumes:
             - ./prometheus/:/etc/prometheus/
             - prometheus_data:/prometheus
         command:
-            - '--config.file=/etc/prometheus/prometheus.yml'
-            - '--storage.tsdb.path=/prometheus'
-            - '--web.console.libraries=/usr/share/prometheus/console_libraries'
-            - '--web.console.templates=/usr/share/prometheus/consoles'
-        labels:
-            - 'traefik.enable=true'
-            - 'traefik.http.routers.prometheus.rule=Host(`prometheus.localhost`)'
-            - 'traefik.http.routers.prometheus.service=prometheus'
-            - 'traefik.http.routers.prometheus.entrypoints=web'
-            - 'traefik.http.services.prometheus.loadbalancer.server.port=9090'
-            - 'traefik.docker.network=webapp'
-        restart: on-failure
+            - '--config.file=/etc/prometheus/prometheus.yml' #/ path config
+            - '--storage.tsdb.path=/prometheus' #? xác định vị trí lưu trữ dữ liệu metrics được scrape
+            - '--web.console.libraries=/usr/share/prometheus/console_libraries' #?  xác định vị trí của các thư viện JavaScript được sử dụng bởi giao diện console web của Prometheus.
+            - '--web.console.templates=/usr/share/prometheus/consoles' #? xác định vị trí của các template HTML được sử dụng bởi giao diện console web của Prometheus.
+        healthcheck:
+            test: ['CMD', 'wget', '--spider', '--quiet', 'http://localhost:9090/-/healthy']
+            interval: 30s
+            timeout: 10s
+            retries: 3
+        deploy:
+            labels:
+                - 'traefik.http.routers.prometheus.rule=Host(`prometheus.localhost`)'
+                - 'traefik.http.routers.prometheus.service=prometheus'
+                - 'traefik.http.routers.prometheus.entrypoints=web'
+                - 'traefik.http.services.prometheus.loadbalancer.server.port=9090'
+                - 'traefik.docker.network=inbound' #? Xác định mạng Docker mà container Prometheus sẽ tham gia
+            placement: #? vị trí place prometheus đặt trên node master
+                constraints:
+                    - node.role==manager
+            restart_policy:
+                condition: on-failure
 
     grafana:
-        image: grafana/grafana:7.3.1
-        networks:
-            - webapp
+        image: grafana/grafana:7.3.1 #10.1.10-ubuntu #) 7.3.1
+        networks: [traefik]
         depends_on:
             - prometheus
         volumes:
             - grafana_data:/var/lib/grafana
-            - ./grafana/provisioning/:/etc/grafana/provisioning/
+            - ./grafana/provisioning/:/etc/grafana/provisioning/ #? location for storing configuration files that define dashboards, data sources, and other settings for Grafana to apply when it starts up and runs continuously.
+
         env_file:
             - ./grafana/config.monitoring
         user: '104'
-        labels:
-            - 'traefik.enable=true'
-            - 'traefik.http.routers.grafana.rule=Host(`grafana.localhost`)'
-            - 'traefik.http.routers.grafana.service=grafana'
-            - 'traefik.http.routers.grafana.entrypoints=web'
-            - 'traefik.http.services.grafana.loadbalancer.server.port=3000'
-            - 'traefik.docker.network=webapp'
-        restart: on-failure
+        healthcheck:
+            test: ['CMD', "curl -f localhost:3000/api/health && echo 'ready'"]
+            interval: 10s
+            retries: 30
+        deploy:
+            labels:
+                - 'traefik.http.routers.grafana.rule=Host(`grafana.localhost`)'
+                - 'traefik.http.routers.grafana.service=grafana'
+                - 'traefik.http.routers.grafana.entrypoints=web'
+                - 'traefik.http.services.grafana.loadbalancer.server.port=3000'
+                - 'traefik.docker.network=inbound'
+            placement:
+                constraints:
+                    - node.role == manager
+            restart_policy:
+                condition: on-failure
 networks:
     traefik:
-        driver: bridge
-        external: true
+        driver: overlay
+        name: traefik #? default random ID
     webapp:
-        driver: bridge
-        external: true
+        driver: overlay
+        name: webapp
 
 volumes:
     dbdata: {}
