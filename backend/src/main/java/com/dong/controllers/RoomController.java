@@ -1,6 +1,7 @@
 package com.dong.controllers;
 import com.dong.pojo.Room;
 import com.dong.service.RoomService;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
@@ -20,8 +21,8 @@ public class RoomController {
 
 
     @RequestMapping("/room")
-    public String list(Model model) {
-        model.addAttribute("room", this.roomSer.getRoom());
+    public String list(Model model,@RequestParam Map<String, String> params) {
+        model.addAttribute("room", this.roomSer.getRoom(params));
         return "room";
     }
 

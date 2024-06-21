@@ -52,7 +52,7 @@ public class Accounts implements Serializable {
     @Column(name = "username")
     private String username;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "{user.name.nullErr}")
     @Size(min = 1, max = 255)
     @Column(name = "password")
     private String password;

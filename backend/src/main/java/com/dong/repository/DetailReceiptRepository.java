@@ -8,7 +8,7 @@ import java.util.Map;
 
 public interface DetailReceiptRepository {
 
-    public List<DetailReceipt> getDetailReceipt();
+    public List<DetailReceipt> getDetailReceipt(Map<String, String> params);
 
     boolean addOrUpdateDetailReceipt(Map<String, String> params);
 

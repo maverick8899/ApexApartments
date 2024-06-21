@@ -32,6 +32,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
@@ -44,198 +45,236 @@ import org.springframework.transaction.interceptor.TransactionAspectSupport;
 @Transactional
 public class SurveyRepositoryImpl implements SurveyRepository {
 
-    @Autowired
-    private LocalSessionFactoryBean factory;
+  @Autowired
+  private LocalSessionFactoryBean factory;
 
-    @Override
-    public List<Object> getSurvey(Map<String, String> params) {
-        int type = 0;
-        String kw = "";
-        if (params.get("kw") != null
-                && !params.get("kw").isEmpty()
-                && params.get("type") != null
-                && !params.get("type").isEmpty()) {
-            type = Integer.parseInt(params.get("type"));
-            kw = params.get("kw");
-        }
-        Session session = this.factory.getObject().getCurrentSession();
-        CriteriaBuilder b = session.getCriteriaBuilder();
-        CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
-        Root a = q.from(Answer.class);
-        Root cS = q.from(CustomerSurvey.class);
-        Root qs = q.from(Question.class);
-        Root s = q.from(Survey.class);
+  @Autowired
+  private Environment env;
 
-        List<Predicate> predicates = new ArrayList<>();
-        q.multiselect(a.get("answer"), qs.get("type"),
-                s.get("date"));
-//        
-        predicates.add(b.equal(cS.get("answerId"), a.get("id")));
-        predicates.add(b.equal(cS.get("questionId"), qs.get("id")));
-        if (type == 1) {
-            predicates.add(
-                    b.equal(b.function("MONTH", Integer.class, s.get("date")), kw)
-            );
-        }
-        if (type == 2) {
-            predicates.add(
-                    b.equal(b.function("YEAR", Integer.class, s.get("date")), kw)
-            );
-        }
-        q.where(predicates.toArray(Predicate[]::new));
-        q.groupBy(cS.get("id"));
-        Query query = session.createQuery(q);
-        List<Object> feedbackMap = new ArrayList<>();
-        for (Object item : query.getResultList()) {
-//            System.out.println("####" + item);
-            Object[] itemArray = (Object[]) item;
-            Map<String, Object> feedbackInfo = new HashMap<>();
-            Long discountDateTimestamp = itemArray[2] instanceof Date ? ((Date) itemArray[2]).getTime() : Long.parseLong(itemArray[2].toString());
-
-            feedbackInfo.put("answer", itemArray[0]);
-            feedbackInfo.put("type", itemArray[1]);
-            feedbackInfo.put("date", parseIntToDate(discountDateTimestamp));
-
-            feedbackMap.add(feedbackInfo);
-        }
-        Map<String, Object> feedbackInfo = new HashMap<>();
-        feedbackInfo.put("quantity", feedbackMap.size());
-
-        feedbackMap.add(feedbackInfo);
-        return feedbackMap;
+  @Override
+  public List<Object> getSurvey(Map<String, String> params) {
+    int type = 0;
+    String kw = "";
+    if (
+      params.get("kw") != null &&
+      !params.get("kw").isEmpty() &&
+      params.get("type") != null &&
+      !params.get("type").isEmpty()
+    ) {
+      type = Integer.parseInt(params.get("type"));
+      kw = params.get("kw");
     }
+    Session session = this.factory.getObject().getCurrentSession();
+    CriteriaBuilder b = session.getCriteriaBuilder();
+    CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
+    Root a = q.from(Answer.class);
+    Root cS = q.from(CustomerSurvey.class);
+    Root qs = q.from(Question.class);
+    Root s = q.from(Survey.class);
 
-    public Object parseIntToDate(Long timestamp) {
-//        long timestamp = 1640970000000L; // Giá trị timestamp dạng long
-        Instant instant = Instant.ofEpochMilli(timestamp); // Chuyển timestamp sang Instant
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); // Định dạng thời gian mong muốn
-        formatter.setTimeZone(TimeZone.getDefault()); // Cài đặt múi giờ mặc định
-        Date date = Date.from(instant); // Chuyển Instant sang Date
-        String formattedDate = formatter.format(date); // Định dạng Date thành chuỗi
-        System.out.println("Date: " + formattedDate); // In ra ngày đã định dạng
-        return formattedDate;
+    List<Predicate> predicates = new ArrayList<>();
+    q.multiselect(a.get("answer"), qs.get("type"), s.get("date"));
+    //
+    predicates.add(b.equal(cS.get("answerId"), a.get("id")));
+    predicates.add(b.equal(cS.get("questionId"), qs.get("id")));
+    if (type == 1) {
+      predicates.add(
+        b.equal(b.function("MONTH", Integer.class, s.get("date")), kw)
+      );
     }
-
-    @Override
-    public boolean createSurvey(Map<String, String> params) {
-        try {
-            //
-            Session session = this.factory.getObject().getCurrentSession();
-            CriteriaBuilder b = session.getCriteriaBuilder();
-            CriteriaQuery<Question> q = b.createQuery(Question.class);
-
-            Set<String> keys = params.keySet();
-
-            for (String key : keys) {
-                Question sD = new Question();
-                sD.setQuestion(params.get(key));
-                sD.setType(key);
-
-                session.save(sD);
-//                System.out.println(key + " ###  " + params.get(key));
-//
-            }
-            return true;
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return false;
+    if (type == 2) {
+      predicates.add(
+        b.equal(b.function("YEAR", Integer.class, s.get("date")), kw)
+      );
     }
-
-    @Override
-    public Survey answerSurvey(SurveyDTO params) {
-        try {
-            Session session = this.factory.getObject().getCurrentSession();
-            CriteriaBuilder b = session.getCriteriaBuilder();
-
-            Customer customer = session.get(Customer.class, params.getCustomerId());
-
-            Survey survey = new Survey();
-            survey.setDate(new Date());
-            survey.setPersonalOpinion(params.getPersonalOpinion());
-            session.save(survey);
-
-            for (AnswerDTO answerDTO : params.getAnswer()) {
-                System.out.println("# " + answerDTO.getId() + "   " + answerDTO.getQuestionId() + "   " + answerDTO.getAnswer());
-                // Answer
-                Answer answer = new Answer();
-                answer.setAnswer(answerDTO.getAnswer());
-                session.save(answer);
-
-                // CustomerSurvey
-                CustomerSurvey customerSurvey = new CustomerSurvey();
-                customerSurvey.setAnswerId(answer);  //session.get(Answer.class, answerDTO.getId())
-                customerSurvey.setCustomerId(customer);
-                customerSurvey.setQuestionId(session.get(Question.class, answerDTO.getQuestionId()));
-                customerSurvey.setSurveyId(survey);
-                session.save(customerSurvey);
-            }
-
-            return survey;
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            // Optionally, you can throw a custom exception here
-        }
-        return null;
+    q.where(predicates.toArray(Predicate[]::new));
+    q.groupBy(cS.get("id"));
+    Query query = session.createQuery(q);
+    String pageNumber = "";
+    int pageSize = 0;
+    if (params != null && !params.isEmpty()) {
+      if (params.get("page") != null && !params.get("page").isEmpty()) {
+        pageNumber = params.get("page");
+      }
+      if (params.get("pageSize") != null && !params.get("pageSize").isEmpty()) {
+        pageSize = Integer.parseInt(params.get("pageSize"));
+      } else {
+        pageSize = 10;
+      }
     }
-
-    @Override
-    public Receipt getReceiptById(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    if (pageNumber != null && !pageNumber.isEmpty()) {
+      int page = Integer.parseInt(pageNumber);
+      // 15, 3, 5
+      //            int pageSize = this.env.getProperty("PAGE_SIZE", Integer.class);
+      int start = (page - 1) * pageSize;
+      query.setFirstResult(start);
+      query.setMaxResults(pageSize);
     }
+    List<Object> feedbackMap = new ArrayList<>();
+    for (Object item : query.getResultList()) {
+      //            System.out.println("####" + item);
+      Object[] itemArray = (Object[]) item;
+      Map<String, Object> feedbackInfo = new HashMap<>();
+      Long discountDateTimestamp = itemArray[2] instanceof Date
+        ? ((Date) itemArray[2]).getTime()
+        : Long.parseLong(itemArray[2].toString());
 
-    @Override
-    public List<Object> getPersonalOpinion(Map<String, String> params) {
-        int type = 0;
-        String kw = "";
-        if (params.get("kw") != null
-                && !params.get("kw").isEmpty()
-                && params.get("type") != null
-                && !params.get("type").isEmpty()) {
-            type = Integer.parseInt(params.get("type"));
-            kw = params.get("kw");
-        }
-        Session session = this.factory.getObject().getCurrentSession();
-        CriteriaBuilder b = session.getCriteriaBuilder();
-        CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
-        Root s = q.from(Survey.class);
-        Root cS = q.from(CustomerSurvey.class);
-        Root c = q.from(Customer.class);
+      feedbackInfo.put("answer", itemArray[0]);
+      feedbackInfo.put("type", itemArray[1]);
+      feedbackInfo.put("date", parseIntToDate(discountDateTimestamp));
 
-        List<Predicate> predicates = new ArrayList<>();
-        q.multiselect(c.get("name"), s.get("personalOpinion"), s.get("date"));
-//        
-        if (type == 1) {
-            predicates.add(
-                    b.equal(b.function("MONTH", Integer.class, s.get("date")), kw)
-            );
-        }
-        if (type == 2) {
-            predicates.add(
-                    b.equal(b.function("YEAR", Integer.class, s.get("date")), kw)
-            );
-        }
-        predicates.add(b.equal(s.get("id"), cS.get("surveyId").get("id")));
-        predicates.add(b.equal(cS.get("customerId").get("id"), c.get("id")));
-
-        q.groupBy(s.get("id"));
-
-        q.where(predicates.toArray(Predicate[]::new));
-        Query query = session.createQuery(q);
-        List<Object> feedbackMap = new ArrayList<>();
-        for (Object item : query.getResultList()) {
-//            System.out.println("####" + item);
-            Object[] itemArray = (Object[]) item;
-            Map<String, Object> feedbackInfo = new HashMap<>();
-            Long discountDateTimestamp = itemArray[2] instanceof Date ? ((Date) itemArray[2]).getTime() : Long.parseLong(itemArray[2].toString());
-            
-            feedbackInfo.put("customer_name", itemArray[0]);
-            feedbackInfo.put("personal_opinion", itemArray[1]);
-            feedbackInfo.put("date", parseIntToDate(discountDateTimestamp));
-            
-            feedbackMap.add(feedbackInfo);
-        }
-        return feedbackMap;
+      feedbackMap.add(feedbackInfo);
     }
+    Map<String, Object> feedbackInfo = new HashMap<>();
+    feedbackInfo.put("quantity", feedbackMap.size());
 
+    feedbackMap.add(feedbackInfo);
+    return feedbackMap;
+  }
+
+  public Object parseIntToDate(Long timestamp) {
+    //        long timestamp = 1640970000000L; // Giá trị timestamp dạng long
+    Instant instant = Instant.ofEpochMilli(timestamp); // Chuyển timestamp sang Instant
+    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); // Định dạng thời gian mong muốn
+    formatter.setTimeZone(TimeZone.getDefault()); // Cài đặt múi giờ mặc định
+    Date date = Date.from(instant); // Chuyển Instant sang Date
+    String formattedDate = formatter.format(date); // Định dạng Date thành chuỗi
+    System.out.println("Date: " + formattedDate); // In ra ngày đã định dạng
+    return formattedDate;
+  }
+
+  @Override
+  public boolean createSurvey(Map<String, String> params) {
+    try {
+      //
+      Session session = this.factory.getObject().getCurrentSession();
+      CriteriaBuilder b = session.getCriteriaBuilder();
+      CriteriaQuery<Question> q = b.createQuery(Question.class);
+
+      Set<String> keys = params.keySet();
+
+      for (String key : keys) {
+        Question sD = new Question();
+        sD.setQuestion(params.get(key));
+        sD.setType(key);
+
+        session.save(sD);
+        //                System.out.println(key + " ###  " + params.get(key));
+        //
+      }
+      return true;
+    } catch (Exception ex) {
+      ex.printStackTrace();
+    }
+    return false;
+  }
+
+  @Override
+  public Survey answerSurvey(SurveyDTO params) {
+    try {
+      Session session = this.factory.getObject().getCurrentSession();
+      CriteriaBuilder b = session.getCriteriaBuilder();
+
+      Customer customer = session.get(Customer.class, params.getCustomerId());
+
+      Survey survey = new Survey();
+      survey.setDate(new Date());
+      survey.setPersonalOpinion(params.getPersonalOpinion());
+      session.save(survey);
+
+      for (AnswerDTO answerDTO : params.getAnswer()) {
+        System.out.println(
+          "# " +
+          answerDTO.getId() +
+          "   " +
+          answerDTO.getQuestionId() +
+          "   " +
+          answerDTO.getAnswer()
+        );
+        // Answer
+        Answer answer = new Answer();
+        answer.setAnswer(answerDTO.getAnswer());
+        session.save(answer);
+
+        // CustomerSurvey
+        CustomerSurvey customerSurvey = new CustomerSurvey();
+        customerSurvey.setAnswerId(answer); //session.get(Answer.class, answerDTO.getId())
+        customerSurvey.setCustomerId(customer);
+        customerSurvey.setQuestionId(
+          session.get(Question.class, answerDTO.getQuestionId())
+        );
+        customerSurvey.setSurveyId(survey);
+        session.save(customerSurvey);
+      }
+
+      return survey;
+    } catch (Exception ex) {
+      ex.printStackTrace();
+      // Optionally, you can throw a custom exception here
+    }
+    return null;
+  }
+
+  @Override
+  public Receipt getReceiptById(int id) {
+    throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+  }
+
+  @Override
+  public List<Object> getPersonalOpinion(Map<String, String> params) {
+    int type = 0;
+    String kw = "";
+    if (
+      params.get("kw") != null &&
+      !params.get("kw").isEmpty() &&
+      params.get("type") != null &&
+      !params.get("type").isEmpty()
+    ) {
+      type = Integer.parseInt(params.get("type"));
+      kw = params.get("kw");
+    }
+    Session session = this.factory.getObject().getCurrentSession();
+    CriteriaBuilder b = session.getCriteriaBuilder();
+    CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
+    Root s = q.from(Survey.class);
+    Root cS = q.from(CustomerSurvey.class);
+    Root c = q.from(Customer.class);
+
+    List<Predicate> predicates = new ArrayList<>();
+    q.multiselect(c.get("name"), s.get("personalOpinion"), s.get("date"));
+    //
+    if (type == 1) {
+      predicates.add(
+        b.equal(b.function("MONTH", Integer.class, s.get("date")), kw)
+      );
+    }
+    if (type == 2) {
+      predicates.add(
+        b.equal(b.function("YEAR", Integer.class, s.get("date")), kw)
+      );
+    }
+    predicates.add(b.equal(s.get("id"), cS.get("surveyId").get("id")));
+    predicates.add(b.equal(cS.get("customerId").get("id"), c.get("id")));
+
+    q.groupBy(s.get("id"));
+
+    q.where(predicates.toArray(Predicate[]::new));
+    Query query = session.createQuery(q);
+    List<Object> feedbackMap = new ArrayList<>();
+    for (Object item : query.getResultList()) {
+      //            System.out.println("####" + item);
+      Object[] itemArray = (Object[]) item;
+      Map<String, Object> feedbackInfo = new HashMap<>();
+      Long discountDateTimestamp = itemArray[2] instanceof Date
+        ? ((Date) itemArray[2]).getTime()
+        : Long.parseLong(itemArray[2].toString());
+
+      feedbackInfo.put("customer_name", itemArray[0]);
+      feedbackInfo.put("personal_opinion", itemArray[1]);
+      feedbackInfo.put("date", parseIntToDate(discountDateTimestamp));
+
+      feedbackMap.add(feedbackInfo);
+    }
+    return feedbackMap;
+  }
 }

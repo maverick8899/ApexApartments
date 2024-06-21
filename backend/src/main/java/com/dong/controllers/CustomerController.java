@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
+import java.util.Map;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class CustomerController {
@@ -32,9 +34,9 @@ public class CustomerController {
     private AccountsService accSer;
 
     @GetMapping("/customers")
-    public String list(Model model) {
+    public String list(Model model,@RequestParam Map<String, String> params) {
 //        model.addAttribute("customer", new Customer());
-        model.addAttribute("customer", this.cusService.getCustomers(null));
+        model.addAttribute("customer", this.cusService.getCustomers(params));
         return "customer";
     }
 
@@ -44,8 +46,8 @@ public class CustomerController {
         return "addCustomer";
     }
     @ModelAttribute
-    public void commonAttr(Model model) {
-        model.addAttribute("room", this.roomService.getRoom()
+    public void commonAttr(Model model,@RequestParam Map<String, String> params) {
+        model.addAttribute("room", this.roomService.getRoom(params)
         );
     }
 

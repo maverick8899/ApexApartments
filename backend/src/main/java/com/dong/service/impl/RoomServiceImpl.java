@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 @Service
 
 public class RoomServiceImpl implements RoomService {
@@ -14,8 +15,8 @@ public class RoomServiceImpl implements RoomService {
     @Autowired
     private RoomRepository roomReps;
     @Override
-    public List<Room> getRoom() {
-        return this.roomReps.getRoom();
+    public List<Room> getRoom(Map<String, String> params) {
+        return this.roomReps.getRoom(params );
     }
 
     @Override

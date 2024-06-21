@@ -21,6 +21,7 @@ import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
 
@@ -32,127 +33,156 @@ import org.springframework.stereotype.Repository;
 @Transactional
 public class UseServiceRepositoryImpl implements UseServiceRepository {
 
-    @Autowired
-    private LocalSessionFactoryBean factory;
+  @Autowired
+  private LocalSessionFactoryBean factory;
 
-    @Override
-    public List<UseService> getUseServicesByIdCustomer(int customerId) {
-        Session session = this.factory.getObject().getCurrentSession();
-        CriteriaBuilder b = session.getCriteriaBuilder();
-        CriteriaQuery<UseService> q = b.createQuery(UseService.class);
-        Root uS = q.from(UseService.class);
-        q.select(uS);
+  @Autowired
+  private Environment env;
 
-        q.where(b.equal(uS.get("customerId"), customerId));
-        Query query = session.createQuery(q);
-        return query.getResultList();
-    }
+  @Override
+  public List<UseService> getUseServicesByIdCustomer(int customerId) {
+    Session session = this.factory.getObject().getCurrentSession();
+    CriteriaBuilder b = session.getCriteriaBuilder();
+    CriteriaQuery<UseService> q = b.createQuery(UseService.class);
+    Root uS = q.from(UseService.class);
+    q.select(uS);
 
-    @Override
-    public boolean UpdateUseService(Map<String, String> params) {
-        try {
-            Session session = this.factory.getObject().getCurrentSession();
-            CriteriaBuilder cb = session.getCriteriaBuilder();
-            CriteriaQuery<UseService> query = cb.createQuery(UseService.class);
-            Root<UseService> root = query.from(UseService.class);
+    q.where(b.equal(uS.get("customerId"), customerId));
+    Query query = session.createQuery(q);
+    return query.getResultList();
+  }
 
-            // Xây dựng điều kiện truy vấn
-            List<Predicate> predicates = new ArrayList<>();
-            predicates.add(cb.equal(root.get("customerId").get("id"), Integer.parseInt(params.get("customer_id"))));
-            predicates.add(cb.equal(root.get("active"), Boolean.TRUE));
+  @Override
+  public boolean UpdateUseService(Map<String, String> params) {
+    try {
+      Session session = this.factory.getObject().getCurrentSession();
+      CriteriaBuilder cb = session.getCriteriaBuilder();
+      CriteriaQuery<UseService> query = cb.createQuery(UseService.class);
+      Root<UseService> root = query.from(UseService.class);
 
-            query.where(predicates.toArray(Predicate[]::new));
+      // Xây dựng điều kiện truy vấn
+      List<Predicate> predicates = new ArrayList<>();
+      predicates.add(
+        cb.equal(
+          root.get("customerId").get("id"),
+          Integer.parseInt(params.get("customer_id"))
+        )
+      );
+      predicates.add(cb.equal(root.get("active"), Boolean.TRUE));
 
-            // Thực hiện truy vấn để lấy danh sách các đối tượng UseService
-            List<UseService> useServices = session.createQuery(query).getResultList();
+      query.where(predicates.toArray(Predicate[]::new));
 
-            // Kiểm tra nếu danh sách useServices không rỗng
-            if (useServices != null && !useServices.isEmpty()) {
-                // Duyệt qua danh sách và cập nhật thuộc tính
-                for (UseService useService : useServices) {
-                    useService.setActive(Boolean.FALSE);
-                    session.update(useService);
-                }
-                return true;
-            } else {
-                // Đối tượng không tồn tại
-                return false;
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
+      // Thực hiện truy vấn để lấy danh sách các đối tượng UseService
+      List<UseService> useServices = session.createQuery(query).getResultList();
+
+      // Kiểm tra nếu danh sách useServices không rỗng
+      if (useServices != null && !useServices.isEmpty()) {
+        // Duyệt qua danh sách và cập nhật thuộc tính
+        for (UseService useService : useServices) {
+          useService.setActive(Boolean.FALSE);
+          session.update(useService);
         }
+        return true;
+      } else {
+        // Đối tượng không tồn tại
         return false;
+      }
+    } catch (Exception ex) {
+      ex.printStackTrace();
+    }
+    return false;
+  }
+
+  @Override
+  public List<Object> getUseServices(Map<String, String> params) {
+    int type = 0;
+    String kw = "";
+    if (
+      params.get("kw") != null &&
+      !params.get("kw").isEmpty() &&
+      params.get("type") != null &&
+      !params.get("type").isEmpty()
+    ) {
+      type = Integer.parseInt(params.get("type"));
+      kw = params.get("kw");
+    }
+    List<Predicate> predicates = new ArrayList<>();
+
+    Session session = this.factory.getObject().getCurrentSession();
+    CriteriaBuilder b = session.getCriteriaBuilder();
+    CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
+    Root uS = q.from(UseService.class);
+    Root s = q.from(Service.class);
+
+    //        q.select(f);
+    q.multiselect(
+      uS.get("id"),
+      uS.get("date"),
+      uS.get("customerId").get("id"),
+      uS.get("customerId").get("name"),
+      uS.get("customerId").get("email"),
+      s.get("name"),
+      s.get("description"),
+      s.get("unit"),
+      s.get("id")
+    );
+
+    if (type == 3) {
+      predicates.add(b.equal(uS.get("customerId").get("id"), kw));
+      //                    q.groupBy( s.get("id"));
+
+    }
+    predicates.add(b.equal(uS.get("serviceId").get("id"), s.get("id")));
+    predicates.add(b.equal(uS.get("active"), 1));
+
+    q.where(predicates.toArray(Predicate[]::new));
+    if (type != 3) {
+      q.groupBy(uS.get("customerId").get("id"));
+      q.orderBy(b.asc(uS.get("customerId").get("id")));
     }
 
-    @Override
-    public List<Object> getUseServices(Map<String, String> params) {
-        int type = 0;
-        String kw = "";
-        if (params.get("kw") != null
-                && !params.get("kw").isEmpty()
-                && params.get("type") != null
-                && !params.get("type").isEmpty()) {
-            type = Integer.parseInt(params.get("type"));
-            kw = params.get("kw");
-        }
-        List<Predicate> predicates = new ArrayList<>();
-
-        Session session = this.factory.getObject().getCurrentSession();
-        CriteriaBuilder b = session.getCriteriaBuilder();
-        CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
-        Root uS = q.from(UseService.class);
-        Root s = q.from(Service.class);
-
-        //        q.select(f);
-        q.multiselect(
-                uS.get("id"),
-                uS.get("date"),
-                uS.get("customerId").get("id"),
-                uS.get("customerId").get("name"),
-                uS.get("customerId").get("email"),
-                s.get("name"),
-                s.get("description"),
-                s.get("unit"),
-                s.get("id")
-        );
-
-        if (type == 3) {
-            predicates.add(b.equal(uS.get("customerId").get("id"), kw));
-//                    q.groupBy( s.get("id"));
-
-        }
-        predicates.add(b.equal(uS.get("serviceId").get("id"), s.get("id")));
-        predicates.add(b.equal(uS.get("active"), 1));
-
-        q.where(predicates.toArray(Predicate[]::new));
-        if (type != 3) {
-            q.groupBy(uS.get("customerId").get("id"));
-            q.orderBy(b.asc(uS.get("customerId").get("id")));
-        }
-
-        Query query = session.createQuery(q);
-        List<Object> feedbackMap = new ArrayList<>();
-        int i = 0;
-
-        for (Object item : query.getResultList()) {
-            //
-            Object[] feedback = (Object[]) item;
-            Map<String, Object> feedbackInfo = new HashMap<>();
-
-            feedbackInfo.put("useService_id", feedback[0]);
-            feedbackInfo.put("useService_date", feedback[1]);
-            feedbackInfo.put("customer_id", feedback[2]);
-            feedbackInfo.put("customer_name", feedback[3]);
-            feedbackInfo.put("customer_email", feedback[4]);
-            feedbackInfo.put("service_name", feedback[5]);
-            feedbackInfo.put("service_description", feedback[6]);
-            feedbackInfo.put("service_unit", feedback[7]);
-            feedbackInfo.put("service_id", feedback[8]);
-
-            feedbackMap.add(feedbackInfo);
-            i++;
-        }
-        return feedbackMap;
+    Query query = session.createQuery(q);
+    String pageNumber = "";
+    int pageSize = 0;
+    if (params != null && !params.isEmpty()) {
+      if (params.get("page") != null && !params.get("page").isEmpty()) {
+        pageNumber = params.get("page");
+      }
+      if (params.get("pageSize") != null && !params.get("pageSize").isEmpty()) {
+        pageSize = Integer.parseInt(params.get("pageSize"));
+      } else {
+        pageSize = 10;
+      }
     }
+    if (pageNumber != null && !pageNumber.isEmpty()) {
+      int page = Integer.parseInt(pageNumber);
+      // 15, 3, 5
+      //            int pageSize = this.env.getProperty("PAGE_SIZE", Integer.class);
+      int start = (page - 1) * pageSize;
+      query.setFirstResult(start);
+      query.setMaxResults(pageSize);
+    }
+    List<Object> feedbackMap = new ArrayList<>();
+    int i = 0;
 
+    for (Object item : query.getResultList()) {
+      //
+      Object[] feedback = (Object[]) item;
+      Map<String, Object> feedbackInfo = new HashMap<>();
+
+      feedbackInfo.put("useService_id", feedback[0]);
+      feedbackInfo.put("useService_date", feedback[1]);
+      feedbackInfo.put("customer_id", feedback[2]);
+      feedbackInfo.put("customer_name", feedback[3]);
+      feedbackInfo.put("customer_email", feedback[4]);
+      feedbackInfo.put("service_name", feedback[5]);
+      feedbackInfo.put("service_description", feedback[6]);
+      feedbackInfo.put("service_unit", feedback[7]);
+      feedbackInfo.put("service_id", feedback[8]);
+
+      feedbackMap.add(feedbackInfo);
+      i++;
+    }
+    return feedbackMap;
+  }
 }

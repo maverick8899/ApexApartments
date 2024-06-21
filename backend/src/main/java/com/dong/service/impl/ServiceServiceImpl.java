@@ -7,6 +7,7 @@ import com.dong.service.ServiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.Map;
 
 @org.springframework.stereotype.Service
 public class ServiceServiceImpl implements ServiceService {
@@ -25,8 +26,8 @@ public class ServiceServiceImpl implements ServiceService {
     }
 
     @Override
-    public List<Service> getServices() {
-        return this.Seser.getServices();
+    public List<Service> getServices(Map<String, String> params) {
+        return this.Seser.getServices(params);
     }
 
     @Override
