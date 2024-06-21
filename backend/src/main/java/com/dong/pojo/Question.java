@@ -45,6 +45,7 @@ public class Question implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Size(max = 255)
+    @NotNull(message = "{survey.nullErr}")
     @Column(name = "question")
     private String question;
     @Basic(optional = false)

@@ -28,7 +28,7 @@
                     <span class="glyphicon glyphicon-search form-control-feedback"></span>
                 </div>
                 <button type="submit" class="btn btn-info"> Tìm</button>
-                <a href="<c:url value="/addReceipt" />" class="btn btn-info">Thêm Hóa Đơn</a>                    
+                <a href="<c:url value="/useService" />" class="btn btn-info">Thêm Hóa Đơn</a>                    
             </form>
         </div>
     </div>
@@ -42,6 +42,8 @@
                 <th>email</th>
                 <th>Tổng HĐ</th>
                 <th>ngày</th>
+                <th>thanh toán</th>
+
 
             </tr>
         </thead>
@@ -53,13 +55,23 @@
                         <td>${r.receiptId}</td>
                         <td>${r.customerId}</td>
                         <td>${r.customerName}</td>
-                        <td>${r.customerEmail}</td>
-                        <td>${r.receiptTotal} VNĐ</td>
+                        <td>${r.customerEmail}</td> 
+                        <td>${r.receiptTotal} VNĐ</td> 
+
                         <td>${r.receiptDate}</td>
+                        <c:choose>
+                            <c:when test="${r.receiptPay == true}">
+                                <td>rồi</td>
+                            </c:when>
+                            <c:otherwise>
+                                <td>chưa</td>
+                            </c:otherwise>
+                        </c:choose>
                         <td>
                             <c:url value="${action}/${r.receiptId}" var="apiDel" />
-                            <a href="<c:url value="/receiptDetail/?type=3&kw=${r.receiptId}" />" class="btn btn-info">Chi Tiết</a>                            
-                            <a href="<c:url value="/receipt/${r.receiptId}" />" class="btn btn-success">Cập nhật</a>
+                                    <!--<a href="<c:url value="/receipt/${r.receiptId}" />" class="btn btn-success">Cập nhật</a>-->
+                            <a href="<c:url value="/receiptDetail/?type=3&kw=${r.receiptId}&cusId=${r.customerId}" />" class="btn btn-success">Chi Tiết</a> 
+
                             <button class="btn btn-danger" onclick="delReceipt('api/receipt/${r.receiptId}')">Xóa</button>
                         </td>
                     </tr>
@@ -71,6 +83,55 @@
     </table>
 </section>
 
+<%@page import="java.util.List"%>
+<%
+    String pageParam = request.getParameter("page");
+    String pageSizeParam = request.getParameter("pageSize");
+
+    int currentPage = pageParam != null ? Integer.parseInt(pageParam) : 1;
+    int pageSize = pageSizeParam != null ? Integer.parseInt(pageSizeParam) : 10;
+
+    List<?> feedbacks = (List<?>) request.getAttribute("feedbacks");
+    int totalItems = feedbacks != null ? feedbacks.size() : 0;
+    int totalPages = (int) Math.ceil((double) totalItems / pageSize);
+
+//    out.println("<p>currentPage: " + currentPage + "</p>");
+//    out.println("<p>pageSize: " + pageSize + "</p>");
+//    out.println("<p>totalItems: " + totalItems + "</p>");
+//    out.println("<p>totalPages: " + totalPages + "</p>");
+    int j = 0;
+%>
+<div class="d-flex justify-content-center">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item <%= currentPage == 1 ? "disabled" : ""%>">
+                <a class="page-link" href="/apartment_manager/feedback?page=<%= currentPage - 1%>&pageSize=<%= pageSize%>">Previous</a>
+            </li>
+
+            <% for (int i = 1; i <= totalPages; i++) {%>
+            <li class="page-item <%= currentPage == i ? "active" : ""%>">
+                <a class="page-link" href="/apartment_manager/feedback?page=<%= i%>&pageSize=<%= pageSize%>"><%= i%></a>
+            </li>
+            <% }%>
+
+            <li class="page-item <%= currentPage == totalPages ? "disabled" : ""%>">
+                <a class="page-link" href="/apartment_manager/feedback?page=<%= currentPage + 1%>&pageSize=<%= pageSize%>">Next</a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+<script>
+    function navigatePage(page, pageSize, totalPages) {
+        if (page < 1 || page > totalPages) {
+            return;
+        }
+        const urlParams = new URLSearchParams(window.location.search);
+        urlParams.set('page', page);
+        urlParams.set('pageSize', pageSize);
+        window.location.search = urlParams.toString();
+    }
+</script>
 <script >
     async function delReceipt(path) {
         if (confirm("Bạn chắc chắn muốn xóa không?")) {

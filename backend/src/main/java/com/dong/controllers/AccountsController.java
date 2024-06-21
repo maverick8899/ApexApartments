@@ -2,6 +2,7 @@ package com.dong.controllers;
 
 import com.dong.pojo.Accounts;
 import com.dong.service.AccountsService;
+import java.util.Map;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @ControllerAdvice
@@ -26,8 +28,8 @@ public class AccountsController {
     }
 
     @RequestMapping({"/account"})
-    public String list(Model model) {
-        model.addAttribute("account", this.accSer.getAccounts());
+    public String list(Model model,@RequestParam Map<String, String> params) {
+        model.addAttribute("account", this.accSer.getAccounts(params));
         return "account";
     }
 

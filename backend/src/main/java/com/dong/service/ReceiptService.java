@@ -13,8 +13,9 @@ public interface ReceiptService {
     boolean deleteReceipt(int id);
 
     Receipt getReceiptById(int id);
+
     public boolean addOrUpdateReceipt(Receipt r);
 
-    
-//    List<ReceiptDTO> getReceiptDetail(Map<String, String> params);
+    boolean payment(Map<String, String> params) ;//    List<ReceiptDTO> getReceiptDetail(Map<String, String> params);
+
 }

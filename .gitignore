@@ -11,3 +11,7 @@ backend/.idea
 frontend/node_modules
 frontend/package-lock.json
 backend/src/main/resources/databases.properties
+deploy/webapps
+./src
+frontend/src
+deploy/.env

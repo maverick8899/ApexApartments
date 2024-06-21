@@ -13,7 +13,7 @@ import com.dong.service.FeedbackService;
 import com.dong.service.ReceiptService;
 import com.dong.service.RoomService;
 import com.dong.service.ServiceService;
-import com.dong.service.SurveyService;
+import com.dong.service.UseServiceService;
 import com.dong.service.impl.ReceiptServiceImpl;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,20 +30,16 @@ import org.springframework.context.annotation.PropertySource;
 @Controller
 @ControllerAdvice
 @PropertySource("classpath:configs.properties")
-public class StatisticsController {
-//    @Autowired
-//    private CustomerService cusService;
-
+public class useServiceController {
     @Autowired
-    private SurveyService surveyService;
+    private UseServiceService useServiceService;
 
-    @GetMapping("/statistics")
+    @GetMapping("/useService")
     public String getReceipts(Model model, @RequestParam Map<String, String> params) {
 //        model.addAttribute("receipt", new Receipt());
-//        model.addAttribute("feedbacks", this.feedbackService.getFeedback(params));
-        return "statistics";
+        model.addAttribute("useServices", this.useServiceService.getUseServices(params));
+        return "useService";
     }
-    
     
 
 }

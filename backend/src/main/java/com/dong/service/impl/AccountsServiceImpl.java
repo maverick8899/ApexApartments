@@ -8,13 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 @Service
 public class AccountsServiceImpl implements AccountsService {
     @Autowired
     private AccountsRepository accRep;
     @Override
-    public List<Accounts> getAccounts() {
-        return this.accRep.getAccounts();
+    public List<Accounts> getAccounts(Map<String, String> params) {
+        return this.accRep.getAccounts(params);
     }
 
     @Override
@@ -33,8 +34,8 @@ public class AccountsServiceImpl implements AccountsService {
     }
 
     @Override
-    public List<Accounts> getAccountsUser() {
-        return this.accRep.getAccountsUser();
+    public List<Accounts> getAccountsUser(Map<String, String> params) {
+        return this.accRep.getAccountsUser(params);
     }
 
     @Override

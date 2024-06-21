@@ -2,7 +2,6 @@
 // Source code recreated from a .class file by IntelliJ IDEA
 // (powered by FernFlower decompiler)
 //
-
 package com.dong.repository.impl;
 
 import com.dong.pojo.Merchandise;
@@ -20,6 +19,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Transactional
 public class MerchandiseRepositoryImpl implements MerchandiseRepository {
+
     @Autowired
     private LocalSessionFactoryBean factory;
 
@@ -27,8 +27,8 @@ public class MerchandiseRepositoryImpl implements MerchandiseRepository {
     }
 
     public Merchandise getMerchandiseById(int id) {
-        Session session = ((SessionFactory)Objects.requireNonNull(this.factory.getObject())).getCurrentSession();
-        return (Merchandise)session.get(Merchandise.class, id);
+        Session session = ((SessionFactory) Objects.requireNonNull(this.factory.getObject())).getCurrentSession();
+        return (Merchandise) session.get(Merchandise.class, id);
     }
 
     public boolean addOrUpdateMerchandise(Merchandise r) {

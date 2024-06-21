@@ -37,7 +37,7 @@ public class ApiReceiptController {
     public void delete(@PathVariable(value = "id") int id) {
         this.recSerivce.deleteReceipt(id);
         this.detailRS.deleteDetailReceipt(id);
-        System.out.println("### "+ this.recSerivce.deleteReceipt(id));
+        System.out.println("### " + this.recSerivce.deleteReceipt(id));
     }
 
     @RequestMapping(
@@ -49,6 +49,19 @@ public class ApiReceiptController {
             @RequestParam Map<String, String> params
     ) {
         return new ResponseEntity<>(this.recSerivce.getReceipt(params), HttpStatus.OK);
+
+    }
+
+    @PostMapping(
+            path = "/receipt/payment",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    @CrossOrigin
+    public ResponseEntity<String> list1(
+            @RequestParam Map<String, String> params
+    ) {
+        this.recSerivce.payment(params);
+        return ResponseEntity.status(HttpStatus.OK).body("thanh cong");
 
     }
     //    @RequestMapping(path = "/customers/{customerId}/", produces = MediaType.APPLICATION_JSON_VALUE)

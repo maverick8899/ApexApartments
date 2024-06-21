@@ -1,135 +1,159 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: ASUS
+  Date: 13-Apr-24
+  Time: 03:29 AM
+  To change this template use File | Settings | File Templates.
+--%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<h1 class="text-center text-info mt-1">QUẢN TRỊ HÓA ĐƠN</h1>
+<!--//-->
+<section class="container">
+    <c:url value="/addReceipt" var="action" />
 
-<c:url value="/addReceipt" var="action" />
+    <form action="${action}" method="post" class="search-form">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <!--<th>Mã HĐ</th>-->
+                    <th>Mã KH</th>
+                    <th>Tên Khách hàng</th>
+                    <th>email</th>
+                </tr>
+            </thead>
+            <tbody> 
+                <c:if test="${useServices != null}"> 
+                    <tr>
+                        <!--<td>${useServices[0].receiptId}</td>-->
+                <input type="text" hidden="true" name="customer_id" value="${useServices[0].customer_id}">
+                <td>${useServices[0].customer_id}</td>
+                <td>${useServices[0].customer_name}</td>
+                <td>${useServices[0].customer_email}</td>
+                <td>
+                    <c:url value="${action}/${useServices[0].customer_id}" var="apiDel" />
+                    <!--<a href="<c:url value="/receipt/${useServices[0].receiptId}" />" class="btn btn-success">Cập nhật</a>-->
+                    <!--<button class="btn btn-danger" onclick=delReceipt('api/receipt/${r.receiptId}')">Xóa</button>-->
+                </td>
+                </tr> 
+            </c:if>
 
-<form action="${action}" method="post" class="search-form "   >
-    <legend>Hóa đơn</legend>
-    <fieldset>
-        <div class="mb-3">
-            <label for="disabledTextInput" class="form-label">Tên cư dân</label>
-            <select class="form-select" aria-label="Default select example"  name="customer_id">
-                <option selected>Tên cư dân</option>
-                <c:if test="${customers != null}">
-                    <c:forEach items="${customers}" var="customer">
-<<<<<<< HEAD:src/apartment_manager/src/main/webapp/WEB-INF/pages/addReceipt.jsp
-                        <option value="${customer.id}">${customer.id} - ${customer.name}</option>
-=======
-                        <option value="${customer.id}">${customer.id} - ${customer.name}</option> 
->>>>>>> ce18b7eb1dc8c262b98de3ed42fd8ed3140aba0b:backend/src/main/webapp/WEB-INF/pages/addReceipt.jsp
+            <%--<form:hidden path="id" />--%>
+            </tbody>
+        </table>
+
+        <table class="table table-hover ">
+            <thead>
+                <tr>
+                    <th>Mã Dịch Vụ</th>
+                    <th>Tên Dịch Vụ</th>
+                    <th>Mô Tả</th>
+                    <th>Số Lượng</th>
+                    <th>Đơn vị</th>
+                    <th>Ngày dùng đầu</th>
+                    <th>Ngày dùng cuối</th> 
+                    <th>Tổng</th> 
+                </tr>
+            </thead>
+            <tbody>
+
+                <c:if test="${useServices != null}">
+                    <%-- Khai báo và khởi tạo biến đếm --%>
+                    <c:set var="counter" value="0" />
+
+                    <c:forEach items="${useServices}" var="r">
+                        <tr>
+                            <td><input type="text"  name="services[${counter}].service_id" value="${r.service_id}"></td>
+
+                            <td>${r.service_name}</td>
+                            <td>${r.service_description}</td> 
+                            <td>
+                                <input type="text" name="services[${counter}].detail_receipt_quantity">
+                            </td>  
+                            <td>${r.service_unit}</td>
+                            <td>${r.useService_date}</td> 
+                            <c:choose>
+                                <c:when test="${r.receiptPay != true}"> 
+                                    <td>
+                                        <input type="date" name="services[${counter}].date">
+                                    </td>
+                                </c:when>
+                                <c:otherwise>
+                                    <td>${r.receiptDate}</td>
+                                </c:otherwise>
+                            </c:choose>
+
+                            <c:choose>
+                                <c:when test="${r.receiptPay != true}"> 
+                                    <td>
+                                        <input type="text" name="services[${counter}].detail_receipt_cost">
+                                    </td>
+                                </c:when>
+                                <c:otherwise>
+                                    <td>${r.receiptDetailCost}</td>
+                                </c:otherwise>
+                            </c:choose>
+
+                            <td>
+                                <c:url value="${action}/${r.receiptId}" var="apiDel" />
+                                <!--<a href="<c:url value="/receipt/${r.receiptId}" />" class="btn btn-success">Cập nhật</a>-->
+                                <!--<button class="btn btn-danger" onclick=delReceipt('api/receipt/${r.receiptId}')">Xóa</button>-->
+                            </td>
+                        </tr>
+
+                        <%-- Tăng giá trị của biến đếm sau mỗi lần lặp --%>
+                        <c:set var="counter" value="${counter + 1}" />
                     </c:forEach>
+
                 </c:if>
-            </select>
-        </div>
 
-        <div id="services-container" class="border border-3 border-info-subtle">
-            <div class="mb-3 mt-3 d-flex gap-3 w-100% align-items-center service-element" style="height: 50px">
-                <div class="mb-2">
-                    <select class="form-select" aria-label="Default select example" name="services[0].service_id">
-                        <option selected>Tên dịch vụ</option>
-                        <c:forEach items="${services}" var="service">
-<<<<<<< HEAD:src/apartment_manager/src/main/webapp/WEB-INF/pages/addReceipt.jsp
-                            <option value="${service.id}">${service.id} - ${service.name}</option>
-=======
-                            <option value="${service.id}">${service.id} - ${service.name}</option> 
->>>>>>> ce18b7eb1dc8c262b98de3ed42fd8ed3140aba0b:backend/src/main/webapp/WEB-INF/pages/addReceipt.jsp
-                        </c:forEach>
-                    </select>
-                </div>
-                <div>
-                    <label for="use_service_date" class="form-label">Ngày sử dụng dịch vụ</label>
-                    <input type="date" name="services[0].date">
-                </div>
-                <div>
-                    <label for="detail_receipt_quantity" class="form-label">Số lượng sử dụng</label>
-                    <input type="text" name="services[0].detail_receipt_quantity">
-                </div>
-                <div>
-                    <label for="detail_receipt_cost" class="form-label">Tổng chi trả vnd</label>
-                    <input type="text" name="services[0].detail_receipt_cost">
-                </div>
-                <button type="button" class="btn btn-danger remove-service-btn">Xóa</button>
-            </div>
-        </div>
-        <button type="button" class="btn btn-primary add-service-btn">Thêm dịch vụ</button>
+                <%--<form:hidden path="id" />--%>
+            </tbody>
+        </table>
 
+        <table class="table table-hover ">
+            <thead>
+                <tr>
+                    <th>Mã Thẻ Xe</th>     
+                    <th>Mô Tả</th> 
+                    <th>Ngày dùng đầu</th>
+                    <th>Ngày dùng cuối</th>
+                    <th>Tổng</th>
+                </tr>
+            </thead>
+            <tbody>
 
+                <c:if test="${parkCards != null}">
+                    <%-- Khai báo và khởi tạo biến đếm --%>
+                    <c:set var="counter" value="0" />
 
-        <div class="mb-3">
-            <select class="form-select" aria-label="Default select example"  name="receipt_isPay">
-                <option selected>Tình trạng thanh toán</option>
-<<<<<<< HEAD:src/apartment_manager/src/main/webapp/WEB-INF/pages/addReceipt.jsp
-                <option value="0">Chưa thanh toán</option>
-                <option value="1">Đã thanh toán</option>
-=======
-                <option value="0">Chưa thanh toán</option> 
-                <option value="1">Đã thanh toán</option> 
->>>>>>> ce18b7eb1dc8c262b98de3ed42fd8ed3140aba0b:backend/src/main/webapp/WEB-INF/pages/addReceipt.jsp
-            </select>
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </fieldset>
-</form>
+                    <c:forEach items="${parkCards}" var="r">
+                        <tr>
+                            <td>${r.id}</td>
+                            <input type="text" hidden="true" name="parkCards[${counter}].id" value="${r.id}">
+                            <td>${r.description}</td> 
+                            <td>${r.dateCreate}</td>
+                            <td>${r.expiry}</td> 
+                            <c:choose>
+                                <c:when test="${r.cost == null}">
+                                    <td><input type="text" name="parkCards[${counter}].cost"></td>
+                                    </c:when>
+                                    <c:otherwise>
+                                    <td>${r.cost}</td>
+                                </c:otherwise>
+                            </c:choose>
+                        </tr>
+                        <%-- Tăng giá trị của biến đếm sau mỗi lần lặp --%>
+                        <c:set var="counter" value="${counter + 1}" />
+                    </c:forEach>
 
-<script>
-    $(document).ready(function() {
-<<<<<<< HEAD:src/apartment_manager/src/main/webapp/WEB-INF/pages/addReceipt.jsp
-        let serviceIndex = 1;
-        // Thêm khối dịch vụ mới
-        $('.add-service-btn').click(function() {
+                </c:if>
 
-            let newService = `
-=======
-    let serviceIndex = 1;
-    // Thêm khối dịch vụ mới
-    $('.add-service-btn').click(function() {
-
-    let newService = `
->>>>>>> ce18b7eb1dc8c262b98de3ed42fd8ed3140aba0b:backend/src/main/webapp/WEB-INF/pages/addReceipt.jsp
-            <div class="mb-3 mt-3 d-flex gap-3 w-100% align-items-center service-element" style="height: 50px">
-                <div class="mb-2">
-                    <select class="form-select" aria-label="Default select example" name="services[` + serviceIndex + `].service_id">
-                        <option selected>Tên dịch vụ</option>
-    <c:forEach items="${services}" var="service">
-<<<<<<< HEAD:src/apartment_manager/src/main/webapp/WEB-INF/pages/addReceipt.jsp
-                            <option value="${service.id}">${service.id} - ${service.name}</option>
-=======
-                            <option value="${service.id}">${service.id} - ${service.name}</option> 
->>>>>>> ce18b7eb1dc8c262b98de3ed42fd8ed3140aba0b:backend/src/main/webapp/WEB-INF/pages/addReceipt.jsp
-    </c:forEach>
-                    </select>
-                </div>
-                <div>
-                    <label for="use_service_date" class="form-label">Ngày sử dụng dịch vụ</label>
-                    <input type="date" name="services[` + serviceIndex + `].date">
-                </div>
-                <div>
-                    <label for="detail_receipt_quantity" class="form-label">Số lượng sử dụng</label>
-                    <input type="text" name="services[` + serviceIndex + `].detail_receipt_quantity">
-                </div>
-                <div>
-                    <label for="detail_receipt_cost" class="form-label">Tổng chi trả vnd</label>
-                    <input type="text" name='services[` + serviceIndex + `].detail_receipt_cost'>
-                </div>
-                <button type="button" class="btn btn-danger remove-service-btn">Xóa</button>
-            </div>`;
-<<<<<<< HEAD:src/apartment_manager/src/main/webapp/WEB-INF/pages/addReceipt.jsp
-            $('#services-container').append(newService);
-            serviceIndex++;
-        });
-        // Xóa khối dịch vụ
-        $('#services-container').on('click', '.remove-service-btn', function() {
-            $(this).closest('.service-element').remove();
-        });
-=======
-    $('#services-container').append(newService);
-    serviceIndex++;
-    });
-    // Xóa khối dịch vụ
-    $('#services-container').on('click', '.remove-service-btn', function() {
-    $(this).closest('.service-element').remove();
-    });
->>>>>>> ce18b7eb1dc8c262b98de3ed42fd8ed3140aba0b:backend/src/main/webapp/WEB-INF/pages/addReceipt.jsp
-    });
-</script>
+                <%--<form:hidden path="id" />--%>
+            </tbody>
+        </table>
+        <button type="submit" class="btn btn-primary">Submit</button> 
+    </form>
+</section>
+<script src="<c:url value="/js/main.js" />"></script>

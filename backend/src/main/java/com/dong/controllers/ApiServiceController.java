@@ -23,8 +23,8 @@ public class ApiServiceController {
     }
     @RequestMapping("/service/")
     @CrossOrigin
-    public ResponseEntity<List<Service>> list() {
-        return new ResponseEntity<>(this.Ser.getServices(), HttpStatus.OK);
+    public ResponseEntity<List<Service>> list(@RequestParam Map<String, String> params) {
+        return new ResponseEntity<>(this.Ser.getServices(params), HttpStatus.OK);
     }
     @RequestMapping(
             path = {"/service/customers/{customerId}"},

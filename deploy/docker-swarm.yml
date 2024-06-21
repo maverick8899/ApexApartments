@@ -1,0 +1,192 @@
+services:
+    db:
+        image: mysql:8.0.33-oracle
+        container_name: mysql
+        ports:
+            - '3307:3306' #/ '3306:3306'
+        networks: [traefik]
+        volumes:
+            - dbdata:/var/lib/mysql
+            - .docker/database/:/docker-entrypoint-initdb.d/
+            # - ../.docker/database/config:/etc/mysql/conf.d
+        # command: mysql -u root -proot -e "SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))"
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: apartments
+            # MYSQL_INIT_COMMAND: "SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));"
+
+    backend:
+        image: maverick0809/tomcat
+        container_name: tomcat
+        ports:
+            - '8081:8080'
+        restart: unless-stopped
+        networks: [ traefik]
+        volumes:
+            # - ../backend/target:/opt/tomcat/webapps
+            - ./webapps:/opt/tomcat/webapps
+        depends_on: [db, traefik]
+        labels:
+            - 'traefik.enable=true'
+            #* Routers
+            #/ backend
+            # - 'traefik.http.routers.backend.rule=Host(`app.devops.online`)' #? domain or pass across header
+            - 'traefik.http.routers.backend.rule=Host(`backend.localhost`)' #? domain or pass across header
+            - 'traefik.http.routers.backend.service=backend' #? auto-generated
+            - 'traefik.http.routers.backend.entrypoints=web' #? port 80
+            # - 'traefik.http.routers.backend.middlewares=test-redirectscheme'
+
+            #/ backend-secure
+            # - 'traefik.http.routers.backend-secure.rule=Host(`app.devops.online`)' #? domain or pass across header
+            # - 'traefik.http.routers.backend-secure.entrypoints=websecure' #? port 443 for tls
+            # - 'traefik.http.routers.backend-secure.tls.certresolver=myresolver' #? tls configuration
+            # - 'traefik.http.routers.backend-secure.middlewares=basic-auth, test-compress, test-errorpages,test-ratelimit'
+
+            #* Services
+            - 'traefik.http.services.backend.loadbalancer.server.port=8080' #? auto-generated
+
+            #@ Middleware
+            #* 1 BasicAuth Middleware
+            # - 'traefik.http.middlewares.basic-auth.basicauth.users=maverick:$$apr1$$BKUDBqtJ$$xvJvdGGEL0mkfGlXgUJXj0'
+            # #?  remove the authorization header before forwarding the request to your service
+            # - 'traefik.http.middlewares.test-auth.basicauth.removeheader=true'
+            # user1: traefik password: training
+            # user2: user2 password: test123
+            # Create hash password -> echo $(htpasswd -nb user2 test123) | sed -e s/\\$/\\$\\$/g
+
+            #* 2 Compress Middleware
+            - 'traefik.http.middlewares.test-compress.compress=true'
+
+            #* 3 Error Pages Middleware
+            #? definition error code
+            - 'traefik.http.middlewares.test-errorpages.errors.status=400-599'
+            #? specify service will resolve when get error
+            - 'traefik.http.middlewares.test-errorpages.errors.service=error'
+            #?  mapping error code to code.html (Ex: 404 -> 404.html)
+            - 'traefik.http.middlewares.test-errorpages.errors.query=/{status}.html'
+
+            #* 4 Rate Limit Middleware
+            - 'traefik.http.middlewares.test-ratelimit.ratelimit.average=2' #? 2reqs / 1second
+
+            #* 5 Redirect Scheme HTTP -> HTTPS  (Moved Permanently : 301) zalo
+            # - 'traefik.http.middlewares.test-redirectscheme.redirectscheme.scheme=https'
+            # - 'traefik.http.middlewares.test-redirectscheme.redirectscheme.permanent=true'
+
+    #* Error Page service, was customed page 404,500,...
+    #) https://github.com/guillaumebriday/traefik-custom-error-pages
+    error:
+        image: guillaumebriday/traefik-custom-error-pages
+        networks: [traefik]
+        labels:
+            - 'traefik.enable=true'
+            - 'traefik.http.routers.error.rule=Host(`error.localhost`)'
+            - 'traefik.http.routers.error.service=error'
+            - 'traefik.http.services.error.loadbalancer.server.port=80' #? default
+            - 'traefik.http.routers.error.entrypoints=web'
+    traefik:
+        image: traefik:v3.0
+        #* use traefik.yml instead
+        # command:
+        #     - '--api.insecure=true'
+        #     - '--providers.docker'
+        #     - '--log.level=INFO'
+        #? the same compare to above
+        environment:
+            #   - TRAEFIK_API_INSECURE=true
+            #   - TRAEFIK_PROVIDERS_DOCKER=true
+            #   - TRAEFIK_LOG_LEVEL=INFO
+            #? use it for dnsChallege
+            #* digital-ocean
+            # - 'DO_AUTH_TOKEN=<Your Super Secret Digital Ocean Token Goes here>'
+            #* aws: router 53
+            - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+            - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+            - AWS_REGION=${AWS_REGION}
+            - AWS_HOSTED_ZONE_ID=${AWS_HOSTED_ZONE_ID}
+        ports:
+            - '8000:80'
+            - '8443:443'
+            - '8080:8080'
+        networks: [traefik]
+        volumes:
+            #? So that Traefik can listen to the Docker events
+            - /var/run/docker.sock:/var/run/docker.sock
+            # Copies the Let's Encrypt certificate locally for ease of backing up
+            - ./letsencrypt:/letsencrypt
+              # Mounts the Traefik static configuration inside the Traefik container
+            - ./traefik.yml:/etc/traefik/traefik.yml
+        healthcheck:
+            test: ['CMD', 'traefik', 'healthcheck']
+            interval: 10s
+            timeout: 2s
+            retries: 3
+            start_period: 5s
+    prometheus:
+        image: prom/prometheus:v2.52.0 #) v2.22.1
+        networks: [traefik]
+        volumes:
+            - ./prometheus/:/etc/prometheus/
+            - prometheus_data:/prometheus
+        command:
+            - '--config.file=/etc/prometheus/prometheus.yml' #/ path config
+            - '--storage.tsdb.path=/prometheus' #? xác định vị trí lưu trữ dữ liệu metrics được scrape
+            - '--web.console.libraries=/usr/share/prometheus/console_libraries' #?  xác định vị trí của các thư viện JavaScript được sử dụng bởi giao diện console web của Prometheus.
+            - '--web.console.templates=/usr/share/prometheus/consoles' #? xác định vị trí của các template HTML được sử dụng bởi giao diện console web của Prometheus.
+        healthcheck:
+            test: ['CMD', 'wget', '--spider', '--quiet', 'http://localhost:9090/-/healthy']
+            interval: 30s
+            timeout: 10s
+            retries: 3
+        deploy:
+            labels:
+                - 'traefik.http.routers.prometheus.rule=Host(`prometheus.localhost`)'
+                - 'traefik.http.routers.prometheus.service=prometheus'
+                - 'traefik.http.routers.prometheus.entrypoints=web'
+                - 'traefik.http.services.prometheus.loadbalancer.server.port=9090'
+                - 'traefik.docker.network=inbound' #? Xác định mạng Docker mà container Prometheus sẽ tham gia
+            placement: #? vị trí place prometheus đặt trên node master
+                constraints:
+                    - node.role==manager
+            restart_policy:
+                condition: on-failure
+
+    grafana:
+        image: grafana/grafana:7.3.1 #10.1.10-ubuntu #) 7.3.1
+        networks: [traefik]
+        depends_on:
+            - prometheus
+        volumes:
+            - grafana_data:/var/lib/grafana
+            - ./grafana/provisioning/:/etc/grafana/provisioning/ #? location for storing configuration files that define dashboards, data sources, and other settings for Grafana to apply when it starts up and runs continuously.
+
+        env_file:
+            - ./grafana/config.monitoring
+        user: '104'
+        healthcheck:
+            test: ['CMD', "curl -f localhost:3000/api/health && echo 'ready'"]
+            interval: 10s
+            retries: 30
+        deploy:
+            labels:
+                - 'traefik.http.routers.grafana.rule=Host(`grafana.localhost`)'
+                - 'traefik.http.routers.grafana.service=grafana'
+                - 'traefik.http.routers.grafana.entrypoints=web'
+                - 'traefik.http.services.grafana.loadbalancer.server.port=3000'
+                - 'traefik.docker.network=inbound'
+            placement:
+                constraints:
+                    - node.role == manager
+            restart_policy:
+                condition: on-failure
+networks:
+    traefik:
+        driver: overlay
+        name: traefik #? default random ID
+    webapp:
+        driver: overlay
+        name: webapp
+
+volumes:
+    dbdata: {}
+    prometheus_data: {}
+    grafana_data: {}

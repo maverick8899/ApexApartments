@@ -4,6 +4,7 @@ import com.dong.pojo.Customer;
 import com.dong.pojo.Service;
 import com.dong.service.CustomerService;
 import com.dong.service.ServiceService;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
@@ -23,8 +24,8 @@ public class ServiceController {
 
 
     @RequestMapping("/service")
-    public String list(Model model) {
-        model.addAttribute("service", this.Seser.getServices());
+    public String list(Model model,@RequestParam Map<String, String> params) {
+        model.addAttribute("service", this.Seser.getServices(params));
         return "service";
     }
 

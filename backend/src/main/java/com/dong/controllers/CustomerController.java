@@ -16,6 +16,7 @@ import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 import java.util.Map;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class CustomerController {
@@ -42,8 +43,8 @@ public class CustomerController {
         return "addCustomer";
     }
     @ModelAttribute
-    public void commonAttr(Model model) {
-        model.addAttribute("room", this.roomService.getRoom()
+    public void commonAttr(Model model,@RequestParam Map<String, String> params) {
+        model.addAttribute("room", this.roomService.getRoom(params)
         );
     }
 

@@ -16,8 +16,8 @@ public class DetailReceiptServiceImpl implements DetailReceiptService {
     private DetailReceiptRepository detailReceiptRepository;
 
     @Override
-    public List<DetailReceipt> getDetailReceipt() {
-        return this.detailReceiptRepository.getDetailReceipt();
+    public List<DetailReceipt> getDetailReceipt(Map<String, String> params) {
+        return this.detailReceiptRepository.getDetailReceipt(params);
     }
 
     @Override

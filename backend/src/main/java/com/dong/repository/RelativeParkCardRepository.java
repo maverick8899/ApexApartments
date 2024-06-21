@@ -17,4 +17,6 @@ public interface RelativeParkCardRepository {
     boolean deleteRelativeParkCard(int var1);
 
     RelativeParkCard addRelativeParkCard(RelativeParkCard var1);
+    
+    boolean updateRelativeParkCard(Map<String, String> params) ;
 }
