@@ -19,6 +19,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.*;
@@ -27,9 +28,9 @@ import org.springframework.web.servlet.config.annotation.*;
 @EnableWebMvc
 @EnableTransactionManagement
 @ComponentScan(basePackages = {
-    "com.dong.controllers",
-    "com.dong.repository",
-    "com.dong.service"
+        "com.dong.controllers",
+        "com.dong.repository",
+        "com.dong.service"
 })
 @PropertySource("classpath:configs.properties")
 public class WebAppContextConfig implements WebMvcConfigurer {
@@ -39,6 +40,7 @@ public class WebAppContextConfig implements WebMvcConfigurer {
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
         configurer.enable();
     }
+
 
     @Override
     public void addFormatters(FormatterRegistry registry) {
@@ -56,10 +58,6 @@ public class WebAppContextConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/js/**").addResourceLocations("/WEB-INF/resources/js/");
         registry.addResourceHandler("/css/**").addResourceLocations("/WEB-INF/resources/css/");
 
-    }
-    @Bean
-    public SimpleDateFormat simpleDateFormat() {
-        return new SimpleDateFormat("yyyy-MM-dd");
     }
     @Bean
     public CommonsMultipartResolver multipartResolver() {
