@@ -60,7 +60,7 @@ public class ApiReceiptController {
     public ResponseEntity<String> list1(
             @RequestParam Map<String, String> params
     ) {
-        this.recSerivce.payment(params);
+        this.recSerivce.payment(params.get("receiptID"));
         return ResponseEntity.status(HttpStatus.OK).body("thanh cong");
 
     }

@@ -13,6 +13,9 @@
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     </head>
     <body>
+<!--        <<h4> ${statistics}</h4>
+        <h4> ${personalOpinions}</h4>-->
+
         <c:url value="/" var="action" />
         <h1 class="text-center text-info mt-1">THỐNG KÊ KHẢO SÁT</h1>
         <section class="container">

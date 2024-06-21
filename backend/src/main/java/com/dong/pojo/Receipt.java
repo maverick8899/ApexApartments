@@ -1,16 +1,8 @@
-
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package com.dong.pojo;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.Collection;
-import java.util.Date;
-
-
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -62,8 +54,6 @@ public class Receipt implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date date;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "total")
     private BigDecimal total;
     @Column(name = "is_pay")
@@ -81,10 +71,9 @@ public class Receipt implements Serializable {
         this.id = id;
     }
 
-    public Receipt(Integer id, Date date, BigDecimal total) {
+    public Receipt(Integer id, Date date) {
         this.id = id;
         this.date = date;
-        this.total = total;
     }
 
     public Integer getId() {

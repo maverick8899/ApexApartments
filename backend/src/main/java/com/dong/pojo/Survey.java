@@ -4,13 +4,21 @@
  */
 package com.dong.pojo;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
-import javax.persistence.*;
-import javax.validation.constraints.Size;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -25,7 +33,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Survey.findAll", query = "SELECT s FROM Survey s"),
     @NamedQuery(name = "Survey.findById", query = "SELECT s FROM Survey s WHERE s.id = :id"),
     @NamedQuery(name = "Survey.findByDate", query = "SELECT s FROM Survey s WHERE s.date = :date"),
-    @NamedQuery(name = "Survey.findByPersonalOpinion", query = "SELECT s FROM Survey s WHERE s.personalOpinion = :personalOpinion")})
+    @NamedQuery(name = "Survey.findByActive", query = "SELECT s FROM Survey s WHERE s.active = :active")})
 public class Survey implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -37,13 +45,14 @@ public class Survey implements Serializable {
     @Column(name = "date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
-    @Size(max = 255)
-    @Column(name = "personal_opinion")
-    private String personalOpinion;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "surveyId")
-    @JsonIgnore
-
+    @Column(name = "active")
+    private Boolean active;
+    @OneToMany(mappedBy = "surveyId")
     private Collection<CustomerSurvey> customerSurveyCollection;
+    @OneToMany(mappedBy = "surveyId")
+    private Collection<Question> questionCollection;
+    @OneToMany(mappedBy = "surveyId")
+    private Collection<Answer> answerCollection;
 
     public Survey() {
     }
@@ -68,14 +77,13 @@ public class Survey implements Serializable {
         this.date = date;
     }
 
-    public String getPersonalOpinion() {
-        return personalOpinion;
+    public Boolean getActive() {
+        return active;
     }
 
-    public void setPersonalOpinion(String personalOpinion) {
-        this.personalOpinion = personalOpinion;
+    public void setActive(Boolean active) {
+        this.active = active;
     }
-
 
     @XmlTransient
     public Collection<CustomerSurvey> getCustomerSurveyCollection() {
@@ -84,6 +92,24 @@ public class Survey implements Serializable {
 
     public void setCustomerSurveyCollection(Collection<CustomerSurvey> customerSurveyCollection) {
         this.customerSurveyCollection = customerSurveyCollection;
+    }
+
+    @XmlTransient
+    public Collection<Question> getQuestionCollection() {
+        return questionCollection;
+    }
+
+    public void setQuestionCollection(Collection<Question> questionCollection) {
+        this.questionCollection = questionCollection;
+    }
+
+    @XmlTransient
+    public Collection<Answer> getAnswerCollection() {
+        return answerCollection;
+    }
+
+    public void setAnswerCollection(Collection<Answer> answerCollection) {
+        this.answerCollection = answerCollection;
     }
 
     @Override

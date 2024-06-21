@@ -11,7 +11,7 @@ public interface ReceiptRepository {
 
     List<ReceiptDTO> getReceipt(Map<String, String> params);
 
-    boolean payment(Map<String, String> params);
+    boolean payment(String receiptId);
 
     boolean deleteReceipt(int id);
 

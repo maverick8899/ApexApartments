@@ -60,37 +60,53 @@ CREATE TABLE `customer` (
   ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
   
   
+CREATE TABLE `survey` (
+    `id` INT PRIMARY KEY AUTO_INCREMENT,
+    `date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ,
+    `active` BIT(1) DEFAULT 1
+)  ENGINE=INNODB DEFAULT CHARSET=UTF8MB4 COLLATE = UTF8MB4_UNICODE_CI;
+
 CREATE TABLE `question` (
     `id` INT PRIMARY KEY AUTO_INCREMENT,
     `question` VARCHAR(255) DEFAULT NULL,
-    `type` VARCHAR(255) NOT NULL
+    `type` VARCHAR(255) NOT NULL,
+    `survey_id` int ,
+     KEY `fk_question_survey` (`survey_id`),
+    CONSTRAINT `fk_question_survey` FOREIGN KEY (`survey_id`) REFERENCES `survey` (`id`)
 )  ENGINE=INNODB DEFAULT CHARSET=UTF8MB4 COLLATE = UTF8MB4_UNICODE_CI;
 
 CREATE TABLE `answer` (
     `id` INT PRIMARY KEY AUTO_INCREMENT,
-    `answer` TINYINT CHECK (`answer` BETWEEN 1 AND 5)
-)  ENGINE=INNODB DEFAULT CHARSET=UTF8MB4 COLLATE = UTF8MB4_UNICODE_CI;
-
-CREATE TABLE `survey` (
-    `id` INT PRIMARY KEY AUTO_INCREMENT,
-    `date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    `personal_opinion` varchar(255) DEFAULT NULL
+    `answer` TINYINT CHECK (`answer` BETWEEN 1 AND 5),
+    `survey_id` int ,
+     KEY `fk_answer_survey` (`survey_id`),
+    CONSTRAINT `fk_answer_survey` FOREIGN KEY (`survey_id`) REFERENCES `survey` (`id`)
 )  ENGINE=INNODB DEFAULT CHARSET=UTF8MB4 COLLATE = UTF8MB4_UNICODE_CI;
 
 CREATE TABLE `customer_survey` (
     `id` INT PRIMARY KEY AUTO_INCREMENT,
-    `answer_id` int NOT NULL,
-    `question_id` int NOT NULL, 
-    `customer_id` int NOT NULL,
-	`survey_id` int NOT NULL,
-    KEY `fk_customer_survey_answer` (`answer_id`),
-    CONSTRAINT `fk_customer_survey_answer` FOREIGN KEY (`answer_id`) REFERENCES `answer` (`id`),
-    KEY `fk_customer_survey_question` (`question_id`),
-    CONSTRAINT `fk_customer_survey_question` FOREIGN KEY (`question_id`) REFERENCES `question` (`id`), 
+    `date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `personal_opinion` varchar(255) DEFAULT NULL,
+    `customer_id` int ,
+	`survey_id` int ,
     KEY `fk_customer_survey_customer` (`customer_id`),
     CONSTRAINT `fk_customer_survey_customer` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`),
     KEY `fk_customer_survey_survey` (`survey_id`),
     CONSTRAINT `fk_customer_survey_survey` FOREIGN KEY (`survey_id`) REFERENCES `survey` (`id`)
+)  ENGINE=INNODB DEFAULT CHARSET=UTF8MB4 COLLATE = UTF8MB4_UNICODE_CI;
+
+
+CREATE TABLE `customer_survey_detail` (
+    `id` INT PRIMARY KEY AUTO_INCREMENT,
+    `answer_id` int ,
+    `question_id` int , 
+    `customer_survey_id` int ,
+    KEY `fk_customer_survey_answer` (`answer_id`),
+    CONSTRAINT `fk_customer_survey_answer` FOREIGN KEY (`answer_id`) REFERENCES `answer` (`id`),
+    KEY `fk_customer_survey_question` (`question_id`),
+    CONSTRAINT `fk_customer_survey_question` FOREIGN KEY (`question_id`) REFERENCES `question` (`id`), 
+    KEY `fk_customer_survey_detail_customer_survey` (`customer_survey_id`),
+    CONSTRAINT `fk_customer_survey_detail_customer_survey` FOREIGN KEY (`customer_survey_id`) REFERENCES `customer_survey` (`id`)
 )  ENGINE=INNODB DEFAULT CHARSET=UTF8MB4 COLLATE = UTF8MB4_UNICODE_CI;
 
   

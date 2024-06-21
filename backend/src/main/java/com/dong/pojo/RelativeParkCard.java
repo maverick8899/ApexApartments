@@ -1,8 +1,9 @@
-
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package com.dong.pojo;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -19,6 +20,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -60,8 +63,6 @@ public class RelativeParkCard implements Serializable {
     @Column(name = "active")
     private Boolean active;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "cost")
     private BigDecimal cost;
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
@@ -75,11 +76,10 @@ public class RelativeParkCard implements Serializable {
         this.id = id;
     }
 
-    public RelativeParkCard(Integer id, Date dateCreate, Date expiry, BigDecimal cost) {
+    public RelativeParkCard(Integer id, Date dateCreate, Date expiry) {
         this.id = id;
         this.dateCreate = dateCreate;
         this.expiry = expiry;
-        this.cost = cost;
     }
 
     public Integer getId() {

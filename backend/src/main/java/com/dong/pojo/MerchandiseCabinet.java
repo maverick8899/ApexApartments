@@ -4,8 +4,6 @@
  */
 package com.dong.pojo;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -52,7 +50,6 @@ public class MerchandiseCabinet implements Serializable {
     @Column(name = "active")
     private Boolean active;
     @OneToMany(mappedBy = "merchandiseCabinetId")
-    @JsonIgnore
     private Collection<Customer> customerCollection;
 
     public MerchandiseCabinet() {

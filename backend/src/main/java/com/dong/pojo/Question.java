@@ -4,17 +4,16 @@
  */
 package com.dong.pojo;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -45,7 +44,6 @@ public class Question implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Size(max = 255)
-    @NotNull(message = "{survey.nullErr}")
     @Column(name = "question")
     private String question;
     @Basic(optional = false)
@@ -53,10 +51,11 @@ public class Question implements Serializable {
     @Size(min = 1, max = 255)
     @Column(name = "type")
     private String type;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "questionId")
-    @JsonIgnore
-
-    private Collection<CustomerSurvey> customerSurveyCollection;
+    @OneToMany(mappedBy = "questionId")
+    private Collection<CustomerSurveyDetail> customerSurveyDetailCollection;
+    @JoinColumn(name = "survey_id", referencedColumnName = "id")
+    @ManyToOne
+    private Survey surveyId;
 
     public Question() {
     }
@@ -95,12 +94,20 @@ public class Question implements Serializable {
     }
 
     @XmlTransient
-    public Collection<CustomerSurvey> getCustomerSurveyCollection() {
-        return customerSurveyCollection;
+    public Collection<CustomerSurveyDetail> getCustomerSurveyDetailCollection() {
+        return customerSurveyDetailCollection;
     }
 
-    public void setCustomerSurveyCollection(Collection<CustomerSurvey> customerSurveyCollection) {
-        this.customerSurveyCollection = customerSurveyCollection;
+    public void setCustomerSurveyDetailCollection(Collection<CustomerSurveyDetail> customerSurveyDetailCollection) {
+        this.customerSurveyDetailCollection = customerSurveyDetailCollection;
+    }
+
+    public Survey getSurveyId() {
+        return surveyId;
+    }
+
+    public void setSurveyId(Survey surveyId) {
+        this.surveyId = surveyId;
     }
 
     @Override

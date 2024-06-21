@@ -3,6 +3,7 @@ package com.dong.controllers;
 import com.dong.DTO.ReceiptDTO;
 import com.dong.DTO.SurveyDTO;
 import com.dong.pojo.Customer;
+import com.dong.pojo.CustomerSurvey;
 import com.dong.pojo.Feedback;
 import com.dong.pojo.Receipt;
 import com.dong.pojo.Survey;
@@ -36,23 +37,25 @@ public class ApiSurveyController {
     private SurveyService surveyService; 
     
     @PostMapping(
-            path = "/answers",
+            path = "/survey/answers",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     @CrossOrigin
-    public ResponseEntity<Survey> list(@RequestBody SurveyDTO params) {
+    public ResponseEntity<Boolean> list(@RequestBody SurveyDTO params) {
         return new ResponseEntity<>(this.surveyService.answerSurvey(params), HttpStatus.OK);
 
     }
     
     
     @RequestMapping(
-            path = "/questions",
+            path = "/survey/questions",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     @CrossOrigin
     public ResponseEntity<List<Object>> list2(@RequestParam Map<String, String> params) {
-        return new ResponseEntity<>(this.surveyService.getSurvey(params), HttpStatus.OK);
+        return new ResponseEntity<>(this.surveyService.getQuestionsBySurvey(params), HttpStatus.OK);
 
     }
+    
+    
 }

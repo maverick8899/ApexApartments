@@ -1,7 +1,8 @@
-
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package com.dong.pojo;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -75,12 +76,8 @@ public class Service implements Serializable {
     @Column(name = "active")
     private Boolean active;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "serviceId")
-    @JsonIgnore
-
     private Collection<DetailReceipt> detailReceiptCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "serviceId")
-    @JsonIgnore
-
     private Collection<UseService> useServiceCollection;
 
     public Service() {

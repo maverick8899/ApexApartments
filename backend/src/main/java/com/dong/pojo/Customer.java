@@ -4,8 +4,6 @@
  */
 package com.dong.pojo;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -79,23 +77,17 @@ public class Customer implements Serializable {
     private Date birthday;
     @Column(name = "active")
     private Boolean active;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "customerId")
-    @JsonIgnore
+    @OneToMany(mappedBy = "customerId")
     private Collection<CustomerSurvey> customerSurveyCollection;
     @OneToMany(mappedBy = "customerId")
-    @JsonIgnore
     private Collection<MerchandiseCabinetDetail> merchandiseCabinetDetailCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "customerId")
-    @JsonIgnore
     private Collection<UseService> useServiceCollection;
     @OneToMany(mappedBy = "customerId")
-    @JsonIgnore
     private Collection<Feedback> feedbackCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "customerId")
-    @JsonIgnore
     private Collection<RelativeParkCard> relativeParkCardCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "customerId")
-    @JsonIgnore
     private Collection<Receipt> receiptCollection;
     @JoinColumn(name = "account_id", referencedColumnName = "id")
     @ManyToOne

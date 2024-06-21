@@ -4,8 +4,6 @@
  */
 package com.dong.pojo;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -52,7 +50,7 @@ public class Accounts implements Serializable {
     @Column(name = "username")
     private String username;
     @Basic(optional = false)
-    @NotNull(message = "{user.name.nullErr}")
+    @NotNull
     @Size(min = 1, max = 255)
     @Column(name = "password")
     private String password;
@@ -67,7 +65,6 @@ public class Accounts implements Serializable {
     @Column(name = "avatar")
     private String avatar;
     @OneToMany(mappedBy = "accountId")
-    @JsonIgnore
     private Collection<Customer> customerCollection;
 
     public Accounts() {
