@@ -5,6 +5,8 @@
 package com.dong.pojo;
 
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,8 +17,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -26,8 +33,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "customer_survey")
 @XmlRootElement
 @NamedQueries({
-        @NamedQuery(name = "CustomerSurvey.findAll", query = "SELECT c FROM CustomerSurvey c"),
-        @NamedQuery(name = "CustomerSurvey.findById", query = "SELECT c FROM CustomerSurvey c WHERE c.id = :id")})
+    @NamedQuery(name = "CustomerSurvey.findAll", query = "SELECT c FROM CustomerSurvey c"),
+    @NamedQuery(name = "CustomerSurvey.findById", query = "SELECT c FROM CustomerSurvey c WHERE c.id = :id"),
+    @NamedQuery(name = "CustomerSurvey.findByDate", query = "SELECT c FROM CustomerSurvey c WHERE c.date = :date"),
+    @NamedQuery(name = "CustomerSurvey.findByPersonalOpinion", query = "SELECT c FROM CustomerSurvey c WHERE c.personalOpinion = :personalOpinion")})
 public class CustomerSurvey implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -36,18 +45,20 @@ public class CustomerSurvey implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @JoinColumn(name = "answer_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Answer answerId;
+    @Column(name = "date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date date;
+    @Size(max = 255)
+    @Column(name = "personal_opinion")
+    private String personalOpinion;
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Customer customerId;
-    @JoinColumn(name = "question_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Question questionId;
     @JoinColumn(name = "survey_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Survey surveyId;
+    @OneToMany(mappedBy = "customerSurveyId")
+    private Collection<CustomerSurveyDetail> customerSurveyDetailCollection;
 
     public CustomerSurvey() {
     }
@@ -64,12 +75,20 @@ public class CustomerSurvey implements Serializable {
         this.id = id;
     }
 
-    public Answer getAnswerId() {
-        return answerId;
+    public Date getDate() {
+        return date;
     }
 
-    public void setAnswerId(Answer answerId) {
-        this.answerId = answerId;
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public String getPersonalOpinion() {
+        return personalOpinion;
+    }
+
+    public void setPersonalOpinion(String personalOpinion) {
+        this.personalOpinion = personalOpinion;
     }
 
     public Customer getCustomerId() {
@@ -80,20 +99,21 @@ public class CustomerSurvey implements Serializable {
         this.customerId = customerId;
     }
 
-    public Question getQuestionId() {
-        return questionId;
-    }
-
-    public void setQuestionId(Question questionId) {
-        this.questionId = questionId;
-    }
-
     public Survey getSurveyId() {
         return surveyId;
     }
 
     public void setSurveyId(Survey surveyId) {
         this.surveyId = surveyId;
+    }
+
+    @XmlTransient
+    public Collection<CustomerSurveyDetail> getCustomerSurveyDetailCollection() {
+        return customerSurveyDetailCollection;
+    }
+
+    public void setCustomerSurveyDetailCollection(Collection<CustomerSurveyDetail> customerSurveyDetailCollection) {
+        this.customerSurveyDetailCollection = customerSurveyDetailCollection;
     }
 
     @Override
@@ -120,5 +140,5 @@ public class CustomerSurvey implements Serializable {
     public String toString() {
         return "com.dong.pojo.CustomerSurvey[ id=" + id + " ]";
     }
-
+    
 }

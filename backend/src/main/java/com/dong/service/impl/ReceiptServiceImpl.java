@@ -41,8 +41,8 @@ public class ReceiptServiceImpl implements ReceiptService {
 //        return this.receiptRepo.getReceiptDetail(params);
 //    }
     @Override
-    public boolean payment(Map<String, String> params) {
-        return this.receiptRepo.payment(params);
+    public boolean payment(String receiptId) {
+        return this.receiptRepo.payment(receiptId);
     }
 
 }
