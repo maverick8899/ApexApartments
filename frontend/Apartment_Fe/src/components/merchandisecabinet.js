@@ -1,21 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Apis, { endpoints } from "../configs/Apis";
+import './Receipt/ReceiptList.css';
 
-const tableStyle = {
-  width: '100%',
-  borderCollapse: 'collapse'
-};
-
-const thTdStyle = {
-  border: '1px solid #ccc',
-  padding: '8px',
-  textAlign: 'left'
-};
-
-const thStyle = {
-  ...thTdStyle,
-  backgroundColor: '#f4f4f4'
-};
 
 const MerchandiseCabinet = () => {
   const [cabinets, setCabinets] = useState([]);
@@ -23,7 +9,7 @@ const MerchandiseCabinet = () => {
   useEffect(() => {
     const fetchCabinets = async () => {
       try {
-        const response = await Apis.get(endpoints.merchandisecabinet);
+        const response = await Apis.get(endpoints.merchandisecabinet(1));
         setCabinets(response.data);
       } catch (error) {
         console.error('Error fetching cabinets:', error);
@@ -36,26 +22,26 @@ const MerchandiseCabinet = () => {
   return (
     <div className="container mt-5">
       <h1 className="mb-4">Merchandise Cabinets</h1>
-      <table style={tableStyle}>
+      <table className="receipt-table">
         <thead>
           <tr>
-            <th style={thStyle}>Cabinet ID</th>
-            <th style={thStyle}>Merchandise Name</th>
-            <th style={thStyle}>Quantity</th>
-            <th style={thStyle}>Date Receive</th>
-            <th style={thStyle}>Is Receive</th>
-            <th style={thStyle}>Merchandise Cabinet</th>
+            <th>Cabinet ID</th>
+            <th>Merchandise Name</th>
+            <th>Quantity</th>
+            <th>Date Receive</th>
+            <th>Is Receive</th>
+            <th>Merchandise Cabinet</th>
           </tr>
         </thead>
         <tbody>
           {cabinets.map(cabinet => (
             <tr key={cabinet.id}>
-              <td style={thTdStyle}>{cabinet.customerId.merchandiseCabinetId.id}</td>
-              <td style={thTdStyle}>{cabinet.merchandiseId.name}</td>
-              <td style={thTdStyle}>{cabinet.quantity}</td>
-              <td style={thTdStyle}>{new Date(cabinet.dateReceive).toLocaleDateString()}</td>
-              <td style={thTdStyle}>{cabinet.isReceive ? 'Yes' : 'No'}</td>
-              <td style={thTdStyle}>{cabinet.customerId.merchandiseCabinetId.name}</td>
+              <td>{cabinet.customerId.merchandiseCabinetId.id}</td>
+              <td>{cabinet.merchandiseId.name}</td>
+              <td>{cabinet.quantity}</td>
+              <td>{new Date(cabinet.dateReceive).toLocaleDateString()}</td>
+              <td>{cabinet.isReceive ? 'Yes' : 'No'}</td>
+              <td>{cabinet.customerId.merchandiseCabinetId.name}</td>
             </tr>
           ))}
         </tbody>

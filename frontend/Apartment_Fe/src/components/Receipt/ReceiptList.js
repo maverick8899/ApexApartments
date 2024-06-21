@@ -36,9 +36,9 @@ const ReceiptList = () => {
         try {
             const response = await Apis.get(endpoints.payment(amount, receiptId,month));
             // Kiểm tra nếu API trả về URL
-            if (response.request.responseURL) {
-              window.location.href = response.request.responseURL;
-          } else {
+            if (response.data && response.data.url) {
+                window.location.href = response.data.url;
+            } else {
               console.error('Payment URL not found in the response');
           }
         } catch (error) {

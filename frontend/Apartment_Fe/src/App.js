@@ -9,6 +9,7 @@ import MerchandiseCabinet from "./components/merchandisecabinet";
 import Service from "./components/Service";
 import Notifications from "./components/Notifications";
 import ReceiptList from "./components/Receipt/ReceiptList";
+import ChatApp from "./components/ChatApp/ChatApp";
 
 const App = () => {
   return (
@@ -24,6 +25,8 @@ const App = () => {
             <Route path="/MerchandiseCabinet" element={<MerchandiseCabinet />} />
             <Route path="/Service" element={<Service/>} />
             <Route path="/ReceiptList" element={<ReceiptList/>} />
+            <Route path="/ChatApp" element={<ChatApp/>} />
+
 
 
           </Routes>

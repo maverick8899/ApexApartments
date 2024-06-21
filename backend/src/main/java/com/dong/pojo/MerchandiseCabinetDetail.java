@@ -113,7 +113,12 @@ public class MerchandiseCabinetDetail implements Serializable {
     public void setMerchandiseId(Merchandise merchandiseId) {
         this.merchandiseId = merchandiseId;
     }
-
+    @PrePersist
+    protected void onCreate() {
+        if (this.dateReceive == null) {
+            this.dateReceive = new Date();
+        }
+    }
     @Override
     public int hashCode() {
         int hash = 0;

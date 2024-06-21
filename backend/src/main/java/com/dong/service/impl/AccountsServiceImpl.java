@@ -42,4 +42,9 @@ public class AccountsServiceImpl implements AccountsService {
     public Customer getAccountsByIdCustomer(int customerId) {
         return  this.accRep.getAccountsByIdCustomer(customerId);
     }
+
+    @Override
+    public List<Accounts> getAccountsByIds(List<Integer> ids) {
+        return this.accRep.getByIds(ids);
+    }
 }

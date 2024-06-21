@@ -12,10 +12,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping({"/api/merchandisecabinet"})
@@ -31,4 +29,10 @@ public class ApiMerchandiseCabinetController {
     public ResponseEntity<List<MerchandiseCabinetDetail>> list(@RequestParam Map<String, String> params) {
         return new ResponseEntity(this.merSer.getMerchandiseCabinet(params), HttpStatus.OK);
     }
-}
+    @GetMapping("/{id}")
+    @CrossOrigin
+    public ResponseEntity<List<MerchandiseCabinetDetail>> list2(@PathVariable("id") int id) {
+        return new ResponseEntity(this.merSer.getMerchandiseByCustomerId(id),HttpStatus.OK);
+    }
+
+    }

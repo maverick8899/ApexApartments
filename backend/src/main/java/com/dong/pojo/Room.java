@@ -102,6 +102,7 @@ public class Room implements Serializable {
         this.date = date;
     }
 
+
     @XmlTransient
     public Collection<Customer> getCustomerCollection() {
         return customerCollection;

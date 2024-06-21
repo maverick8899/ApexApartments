@@ -8,11 +8,25 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<c:url value="/customers" var="action" />
 <h1 class="text-center text-info mt-1">QUẢN TRỊ KHÁCH HÀNG</h1>
-
 <section class="container">
-    <a href="<c:url value="/addCustomer" />" class="btn btn-info">Thêm người dân</a>
-    <table class="table table-hover">
+    <div class="col-md-4 col-md-offset-3 d-flex flex-row mb-3 gap-2">
+        <form action="${action}" method="get" class="search-form w-100">
+            <select class="form-select" aria-label="Default select example" name="type">
+                <option value="0" selected>Kiểu</option>
+                <option value="1">Id khách hàng</option>
+                <option value="2">Tên khách hàng</option>
+                <option value="3">Số điện thoại</option>
+            </select>
+            <div class="form-group has-feedback mb-2">
+                <input type="text" class="form-control" name="kw" id="search" placeholder="Tìm kiếm">
+                <span class="glyphicon glyphicon-search form-control-feedback"></span>
+            </div>
+            <button type="submit" class="btn btn-info">Tìm</button>
+            <a href="<c:url value="/addCustomer" />" class="btn btn-info">Thêm người dân</a>
+        </form>
+    </div>    <table class="table table-hover">
         <thead>
         <tr>
             <th>Id</th>

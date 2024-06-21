@@ -13,4 +13,6 @@ public interface AccountsService {
     boolean deleteAccounts(int id);
     List<Accounts> getAccountsUser(Map<String, String> params);
     Customer getAccountsByIdCustomer(int customerId);
+
+    List<Accounts> getAccountsByIds(List<Integer> ids);
 }
