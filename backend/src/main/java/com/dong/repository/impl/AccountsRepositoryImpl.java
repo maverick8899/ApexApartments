@@ -128,7 +128,13 @@ public class AccountsRepositoryImpl implements AccountsRepository {
     }
     return query.getResultList();
   }
-
+@Override
+    public List<Accounts> getByIds(List<Integer> ids) {
+        Session s = factory.getObject().getCurrentSession();
+        return s.createQuery("SELECT u FROM Accounts u where u.id in :ids", Accounts.class)
+                .setParameter("ids", ids)
+                .getResultList();
+    }
   @Override
   public Customer getAccountsByIdCustomer(int customerId) {
     //        Session session = this.factory.getObject().getCurrentSession();

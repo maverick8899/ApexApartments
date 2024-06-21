@@ -1,8 +1,13 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.dong.pojo;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.Date;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -68,6 +73,7 @@ public class Merchandise implements Serializable {
     @Column(name = "active")
     private Boolean active;
     @OneToMany(mappedBy = "merchandiseId")
+    @JsonIgnore
     private Collection<MerchandiseCabinetDetail> merchandiseCabinetDetailCollection;
 
     public Merchandise() {
@@ -131,7 +137,12 @@ public class Merchandise implements Serializable {
     public void setActive(Boolean active) {
         this.active = active;
     }
-
+    @PrePersist
+    protected void onCreate() {
+        if (this.date == null) {
+            this.date = new Date();
+        }
+    }
     @XmlTransient
     public Collection<MerchandiseCabinetDetail> getMerchandiseCabinetDetailCollection() {
         return merchandiseCabinetDetailCollection;

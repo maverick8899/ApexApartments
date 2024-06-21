@@ -1,9 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.dong.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Date;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -111,7 +112,12 @@ public class MerchandiseCabinetDetail implements Serializable {
     public void setMerchandiseId(Merchandise merchandiseId) {
         this.merchandiseId = merchandiseId;
     }
-
+    @PrePersist
+    protected void onCreate() {
+        if (this.dateReceive == null) {
+            this.dateReceive = new Date();
+        }
+    }
     @Override
     public int hashCode() {
         int hash = 0;

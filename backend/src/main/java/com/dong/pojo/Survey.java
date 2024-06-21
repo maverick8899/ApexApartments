@@ -85,6 +85,12 @@ public class Survey implements Serializable {
         this.active = active;
     }
 
+    @PrePersist
+    protected void onCreate() {
+        if (this.date == null) {
+            this.date = new Date();
+        }
+    }
     @XmlTransient
     public Collection<CustomerSurvey> getCustomerSurveyCollection() {
         return customerSurveyCollection;

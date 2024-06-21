@@ -109,6 +109,11 @@
         <put-attribute name="content"
                        value="/WEB-INF/pages/statistics.jsp" />
     </definition>
+    <definition name="login" extends="baseLayout">
+        <put-attribute name="login" value="login" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/login.jsp" />
+    </definition>
     <definition name="return_url"  template="/WEB-INF/pages/return_url.jsp">
     </definition>
     <definition name="useService" extends="baseLayout">
