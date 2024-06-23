@@ -54,9 +54,10 @@ const Header = () => {
                         <StyledNavLink href="/Relativeparkcard">Thêm thẻ giữ xe người thân</StyledNavLink>
                         <StyledNavLink href="/MerchandiseCabinet">Xem tủ đồ</StyledNavLink>
                         <StyledNavLink href="/Service">Dịch vụ</StyledNavLink>
-                        <StyledNavLink href="#">Feedback</StyledNavLink>
-                        <StyledNavLink href="#">Đăng nhập</StyledNavLink>
-                        <StyledNavLink href="ReceiptList">Hóa đơn</StyledNavLink>
+                        <StyledNavLink href="/feedback">Feedback</StyledNavLink>
+                        <StyledNavLink href="/login">Đăng nhập</StyledNavLink>
+                        <StyledNavLink href="/ReceiptList">Hóa đơn</StyledNavLink>
+                        <StyledNavLink href="/Survey">Khảo sát</StyledNavLink>
 
                     </Nav>
                 </Navbar.Collapse>
