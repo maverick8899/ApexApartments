@@ -21,6 +21,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -32,7 +33,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepo;
     @Autowired
-    private BCryptPasswordEncoder passEncoder;
+    private BCryptPasswordEncoder passwordEncoder;
     @Autowired
     private Cloudinary cloudinary;
 
@@ -53,21 +54,32 @@ public class UserServiceImpl implements UserService {
                 u.getUsername(), u.getPassword(), authorities);
     }
 
-    @Override
-    public void addUser(Accounts user) {
-        user.setPassword(passEncoder.encode(user.getPassword()).toString());
-//        user.setPassword(user.getPassword());
 
-        if (!user.getFile().isEmpty()) {
+
+    @Override
+    public boolean authUser(String username, String password) {
+        return this.userRepo.authUser(username, password);    }
+
+    @Override
+    public Accounts addUser(Map<String, String> params, MultipartFile avatar) {
+
+        Accounts u = new Accounts();
+        u.setUsername(params.get("username"));
+        u.setPassword(this.passwordEncoder.encode(params.get("password")));
+        u.setRole("ROLE_USER");
+        if (!avatar.isEmpty()) {
             try {
-                Map res = this.cloudinary.uploader().upload(user.getFile().getBytes(), ObjectUtils.asMap("resource_type", "auto"));
-                user.setAvatar(res.get("secure_url").toString());
+                Map res = this.cloudinary.uploader().upload(avatar.getBytes(),
+                        ObjectUtils.asMap("resource_type", "auto"));
+                u.setAvatar(res.get("secure_url").toString());
             } catch (IOException ex) {
                 Logger.getLogger(UserServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
-        this.userRepo.addUser(user);
+        this.userRepo.addUser(u);
+        return u;
     }
+
 
 }

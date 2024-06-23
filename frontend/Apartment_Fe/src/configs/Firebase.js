@@ -8,11 +8,11 @@ const firebaseConfig = {
   projectId: "chatapprealtime-c9591",
   storageBucket: "chatapprealtime-c9591.appspot.com",
   messagingSenderId: "18194633761",
-  appId: "1:18194633761:web:9fad739d16bf2b37b6ff60",
-  measurementId: "G-PR1ZXEPW4X"
-}
+  appId: "1:18194633761:web:9b59b58bc3256144b6ff60",
+  measurementId: "G-CK0M118GL6"
+};
 
-const app = initializeApp(firebaseConfig)
+const app = initializeApp(firebaseConfig);
 
 export const FirebaseAuth = getAuth()
 export const FirebaseDb = getFirestore()

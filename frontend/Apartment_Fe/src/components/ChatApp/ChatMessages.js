@@ -75,8 +75,6 @@ const ChatMessages = () => {
       setMessages(data.reverse())
     })
 
-    console.log('unsubcribe', ubSubcribe)
-
     const unsubRef = () => ubSubcribe
     setUnsub(unsubRef)
   }
