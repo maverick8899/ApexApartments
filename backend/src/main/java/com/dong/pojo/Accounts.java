@@ -3,10 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.dong.pojo;
-
+ 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.*;
@@ -44,7 +43,7 @@ public class Accounts implements Serializable {
     @Column(name = "username")
     private String username;
     @Basic(optional = false)
-    @NotNull(message = "{user.name.nullErr}")
+    @NotNull
     @Size(min = 1, max = 255)
     @Column(name = "password")
     private String password;

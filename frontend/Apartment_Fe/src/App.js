@@ -15,7 +15,8 @@ import UserContext from './contexts/UserContext'
 import UserReducer from './reducers/UserReducer'
 import Cookies from 'js-cookie'
 import { useReducer } from 'react'
-
+import Feedback from './components/Feedback';
+import Survey from './components/Survey';
 const App = () => {
   let currentUser = null
   if (Cookies.get('user')) currentUser = JSON.parse(Cookies.get('user'))
@@ -40,6 +41,8 @@ const App = () => {
               <Route path='/Service' element={<Service />} />
               <Route path='/ReceiptList' element={<ReceiptList />} />
               <Route path='/ChatApp' element={<ChatApp />} />
+                  <Route path="/feedback" element={<Feedback />} />
+                    <Route path="/survey" element={<Survey />} />
             </Routes>
           </Container>
           <Footer />
@@ -49,4 +52,4 @@ const App = () => {
   )
 }
 
-export default App
+export default App 

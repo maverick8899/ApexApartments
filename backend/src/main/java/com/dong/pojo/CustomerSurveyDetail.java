@@ -5,7 +5,6 @@
 package com.dong.pojo;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,23 +15,20 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author MAVERICK
  */
 @Entity
-@Table(name = "answer")
+@Table(name = "customer_survey_detail")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Answer.findAll", query = "SELECT a FROM Answer a"),
-    @NamedQuery(name = "Answer.findById", query = "SELECT a FROM Answer a WHERE a.id = :id"),
-    @NamedQuery(name = "Answer.findByAnswer", query = "SELECT a FROM Answer a WHERE a.answer = :answer")})
-public class Answer implements Serializable {
+    @NamedQuery(name = "CustomerSurveyDetail.findAll", query = "SELECT c FROM CustomerSurveyDetail c"),
+    @NamedQuery(name = "CustomerSurveyDetail.findById", query = "SELECT c FROM CustomerSurveyDetail c WHERE c.id = :id")})
+public class CustomerSurveyDetail implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -40,18 +36,20 @@ public class Answer implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Column(name = "answer")
-    private Short answer;
-    @OneToMany(mappedBy = "answerId")
-    private Collection<CustomerSurveyDetail> customerSurveyDetailCollection;
-    @JoinColumn(name = "survey_id", referencedColumnName = "id")
+    @JoinColumn(name = "answer_id", referencedColumnName = "id")
     @ManyToOne
-    private Survey surveyId;
+    private Answer answerId;
+    @JoinColumn(name = "customer_survey_id", referencedColumnName = "id")
+    @ManyToOne
+    private CustomerSurvey customerSurveyId;
+    @JoinColumn(name = "question_id", referencedColumnName = "id")
+    @ManyToOne
+    private Question questionId;
 
-    public Answer() {
+    public CustomerSurveyDetail() {
     }
 
-    public Answer(Integer id) {
+    public CustomerSurveyDetail(Integer id) {
         this.id = id;
     }
 
@@ -63,29 +61,28 @@ public class Answer implements Serializable {
         this.id = id;
     }
 
-    public Short getAnswer() {
-        return answer;
+    public Answer getAnswerId() {
+        return answerId;
     }
 
-    public void setAnswer(Short answer) {
-        this.answer = answer;
+    public void setAnswerId(Answer answerId) {
+        this.answerId = answerId;
     }
 
-    @XmlTransient
-    public Collection<CustomerSurveyDetail> getCustomerSurveyDetailCollection() {
-        return customerSurveyDetailCollection;
+    public CustomerSurvey getCustomerSurveyId() {
+        return customerSurveyId;
     }
 
-    public void setCustomerSurveyDetailCollection(Collection<CustomerSurveyDetail> customerSurveyDetailCollection) {
-        this.customerSurveyDetailCollection = customerSurveyDetailCollection;
+    public void setCustomerSurveyId(CustomerSurvey customerSurveyId) {
+        this.customerSurveyId = customerSurveyId;
     }
 
-    public Survey getSurveyId() {
-        return surveyId;
+    public Question getQuestionId() {
+        return questionId;
     }
 
-    public void setSurveyId(Survey surveyId) {
-        this.surveyId = surveyId;
+    public void setQuestionId(Question questionId) {
+        this.questionId = questionId;
     }
 
     @Override
@@ -98,10 +95,10 @@ public class Answer implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Answer)) {
+        if (!(object instanceof CustomerSurveyDetail)) {
             return false;
         }
-        Answer other = (Answer) object;
+        CustomerSurveyDetail other = (CustomerSurveyDetail) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -110,7 +107,7 @@ public class Answer implements Serializable {
 
     @Override
     public String toString() {
-        return "com.dong.pojo.Answer[ id=" + id + " ]";
+        return "com.dong.pojo.CustomerSurveyDetail[ id=" + id + " ]";
     }
     
 }

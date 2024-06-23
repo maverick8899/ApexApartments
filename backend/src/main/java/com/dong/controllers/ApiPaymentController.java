@@ -23,20 +23,21 @@ import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-
 @Controller
 @RequestMapping("/api/vnpay")
 public class ApiPaymentController {
+
     @Autowired
     ReceiptService recSerivce;
+
     @GetMapping("/create_payment")
-    public ResponseEntity<PaymentResDTO> create_payment(HttpServletRequest request, @RequestParam long amount, @RequestParam long month ) throws UnsupportedEncodingException, URISyntaxException {
-      String receiptId = request.getParameter("receiptId");
-      String hashReceiptId = hashString(receiptId);
+    public ResponseEntity<PaymentResDTO> create_payment(HttpServletRequest request, @RequestParam long amount, @RequestParam long month) throws UnsupportedEncodingException, URISyntaxException {
+        String receiptId = request.getParameter("receiptId");
+        String hashReceiptId = hashString(receiptId);
         String orderType = "other";
 //        long amount = Integer.parseInt(req.getParameter("amount")) * 100;
 //        String bankCode = req.getParameter("bankCode
-                String vnp_IpAddr = ConfigVNPay.getIpAddress(request);
+        String vnp_IpAddr = ConfigVNPay.getIpAddress(request);
 //        long amount= 1000000;
         String vnp_Version = "2.1.0";
         String vnp_Command = "pay";
@@ -44,7 +45,7 @@ public class ApiPaymentController {
         String vnp_TmnCode = ConfigVNPay.vnp_TmnCode;
         Map<String, String> vnp_Params = new HashMap<>();
         vnp_Params.put("vnp_Version", vnp_Version);
-        vnp_Params.put("vnp_Command",vnp_Command);
+        vnp_Params.put("vnp_Command", vnp_Command);
         vnp_Params.put("vnp_TmnCode", vnp_TmnCode);
         vnp_Params.put("vnp_Amount", String.valueOf(amount));
         vnp_Params.put("vnp_CurrCode", "VND");
@@ -96,6 +97,8 @@ public class ApiPaymentController {
         paymentResDTO.setStatus("OK");
         paymentResDTO.setMessage("Successfully");
         paymentResDTO.setURL(paymentUrl);
+        //? update DB that was paid
+        recSerivce.payment(receiptId);
         return ResponseEntity.status(HttpStatus.OK).body(paymentResDTO);
     }
 
@@ -121,11 +124,10 @@ public class ApiPaymentController {
         String signValue = ConfigVNPay.hashAllFields(fields);
         String response;
 
+        String hashReceipt = request.getParameter("vnp_OrderInfo");
 
-        String hashReceipt =  request.getParameter("vnp_OrderInfo");
-
-        if (signValue.equals(vnp_SecureHash) && "00".equals(request.getParameter("vnp_TransactionStatus")) &&
-               checkString(receiptId, hashReceipt)) {
+        if (signValue.equals(vnp_SecureHash) && "00".equals(request.getParameter("vnp_TransactionStatus"))
+                && checkString(receiptId, hashReceipt)) {
             // thuc hien xuat hoa, thanh toan thanh cong
             // kiem tra dieu kien if xem
             Long amount = Long.valueOf(request.getParameter("vnp_Amount"));
@@ -157,4 +159,3 @@ public class ApiPaymentController {
         return BCrypt.checkpw(rawString, hashedString);
     }
 }
-

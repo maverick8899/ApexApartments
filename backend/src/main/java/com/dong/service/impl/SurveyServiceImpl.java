@@ -2,6 +2,8 @@ package com.dong.service.impl;
 
 import com.dong.DTO.ReceiptDTO;
 import com.dong.DTO.SurveyDTO;
+import com.dong.pojo.CustomerSurvey;
+import com.dong.pojo.Question;
 import com.dong.pojo.Receipt;
 import com.dong.pojo.Survey;
 import com.dong.repository.ReceiptRepository;
@@ -31,7 +33,7 @@ public class SurveyServiceImpl implements SurveyService {
     }
 
     @Override
-    public Survey answerSurvey(SurveyDTO params) {
+    public boolean answerSurvey(SurveyDTO params) {
         return this.surveyRepo.answerSurvey(params);
     }
 
@@ -39,9 +41,14 @@ public class SurveyServiceImpl implements SurveyService {
 //    public Receipt getReceiptById(int id) {
 //        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
 //    }
-
     @Override
     public List<Object> getPersonalOpinion(Map<String, String> params) {
-  return this.surveyRepo.getPersonalOpinion(params);    }
+        return this.surveyRepo.getPersonalOpinion(params);
+    }
+
+    @Override
+    public  List<Object> getQuestionsBySurvey(Map<String, String> params) {
+        return this.surveyRepo.getQuestionsBySurvey(params);
+    }
 
 }

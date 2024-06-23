@@ -61,6 +61,21 @@ const Header = () => {
     Cookies.remove('token')
     Cookies.remove('user')
   }
+    return (
+        <StyledNavbar expand="lg">
+            <Container>
+                <StyledNavbarBrand href="#home">Quản lý chung cư</StyledNavbarBrand>
+                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                <Navbar.Collapse id="basic-navbar-nav">
+                    <Nav className="me-auto">
+                        <StyledNavLink href="#home">Trang chủ</StyledNavLink>
+                        <StyledNavLink href="/Relativeparkcard">Thêm thẻ giữ xe người thân</StyledNavLink>
+                        <StyledNavLink href="/MerchandiseCabinet">Xem tủ đồ</StyledNavLink>
+                        <StyledNavLink href="/Service">Dịch vụ</StyledNavLink>
+                        <StyledNavLink href="/feedback">Feedback</StyledNavLink>
+                        <StyledNavLink href="/login">Đăng nhập</StyledNavLink>
+                        <StyledNavLink href="/ReceiptList">Hóa đơn</StyledNavLink>
+                        <StyledNavLink href="/Survey">Khảo sát</StyledNavLink>
 
   return (
     <StyledNavbar expand='lg'>

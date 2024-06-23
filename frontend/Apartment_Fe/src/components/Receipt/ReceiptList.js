@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Apis, { endpoints } from '../../configs/Apis';
-import './ReceiptList.css';  // Import file CSS
+import './ReceiptList.css'; // Import file CSS
+import MyPagination from '../MyPagination';
+// import Pagination from '../Pagination.js';
 
 const ReceiptList = () => {
     const [receipt_paid, setReceiptsPaid] = useState([]);
@@ -22,7 +24,7 @@ const ReceiptList = () => {
     useEffect(() => {
         const fetchReceipts = async () => {
             try {
-                const response = await Apis.get(endpoints.receipt_unpaid(46));
+                const response = await Apis.get(endpoints.receipt_unpaid(1));
                 setReceiptsUnPaid(response.data);
             } catch (error) {
                 console.error('Error fetching the receipts:', error);
@@ -32,15 +34,14 @@ const ReceiptList = () => {
         fetchReceipts();
     }, []);
 
-    const handlePayment = async (receiptId, amount,month) => {
+    const handlePayment = async (receiptId, amount, month) => {
         try {
-            const response = await Apis.get(endpoints.payment(amount, receiptId,month));
-            // Kiểm tra nếu API trả về URL
-            if (response.data && response.data.url) {
-                window.location.href = response.data.url;
+            const response = await Apis.get(endpoints.payment(amount, receiptId, month));
+            if (response.request.responseURL) {
+                window.location.href = response.request.responseURL;
             } else {
-              console.error('Payment URL not found in the response');
-          }
+                console.error('Payment URL not found in the response');
+            }
         } catch (error) {
             console.error('Error processing payment:', error);
         }
@@ -73,7 +74,7 @@ const ReceiptList = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {receipt_paid.map(receipt => (
+                        {receipt_paid.map((receipt) => (
                             <tr key={receipt.receiptId}>
                                 <td>{receipt.receiptId}</td>
                                 <td>{new Date(receipt.useServiceDate).toLocaleDateString()}</td>
@@ -82,16 +83,21 @@ const ReceiptList = () => {
                                 <td>{receipt.receiptDetailQuantity}</td>
                                 <td>{receipt.serviceId}</td>
                                 <td>{receipt.serviceName}</td>
-                                <td>{new Date(receipt.receiptDate).getMonth()+1}</td>
-                                <td>{new Date(receipt.receiptDate).getFullYear()}</td>                                
+                                <td>{new Date(receipt.receiptDate).getMonth() + 1}</td>
+                                <td>{new Date(receipt.receiptDate).getFullYear()}</td>
                                 <td>{receipt.receiptDetailCost}</td>
                                 <td>{receipt.receiptTotal}</td>
                                 <td>
-                                    <button className="button details" onClick={() => handleViewDetails(receipt.receiptId)}>Xem chi tiết</button>
+                                    <button
+                                        className="button details"
+                                        onClick={() => handleViewDetails(receipt.receiptId)}
+                                    >
+                                        Xem chi tiết
+                                    </button>
                                 </td>
                             </tr>
                         ))}
-                        {receipt_unpaid.map(receipt => (
+                        {receipt_unpaid.map((receipt) => (
                             <tr key={receipt.receiptId}>
                                 <td>{receipt.receiptId}</td>
                                 <td>{new Date(receipt.useServiceDate).toLocaleDateString()}</td>
@@ -100,26 +106,33 @@ const ReceiptList = () => {
                                 <td>{receipt.receiptDetailQuantity}</td>
                                 <td>{receipt.serviceId}</td>
                                 <td>{receipt.serviceName}</td>
-                                <td>{new Date(receipt.receiptDate).getMonth()+1}</td>
-                                <td>{new Date(receipt.receiptDate).getFullYear()}</td>   
+                                <td>{new Date(receipt.receiptDate).getMonth() + 1}</td>
+                                <td>{new Date(receipt.receiptDate).getFullYear()}</td>
 
                                 <td>{receipt.receiptDetailCost}</td>
                                 <td>{receipt.receiptTotal}</td>
                                 <td>
                                     <button
                                         className="button payment"
-                                        onClick={() => handlePayment(receipt.receiptId, receipt.receiptTotal, new Date(receipt.receiptDate).getMonth() + 1)}
+                                        onClick={() =>
+                                            handlePayment(
+                                                receipt.receiptId,
+                                                receipt.receiptTotal,
+                                                new Date(receipt.receiptDate).getMonth() + 1,
+                                            )
+                                        }
                                     >
                                         Thanh toán
                                     </button>
                                 </td>
-                            </tr>                          
+                            </tr>
                         ))}
                     </tbody>
                 </table>
             ) : (
                 <p>No receipts found</p>
             )}
+           <div className='d-flex justify-content-center'> <MyPagination /></div>
         </div>
     );
 };
