@@ -68,7 +68,7 @@ const Survey = () => {
             pauseOnHover: true,
             draggable: true,
             progress: undefined,
-            theme: 'light' ,
+            theme: 'light',
             transition: Bounce,
         });
 
@@ -119,7 +119,7 @@ const Survey = () => {
             try {
                 const response = await Apis.get(endpoints.survey_questions);
                 setSurvey(response.data);
-                console.log(response.data); 
+                console.log(response.data);
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -137,7 +137,9 @@ const Survey = () => {
 
     return (
         <>
-            <h1 className="text-center">Survey: {survey[2].date && survey[2].date.split(' ')[0]}</h1>
+            <h1 className="text-center">
+                Survey: {survey[2].date && survey[2].date.split(' ')[0]}
+            </h1>
             <Container className="d-flex flex-column align-items-stretch">
                 {survey[0]?.questions &&
                     survey[0].questions.map((s, index) => (
@@ -152,11 +154,11 @@ const Survey = () => {
                                 <option value="0" defaultChecked>
                                     Đánh giá
                                 </option>
-                                <option value={s.question}>1</option>
-                                <option value={s.question}>2</option>
-                                <option value={s.question}>3</option>
-                                <option value={s.question}>4</option>
-                                <option value={s.question}>5</option>
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
                             </Form.Select>
                         </Form.Group>
                     ))}

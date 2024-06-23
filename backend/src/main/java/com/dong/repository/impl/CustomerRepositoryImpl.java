@@ -123,30 +123,29 @@ public class CustomerRepositoryImpl implements CustomerRepository {
             return false;
         }
     }
-  }
 
-  @Override
-  public Customer getCustomerById(int id) {
-    Session session = Objects
-      .requireNonNull(this.factory.getObject())
-      .getCurrentSession();
-    return session.get(Customer.class, id);
-  }
+    @Override
+    public Customer getCustomerById(int id) {
+        Session session = Objects
+                .requireNonNull(this.factory.getObject())
+                .getCurrentSession();
+        return session.get(Customer.class, id);
+    }
 
-  @Override
-  public boolean deleteCustomer(int id) {
-      Session session = Objects
-              .requireNonNull(this.factory.getObject())
-              .getCurrentSession();
-      Customer c = this.getCustomerById(id);
-      try {
-          session.delete(c);
-          return true;
-      } catch (HibernateException ex) {
-          ex.printStackTrace();
-          return false;
-      }
-  } 
+    @Override
+    public boolean deleteCustomer(int id) {
+        Session session = Objects
+                .requireNonNull(this.factory.getObject())
+                .getCurrentSession();
+        Customer c = this.getCustomerById(id);
+        try {
+            session.delete(c);
+            return true;
+        } catch (HibernateException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
 
     @Override
     public List<Customer> getCustomersByAccountId(Integer accountId) {
