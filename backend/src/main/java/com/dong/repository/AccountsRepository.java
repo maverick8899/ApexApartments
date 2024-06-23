@@ -13,8 +13,10 @@ public interface AccountsRepository {
     Accounts getAccountsById(int id);
     boolean addOrUpdateAccounts(Accounts r );
     boolean deleteAccounts(int id);
-    List<Accounts> getAccountsUser(Map<String, String> params);
-     Customer getAccountsByIdCustomer(int customerId);
+    List<Accounts> getAccountsUser();
+    Customer getAccountsByIdCustomer(int customerId);
 
     List<Accounts> getByIds(List<Integer> ids);
+
+    Accounts findByUsername(String username);
 }

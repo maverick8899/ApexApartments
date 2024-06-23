@@ -68,7 +68,7 @@ const RelativeParkCard = () => {
     e.preventDefault();
     console.log(123);
     try {
-      await Apis.post(endpoints.relativeparkcard, formData);
+      await authApi.post(endpoints.relativeparkcard, formData);
     } catch (error) {
       console.error('Error creating RelativeParkCard:', error);
     }
@@ -77,7 +77,7 @@ const RelativeParkCard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await Apis.get(endpoints.relativeparkcard);
+        const response = await authApi.get(endpoints.relativeparkcard);
         setParkCards(response.data);
       } catch (error) {
         console.error('Error fetching data:', error);

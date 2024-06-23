@@ -2,28 +2,61 @@ package com.dong.controllers;
 
 
 import com.dong.DTO.ChatUserInfoDto;
+import com.dong.DTO.UserLoginRequestDto;
+import com.dong.DTO.UserLoginResponseDto;
+import com.dong.components.JwtService;
 import com.dong.pojo.Accounts;
 import com.dong.pojo.Customer;
 import com.dong.service.AccountsService;
 import com.dong.service.CustomerService;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
 import org.hibernate.Hibernate;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api")
 @CrossOrigin
 public class ApiUserController {
     @Autowired
     private ModelMapper modelMapper;
     @Autowired
     private AccountsService accService;
-    @GetMapping("/get-chat-users")
+    @Autowired
+    private JwtService jwtService;
+
+    @PostMapping("/login")
+    @CrossOrigin
+    public ResponseEntity<UserLoginResponseDto> login(@RequestBody UserLoginRequestDto userLoginRequestDto) {
+        if (accService.authenticate(userLoginRequestDto.getUsername(), userLoginRequestDto.getPassword())) {
+            String token = this.jwtService.generateTokenLogin(userLoginRequestDto.getUsername());
+            Accounts accounts = accService.getByUserName(userLoginRequestDto.getUsername());
+            String firebaseToken = generateFirebaseToken(accounts.getId());
+            return ResponseEntity.ok(convertToDto(token, firebaseToken, accounts));
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+    }
+
+
+    private String generateFirebaseToken(Integer userId) {
+        try {
+            String firebaseToken = FirebaseAuth.getInstance().createCustomToken(userId.toString());
+            return firebaseToken;
+        } catch (FirebaseAuthException e) {
+            e.printStackTrace();
+            return "Error creating firebase token";
+        }
+    }
+
+    @GetMapping("/users/get-chat-users")
     public ResponseEntity<List<ChatUserInfoDto>> getAllUsers(@RequestParam(name = "ids") List<Integer> ids) {
         List<Accounts> users = accService.getAccountsByIds(ids);
         users.forEach(user -> Hibernate.initialize(user.getCustomerCollection())); // Initialize the collection
@@ -42,5 +75,20 @@ public class ApiUserController {
                     return dto;
                 })
                 .collect(Collectors.toList());
+    }
+
+    private UserLoginResponseDto convertToDto(String token, String firebaseToken, Accounts accounts) {
+        UserLoginResponseDto ulrd = new UserLoginResponseDto();
+        ulrd.setToken(token);
+        ulrd.setFirebaseToken(firebaseToken);
+        ulrd.setId(accounts.getId());
+        if (accounts.getCustomerCollection().isEmpty()) {
+            ulrd.setFullName("No Customer");
+        } else {
+            ulrd.setFullName(accounts.getCustomerCollection().stream().findFirst().get().getName());
+        }
+        ulrd.setRole(accounts.getRole());
+        ulrd.setAvatar(accounts.getAvatar());
+        return ulrd;
     }
 }
