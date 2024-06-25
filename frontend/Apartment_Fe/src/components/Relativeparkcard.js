@@ -53,7 +53,7 @@ const RelativeParkCard = () => {
         <CardBody>
           <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3">
-              <FormLabel>Description</FormLabel>
+              <FormLabel>Mô tả</FormLabel>
               <FormControl
                 type="text"
                 name="description"
@@ -64,7 +64,7 @@ const RelativeParkCard = () => {
               />
             </Form.Group>
             <Form.Group className="mb-3">
-              <FormLabel>Expiry Date</FormLabel>
+              <FormLabel>Hạn sử dụng</FormLabel>
               <FormControl
                 type="date"
                 name="expiry"

@@ -61,17 +61,14 @@ const ReceiptList = () => {
                 <table className="receipt-table">
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Date</th>
-                            <th>Customer ID</th>
-                            <th>Customer Name</th>
-                            <th>Receipt Quantity</th>
-                            <th>Service ID</th>
-                            <th>Service Name</th>
+                            <th>ID hóa đơn</th>
+                            <th>Ngày</th>
+                            <th>Tên khách hàng</th>
+                            <th>số lần sử dụng</th>
                             <th>Tháng</th>
                             <th>Năm</th>
-                            <th>Receipt Detail Cost</th>
-                            <th>Total</th>
+                            <th>Chi tiết biên nhận</th>
+                            <th>Tổng cộng</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -80,11 +77,8 @@ const ReceiptList = () => {
                             <tr key={receipt.receiptId}>
                                 <td>{receipt.receiptId}</td>
                                 <td>{new Date(receipt.useServiceDate).toLocaleDateString()}</td>
-                                <td>{receipt.customerId}</td>
                                 <td>{receipt.customerName}</td>
                                 <td>{receipt.receiptDetailQuantity}</td>
-                                <td>{receipt.serviceId}</td>
-                                <td>{receipt.serviceName}</td>
                                 <td>{new Date(receipt.receiptDate).getMonth() + 1}</td>
                                 <td>{new Date(receipt.receiptDate).getFullYear()}</td>
                                 <td>{receipt.receiptDetailCost}</td>
@@ -103,11 +97,8 @@ const ReceiptList = () => {
                             <tr key={receipt.receiptId}>
                                 <td>{receipt.receiptId}</td>
                                 <td>{new Date(receipt.useServiceDate).toLocaleDateString()}</td>
-                                <td>{receipt.customerId}</td>
                                 <td>{receipt.customerName}</td>
                                 <td>{receipt.receiptDetailQuantity}</td>
-                                <td>{receipt.serviceId}</td>
-                                <td>{receipt.serviceName}</td>
                                 <td>{new Date(receipt.receiptDate).getMonth() + 1}</td>
                                 <td>{new Date(receipt.receiptDate).getFullYear()}</td>
                                 <td>{receipt.receiptDetailCost}</td>
