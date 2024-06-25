@@ -1,21 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Apis, { endpoints } from "../configs/Apis";
 import { Button, Form, Card, Container, Row, Col } from 'react-bootstrap';
+import UserContext from '../contexts/UserContext';
 
 const Service = () => {
   const [serviceDetail, setServiceDetail] = useState([]);
   const [services, setServices] = useState([]);
   const [formData, setFormData] = useState({
-    customerId: '',
     serviceId: '',
     active: true
   });
   const [error, setError] = useState(null);
+  
+  const [user] = useContext(UserContext); 
 
   const fetchServiceDetail = async () => {
     try {
-      const response = await Apis.get(endpoints.service_detail(2));
-      setServiceDetail(response.data);
+      if (user) {
+        const response = await Apis.get(endpoints.service_detail(user.id)); // Sử dụng user.id thay cho giá trị gán cứng
+        setServiceDetail(response.data);
+      }
     } catch (error) {
       console.error('Error fetching Service:', error);
     }
@@ -23,7 +27,7 @@ const Service = () => {
 
   useEffect(() => {
     fetchServiceDetail();
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     const fetchServices = async () => {
@@ -48,7 +52,7 @@ const Service = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (!formData.customerId || !formData.serviceId) {
+    if (!formData.serviceId) {
       setError("Please fill in all fields.");
       return;
     }
@@ -59,7 +63,7 @@ const Service = () => {
     try {
       const response = await Apis.post(endpoints.add_use_service, {
         ...formData,
-        customerId: parseInt(formData.customerId),
+        customerId: user.id, // Sử dụng user.id cho customerId
         serviceId: parseInt(formData.serviceId)
       });
       console.log('Service created successfully:', response.data);
@@ -70,41 +74,27 @@ const Service = () => {
     }
   };
 
-  // const handleDelete = async (serviceId) => {
-  //   try {
-  //     const useServiceResponse = await Apis.get(
-  //       endpoints.use_service_by_customer_and_service(2, serviceId)
-  //     );
-  //     const useService = useServiceResponse.data;
-
-  //     if (useService) {
-  //       console.log('Service deleted successfully');
-  //       fetchServiceDetail();
-  //     } else {
-  //       console.error('UseService not found for the given customerId and serviceId');
-  //     }
-  //   } catch (error) {
-  //     console.error('Error deleting Service:', error);
-  //   }
-  // };
-   const handleDelete = async (serviceId) => {
+  const handleDelete = async (serviceId) => {
     try {
-      const useServiceResponse = await Apis.get(
-        endpoints.use_service_by_customer_and_service(2, serviceId)
-      );
-      const useService = useServiceResponse.data;
-      if (useService) {
-        await  Apis.delete(endpoints.use_service(useService.id));
-        console.log('Service deleted successfully');
-        // Reload the service detail after deleting a service
-        fetchServiceDetail();
-      } else {
-        console.error('UseService not found for the given customerId and serviceId');
+      if (user) {
+        const useServiceResponse = await Apis.get(
+          endpoints.use_service_by_customer_and_service(user.id, serviceId) // Sử dụng user.id thay cho giá trị gán cứng
+        );
+        const useService = useServiceResponse.data;
+        if (useService) {
+          await Apis.delete(endpoints.use_service(useService.id));
+          console.log('Service deleted successfully');
+          // Reload the service detail after deleting a service
+          fetchServiceDetail();
+        } else {
+          console.error('UseService not found for the given customerId and serviceId');
+        }
       }
     } catch (error) {
       console.error('Error deleting Service:', error);
     }
   };
+
   return (
     <Container className="mt-5">
       <h1 className="mb-4 text-center">Service</h1>
@@ -123,16 +113,6 @@ const Service = () => {
       </Row>
       <Card className="p-4">
         <Form onSubmit={handleSubmit}>
-          <Form.Group controlId="formCustomerId">
-            <Form.Label>Customer ID</Form.Label>
-            <Form.Control 
-              type="text" 
-              placeholder="Enter Customer ID" 
-              name="customerId"
-              value={formData.customerId} 
-              onChange={handleChange} 
-            />
-          </Form.Group>
           <Form.Group controlId="formServiceSelect" className="mt-3">
             <Form.Label>Select a Service</Form.Label>
             <Form.Control as="select" name="serviceId" value={formData.serviceId} onChange={handleChange}>
@@ -150,7 +130,6 @@ const Service = () => {
           </Button>
         </Form>
       </Card>
-      
     </Container>
   );
 };

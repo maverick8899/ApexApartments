@@ -96,11 +96,16 @@
     <div class="form-floating mb-3 mt-3">
         <form:input type="text" class="form-control"
                     path="accountId.password" id="accountId.password"  placeholder="password" />
-        <label for="name">password khách hàng</label>
+        <label for="name">password </label>
+
+    </div>
+    <div class="form-floating mb-3 mt-3">
         <form:input type="text" class="form-control"
                     path="accountId.role" id="accountId.role" placeholder="Vai trò" />
         <label for="name">Vai trò</label>
+
     </div>
+
 
 
     <div class="form-floating mb-3 mt-3">

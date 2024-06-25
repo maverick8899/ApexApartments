@@ -1,104 +1,60 @@
-import { useContext, useEffect, useState } from 'react';
-import Apis, { endpoints } from '../configs/Apis';
-import MySpinner from './MySpinner';
-import {
-    Badge,
-    Button,
-    Col,
-    Container,
-    Form,
-    Nav,
-    Navbar,
-    NavDropdown,
-    Row,
-} from 'react-bootstrap';
+import { useContext } from 'react';
+import { Container, Nav, Navbar } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
 import UserContext from '../contexts/UserContext';
 import Cookies from 'js-cookie';
 
-const StyledNavbar = styled(Navbar)`
-    background-color: #343a40 !important;
-`;
-
-const StyledNavbarBrand = styled(Navbar.Brand)`
-    color: #ffffff !important;
-    font-size: 1.5em;
-    font-weight: bold;
-
-    &:hover {
-        color: #cccccc !important;
-    }
-`;
-
-const StyledNavLink = styled(Nav.Link)`
-    color: #ffffff !important;
-    font-size: 1.1em;
-    margin-right: 15px;
-
-    &:hover {
-        color: #cccccc !important;
-    }
-`;
-
 const Header = () => {
-    // const [customer, setCustomer] = useState(null);
-    // const loadCus = async () => {
-    //     let res = await Apis.get(endpoints['customer'])
-    //     setCustomer(res.data);
-    // }
-
-    // useEffect(() => {
-    //     loadCus();
-    // }, [])
-
-    // if (customer === null)
-    //     return <MySpinner />;
-
     const [user, dispatch] = useContext(UserContext);
+
     const handleLogout = () => {
         dispatch({ type: 'logout' });
         Cookies.remove('token');
         Cookies.remove('user');
+        window.location.href = '/login'; // Chuyển hướng sau khi đăng xuất
     };
-    // return (
-    //     <StyledNavbar expand="lg">
-    //         <Container>
-    //             <StyledNavbarBrand href="#home">Quản lý chung cư</StyledNavbarBrand>
-    //             <Navbar.Toggle aria-controls="basic-navbar-nav" />
-    //             <Navbar.Collapse id="basic-navbar-nav">
-    //                 <Nav className="me-auto">
-    //                     <StyledNavLink href="#home">Trang chủ</StyledNavLink>
-    //                     <StyledNavLink href="/Relativeparkcard">Thêm thẻ giữ xe người thân</StyledNavLink>
-    //                     <StyledNavLink href="/MerchandiseCabinet">Xem tủ đồ</StyledNavLink>
-    //                     <StyledNavLink href="/Service">Dịch vụ</StyledNavLink>
-    //                     <StyledNavLink href="/feedback">Feedback</StyledNavLink>
-    //                     <StyledNavLink href="/login">Đăng nhập</StyledNavLink>
-    //                     <StyledNavLink href="/ReceiptList">Hóa đơn</StyledNavLink>
 
-    return (
-        <StyledNavbar expand="lg">
+    return user ? (
+        <Navbar expand="lg" style={{ backgroundColor: '#343a40' }}>
             <Container>
-                <StyledNavbarBrand href="#home">Quản lý chung cư</StyledNavbarBrand>
+                <Navbar.Brand as={Link} to="/" style={{ color: '#ffffff', fontSize: '1.5em', fontWeight: 'bold' }}>
+                    Quản lý chung cư
+                </Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
-                        <StyledNavLink href="#home">Trang chủ</StyledNavLink>
-                        <StyledNavLink href="/Relativeparkcard">
+                        <Nav.Link as={Link} to="/" style={{ color: '#ffffff', fontSize: '1.1em', marginRight: '15px' }}>
+                            Trang chủ
+                        </Nav.Link>
+                        <Nav.Link as={Link} to="/Relativeparkcard" style={{ color: '#ffffff', fontSize: '1.1em', marginRight: '15px' }}>
                             Thêm thẻ giữ xe người thân
-                        </StyledNavLink>
-                        <StyledNavLink href="/MerchandiseCabinet">Xem tủ đồ</StyledNavLink>
-                        <StyledNavLink href="/Service">Dịch vụ</StyledNavLink>
-                        <StyledNavLink href="/Feedback">Feedback</StyledNavLink>
-                        <StyledNavLink href="/Survey">Khảo sát</StyledNavLink>
-                        <StyledNavLink href="/login">Đăng nhập</StyledNavLink>
-                        <StyledNavLink onClick={handleLogout}>Đăng xuất</StyledNavLink>
-                        <StyledNavLink href="ReceiptList">Hóa đơn</StyledNavLink>
+                        </Nav.Link>
+                        <Nav.Link as={Link} to="/MerchandiseCabinet" style={{ color: '#ffffff', fontSize: '1.1em', marginRight: '15px' }}>
+                            Xem tủ đồ
+                        </Nav.Link>
+                        <Nav.Link as={Link} to="/Service" style={{ color: '#ffffff', fontSize: '1.1em', marginRight: '15px' }}>
+                            Dịch vụ
+                        </Nav.Link>
+                        <Nav.Link as={Link} to="/Feedback" style={{ color: '#ffffff', fontSize: '1.1em', marginRight: '15px' }}>
+                            Feedback
+                        </Nav.Link>
+                        <Nav.Link as={Link} to="/Survey" style={{ color: '#ffffff', fontSize: '1.1em', marginRight: '15px' }}>
+                            Khảo sát
+                        </Nav.Link>
+                        <Nav.Link as={Link} to="/ReceiptList" style={{ color: '#ffffff', fontSize: '1.1em', marginRight: '15px' }}>
+                            Hóa đơn
+                        </Nav.Link>
+                        <Nav.Link as={Link} to="/chatapp" style={{ color: '#ffffff', fontSize: '1.1em', marginRight: '15px' }}>
+                            Chat
+                        </Nav.Link>
+                        <Nav.Link onClick={handleLogout} style={{ color: '#ffffff', fontSize: '1.1em', marginRight: '15px' }}>
+                            Đăng xuất
+                        </Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Container>
-        </StyledNavbar>
-    );
+        </Navbar>
+    ) : null; // Không hiển thị header nếu chưa đăng nhập
 };
 
 export default Header;

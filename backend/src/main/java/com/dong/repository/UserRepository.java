@@ -4,7 +4,7 @@ import com.dong.pojo.Accounts;
 
 public interface UserRepository {
     Accounts getUserByUsername(String username);
-    Accounts addUser(Accounts user);
+    Accounts save(Accounts user);
 
     boolean authUser(String username, String password);
 }

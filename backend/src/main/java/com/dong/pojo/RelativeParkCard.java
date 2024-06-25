@@ -35,7 +35,6 @@ public class RelativeParkCard implements Serializable {
     @Column(name = "description")
     private String description;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "date_create")
     @Temporal(TemporalType.DATE)
     private Date dateCreate;

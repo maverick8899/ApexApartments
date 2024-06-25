@@ -7,7 +7,7 @@
     <tr>
         <th>Id</th>
         <th>username</th>
-        <th>password</th>
+<%--        <th>password</th>--%>
         <th>Vai trò</th>
 
     </tr>
@@ -18,7 +18,7 @@
 
             <td>${c.id}</td>
             <td>${c.username}</td>
-            <td>${c.password}</td>
+<%--            <td>${c.password}</td>--%>
             <td>${c.role}</td>
             <td>
                 <c:url value="/api/account/${c.id}" var="apiDel" />

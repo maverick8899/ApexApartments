@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import Apis, { authApi, endpoints } from '../configs/Apis';
 import { Form, Button } from 'react-bootstrap';
 import styled from 'styled-components';
-// import { useToast } from '@chakra-ui/react';
 import { inputValidate } from '../helper/inputValidate';
 import { Bounce, ToastContainer, toast } from 'react-toastify';
 
@@ -49,15 +48,8 @@ const SubmitButton = styled(Button)`
 `;
 
 const Survey = () => {
-    const [survey, setSurvey] = useState([
-        { question: 'How satisfied are you with our service?' },
-        { question: 'How would you rate our product quality?' },
-        { question: 'How likely are you to recommend us to a friend?' },
-        { question: 'How do you rate the cleanliness of our facility?' },
-        { question: 'How friendly was our staff?' },
-    ]);
+    const [survey, setSurvey] = useState([]);
     const [answers, setAnswers] = useState([]);
-    const [answer, setAnswer] = useState();
     const [personalOpinion, setPersonalOpinion] = useState('');
     const notify = (msg) =>
         toast.warn(`${msg}`, {
@@ -73,7 +65,7 @@ const Survey = () => {
         });
 
     const handleInputAnswers = (e, id) => {
-        const { name, value } = e.target;
+        const { value } = e.target;
         setAnswers((prevAnswers) => {
             const updatedAnswers = prevAnswers.filter((answer) => answer.question_id !== id);
             return [
@@ -94,16 +86,14 @@ const Survey = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(123);
         const { error } = inputValidate(personalOpinion);
         if (error) {
-            console.log('error: ' + error);
             notify(error.details[0].message);
             return;
         }
         try {
             const res = await Apis.post(endpoints.survey_answer, {
-                survey_id: survey[1].survey_id,
+                survey_id: survey[1]?.survey_id,
                 customer_id: 1,
                 personal_opinion: personalOpinion,
                 answers,
@@ -126,19 +116,10 @@ const Survey = () => {
         })();
     }, []);
 
-    // useEffect(() => {
-    //     console.log({
-    //         survey_id: 1,
-    //         customer_id: 1,
-    //         personal_opinion: personalOpinion,
-    //         answers,
-    //     });
-    // }, [answers]);
-
     return (
         <>
             <h1 className="text-center">
-                Survey: {survey[2].date && survey[2].date.split(' ')[0]}
+                Survey: {survey[2]?.date && survey[2].date.split(' ')[0]}
             </h1>
             <Container className="d-flex flex-column align-items-stretch">
                 {survey[0]?.questions &&
@@ -148,7 +129,6 @@ const Survey = () => {
                             <Form.Select
                                 name="answer"
                                 id={s.question_id}
-                                // value={formData.answers}
                                 onChange={(e) => handleInputAnswers(e, s.question_id)}
                             >
                                 <option value="0" defaultChecked>
@@ -168,9 +148,7 @@ const Survey = () => {
                         type="text"
                         name="personal_opinion"
                         value={personalOpinion}
-                        onChange={(e) => {
-                            setPersonalOpinion(e.target.value);
-                        }}
+                        onChange={(e) => setPersonalOpinion(e.target.value)}
                         placeholder="Enter Personal Opinion"
                         required
                     />
@@ -179,6 +157,7 @@ const Survey = () => {
                     Hoàn thành khảo sát
                 </SubmitButton>
             </Container>
+            <ToastContainer />
         </>
     );
 };

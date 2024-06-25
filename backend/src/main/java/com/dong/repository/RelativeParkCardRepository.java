@@ -12,6 +12,8 @@ import java.util.Map;
 public interface RelativeParkCardRepository {
     List<RelativeParkCard> getRelativeParkCard(Map<String, String> var1);
 
+    List<RelativeParkCard> getRelativeParkCardByCustomerId(Integer customerId);
+
     RelativeParkCard getRelativeParkCardById(int var1);
 
     boolean deleteRelativeParkCard(int var1);

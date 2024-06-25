@@ -6,22 +6,14 @@ const SERVER = 'http://localhost:8080';
 
 export const endpoints = {
     customer: `${SERVER_CONTEXT}/api/customers/`,
-    relativeparkcard: `${SERVER_CONTEXT}/api/relativeparkcard/`,
+    relativeparkcard:(customerId)=> `${SERVER_CONTEXT}/api/relativeparkcard/${customerId}`,
     merchandisecabinet: (customerId) => `${SERVER_CONTEXT}/api/merchandisecabinet/${customerId}`,
     service: `${SERVER_CONTEXT}/api/service/`,
     customer_service: `${SERVER_CONTEXT}/api/service/customers`,
     add_use_service: `${SERVER_CONTEXT}/api/use-services`,
     add_feedback: `${SERVER_CONTEXT}/api/addFeedback`,
-
-    //     'service_detail': (customerId) => `${SERVER_CONTEXT}/api/service/customers/${customerId}`,
-    //     'use_service_by_customer_and_service': (customerId, serviceId) =>
-    //         `${SERVER_CONTEXT}/api/use-services?customerId=${customerId}&serviceId=${serviceId}`,
-    //     'use_service': (id) => `${SERVER_CONTEXT}/api/use_service/${id}`,
-    //     'receipt':(customerId)=> `${SERVER_CONTEXT}/api/receipts?type=1&kw=${customerId}`,
-    //     'receipt_paid':(customerId)=> `${SERVER_CONTEXT}/api/receipts?type=1&isPay=1&kw=${customerId}`,
-    //     'receipt_unpaid':(customerId)=> `${SERVER_CONTEXT}/api/receipts?type=1&isPay=2&kw=${customerId}`,
-
-    // http://localhost:8080/apartment_manager/api/vnpay/create_payment?amount=300000
+    upload_avatar: `${SERVER_CONTEXT}/api/upload-avatar`,
+    check_avatar: `${SERVER_CONTEXT}/api/check-avatar`,
     payment: (amount, receiptId, month) =>
         `${SERVER_CONTEXT}/api/vnpay/create_payment?amount=${amount}&receiptId=${receiptId}&month=${month}`,
 

@@ -61,13 +61,21 @@ public class UserServiceImpl implements UserService {
         return this.userRepo.authUser(username, password);    }
 
     @Override
-    public Accounts addUser(Map<String, String> params, MultipartFile avatar) {
+    public Accounts updateUser(Map<String, String> params, MultipartFile avatar) {
+        Accounts u = this.userRepo.getUserByUsername(params.get("username"));
+        if (u == null) {
+            throw new RuntimeException("User not found");
+        }
 
-        Accounts u = new Accounts();
-        u.setUsername(params.get("username"));
-        u.setPassword(this.passwordEncoder.encode(params.get("password")));
-        u.setRole("ROLE_USER");
-        if (!avatar.isEmpty()) {
+        if (params.containsKey("password")) {
+            u.setPassword(this.passwordEncoder.encode(params.get("password")));
+        }
+
+        if (params.containsKey("role")) {
+            u.setRole(params.get("role"));
+        }
+
+        if (avatar != null && !avatar.isEmpty()) {
             try {
                 Map res = this.cloudinary.uploader().upload(avatar.getBytes(),
                         ObjectUtils.asMap("resource_type", "auto"));
@@ -76,9 +84,17 @@ public class UserServiceImpl implements UserService {
                 Logger.getLogger(UserServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-
-        this.userRepo.addUser(u);
+        this.userRepo.save(u);
         return u;
+    }
+
+    @Override
+    public void uploadAvatar(Accounts user, MultipartFile avatar) throws IOException {
+        if (avatar != null && avatar.getSize() > 0) {
+            Map res = this.cloudinary.uploader().upload(avatar.getBytes(), ObjectUtils.asMap("resource_type", "auto"));
+            user.setAvatar(res.get("secure_url").toString());
+            this.userRepo.save(user);
+        }
     }
 
 
