@@ -26,15 +26,17 @@ const ChatApp = () => {
   const isNormalUser = currentUser.role == 'user'
 
   useEffect(() => {
-    let unSubcribe
-    if (isNormalUser) unSubcribe = fetchChatFornormalUser()
-    return () => unSubcribe && unSubcribe()
-  }, [])
+    let unsubscribe
+    if (isNormalUser) {
+      unsubscribe = fetchChatFornormalUser()
+    }
+    return () => unsubscribe && unsubscribe()
+  }, [isNormalUser])
 
-  const fetchChatFornormalUser = async () => {
+  const fetchChatFornormalUser = () => {
     const chatsRef = collection(FirebaseDb, 'chats')
     const q = query(chatsRef, where('user', '==', currentUser.id))
-    const unSubcribe = onSnapshot(q, (snapshot) => {
+    const unsubscribe = onSnapshot(q, (snapshot) => {
       if (snapshot.empty) {
         const newChatRef = doc(chatsRef)
         setDoc(newChatRef, {
@@ -59,8 +61,8 @@ const ChatApp = () => {
           avatar: '/admin_avatar.png',
         })
       }
-      return () => unSubcribe()
     })
+    return unsubscribe
   }
 
   return (

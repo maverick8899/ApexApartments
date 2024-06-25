@@ -15,6 +15,7 @@ public interface RelativeParkCardService {
     RelativeParkCard getRelativeParkCardById(int var1);
 
     boolean deleteRelativeParkCard(int var1);
+    List<RelativeParkCard> getRelativeParkCardByCustomerId(Integer customerId);
 
     RelativeParkCard addRelativeParkCard(RelativeParkCard var1);
 

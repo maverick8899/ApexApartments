@@ -1,7 +1,113 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Apis, { authApi, endpoints } from "../configs/Apis";
 import { Form, Button } from 'react-bootstrap';
 import styled from 'styled-components';
+import UserContext from '../contexts/UserContext';
+
+
+const RelativeParkCard = () => {
+  const [user] = useContext(UserContext); 
+  const [parkCards, setParkCards] = useState([]);
+
+  const [formData, setFormData] = useState({
+    description: '',
+    expiry: '',
+    active: true,
+    cost: '200.00'
+  });
+
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const data = { ...formData };
+      await authApi.post(endpoints.relativeparkcard(user.id), formData);
+      fetchData();
+        } catch (error) {
+      console.error('Error creating RelativeParkCard:', error);
+    }
+  };
+  const fetchData = async () => {
+    try {
+      const response = await authApi.get(endpoints.relativeparkcard(user.id));
+      setParkCards(response.data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
+  return (
+    <Container>
+      <Card>
+        <CardHeader>Tạo thẻ giữ xe mới</CardHeader>
+        <CardBody>
+          <Form onSubmit={handleSubmit}>
+            <Form.Group className="mb-3">
+              <FormLabel>Description</FormLabel>
+              <FormControl
+                type="text"
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+                placeholder="Enter description"
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <FormLabel>Expiry Date</FormLabel>
+              <FormControl
+                type="date"
+                name="expiry"
+                value={formData.expiry}
+                onChange={handleChange}
+                required
+              />
+            </Form.Group>
+            <SubmitButton variant="primary" type="submit">
+              Create
+            </SubmitButton>
+          </Form>
+        </CardBody>
+      </Card>
+
+     <Card>
+     <CardBody>
+     <table className="receipt-table">
+        <thead>
+          <tr>
+            <th>Mô tả</th>
+            <th>Ngày tạo</th>
+            <th>Hạn sử dụng</th>
+          </tr>
+        </thead>
+        <tbody>
+          {parkCards.map(parkCard => (
+            <tr key={parkCard.id}>
+              <td>{parkCard.description}</td>
+              <td>{new Date(parkCard.dateCreate).toLocaleDateString()}</td>
+              <td>{new Date(parkCard.expiry).toLocaleDateString()}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      </CardBody>
+
+     </Card>
+    </Container>
+  );
+};
+
+export default RelativeParkCard;
 
 const Container = styled.div`
   margin-top: 20px;
@@ -44,104 +150,3 @@ const SubmitButton = styled(Button)`
   font-size: 16px;
   border-radius: 5px;
 `;
-
-const RelativeParkCard = () => {
-  const [parkCards, setParkCards] = useState([]);
-
-  const [formData, setFormData] = useState({
-    description: '',
-    // dateCreate: '',
-    expiry: '',
-    active: true,
-    cost: ''
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value
-    });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log(123);
-    try {
-      await authApi.post(endpoints.relativeparkcard, formData);
-    } catch (error) {
-      console.error('Error creating RelativeParkCard:', error);
-    }
-  };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await authApi.get(endpoints.relativeparkcard);
-        setParkCards(response.data);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-    fetchData();
-  }, []);
-
-  return (
-    <Container>
-      <Card>
-        <CardHeader>Create New Relative Park Card</CardHeader>
-        <CardBody>
-          <Form onSubmit={handleSubmit}>
-            <Form.Group className="mb-3">
-              <FormLabel>Description</FormLabel>
-              <FormControl
-                type="text"
-                name="description"
-                value={formData.description}
-                onChange={handleChange}
-                placeholder="Enter description"
-                required
-              />
-            </Form.Group>
-            {/* <Form.Group className="mb-3">
-              <FormLabel>Date Create</FormLabel>
-              <FormControl
-                type="date"
-                name="dateCreate"
-                value={formData.dateCreate}
-                onChange={handleChange}
-                required
-              />
-            </Form.Group> */}
-            <Form.Group className="mb-3">
-              <FormLabel>Expiry Date</FormLabel>
-              <FormControl
-                type="date"
-                name="expiry"
-                value={formData.expiry}
-                onChange={handleChange}
-                required
-              />
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <FormLabel>Cost</FormLabel>
-              <FormControl
-                type="number"
-                name="cost"
-                value={formData.cost}
-                onChange={handleChange}
-                placeholder="Enter cost"
-                required
-              />
-            </Form.Group>
-            <SubmitButton variant="primary" type="submit">
-              Create
-            </SubmitButton>
-          </Form>
-        </CardBody>
-      </Card>
-    </Container>
-  );
-};
-
-export default RelativeParkCard;

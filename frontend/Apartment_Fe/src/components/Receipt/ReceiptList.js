@@ -1,17 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Apis, { endpoints } from '../../configs/Apis';
-import './ReceiptList.css'; // Import file CSS
+import './ReceiptList.css'; 
 import MyPagination from '../MyPagination';
-// import Pagination from '../Pagination.js';
+import UserContext from '../../contexts/UserContext';
 
 const ReceiptList = () => {
     const [receipt_paid, setReceiptsPaid] = useState([]);
     const [receipt_unpaid, setReceiptsUnPaid] = useState([]);
+    const [user] = useContext(UserContext); 
 
     useEffect(() => {
         const fetchReceipts = async () => {
             try {
-                const response = await Apis.get(endpoints.receipt_paid(46));
+                const response = await Apis.get(endpoints.receipt_paid(user.id));
                 setReceiptsPaid(response.data);
             } catch (error) {
                 console.error('Error fetching the receipts:', error);
@@ -19,12 +20,12 @@ const ReceiptList = () => {
         };
 
         fetchReceipts();
-    }, []);
+    }, [user.id]);
 
     useEffect(() => {
         const fetchReceipts = async () => {
             try {
-                const response = await Apis.get(endpoints.receipt_unpaid(1));
+                const response = await Apis.get(endpoints.receipt_unpaid(user.id));
                 setReceiptsUnPaid(response.data);
             } catch (error) {
                 console.error('Error fetching the receipts:', error);
@@ -32,13 +33,15 @@ const ReceiptList = () => {
         };
 
         fetchReceipts();
-    }, []);
+    }, [user.id]);
 
     const handlePayment = async (receiptId, amount, month) => {
         try {
             const response = await Apis.get(endpoints.payment(amount, receiptId, month));
-            if (response.request.responseURL) {
-                window.location.href = response.request.responseURL;
+            console.log('Payment response:', response);
+            const paymentUrl = response.data.url;
+            if (paymentUrl) {
+                window.location.href = paymentUrl;
             } else {
                 console.error('Payment URL not found in the response');
             }
@@ -46,8 +49,8 @@ const ReceiptList = () => {
             console.error('Error processing payment:', error);
         }
     };
+
     const handleViewDetails = (receiptId) => {
-        // Thêm logic xem chi tiết ở đây
         console.log('Xem chi tiết hoá đơn:', receiptId);
     };
 
@@ -67,7 +70,6 @@ const ReceiptList = () => {
                             <th>Service Name</th>
                             <th>Tháng</th>
                             <th>Năm</th>
-
                             <th>Receipt Detail Cost</th>
                             <th>Total</th>
                             <th>Actions</th>
@@ -86,7 +88,7 @@ const ReceiptList = () => {
                                 <td>{new Date(receipt.receiptDate).getMonth() + 1}</td>
                                 <td>{new Date(receipt.receiptDate).getFullYear()}</td>
                                 <td>{receipt.receiptDetailCost}</td>
-                                <td>{receipt.receiptTotal}</td>
+                                <td>{receipt.receiptTotal*100000}</td>
                                 <td>
                                     <button
                                         className="button details"
@@ -108,16 +110,15 @@ const ReceiptList = () => {
                                 <td>{receipt.serviceName}</td>
                                 <td>{new Date(receipt.receiptDate).getMonth() + 1}</td>
                                 <td>{new Date(receipt.receiptDate).getFullYear()}</td>
-
                                 <td>{receipt.receiptDetailCost}</td>
-                                <td>{receipt.receiptTotal}</td>
+                                <td>{receipt.receiptTotal*100000}</td>
                                 <td>
                                     <button
                                         className="button payment"
                                         onClick={() =>
                                             handlePayment(
                                                 receipt.receiptId,
-                                                receipt.receiptTotal,
+                                                receipt.receiptTotal*100000,
                                                 new Date(receipt.receiptDate).getMonth() + 1,
                                             )
                                         }

@@ -4,16 +4,11 @@
 //
 package com.dong.repository.impl;
 
-import com.dong.pojo.Customer;
-import com.dong.pojo.DetailReceipt;
-import com.dong.pojo.Receipt;
+
 import com.dong.pojo.RelativeParkCard;
-import com.dong.pojo.Service;
-import com.dong.pojo.UseService;
+
 import com.dong.repository.RelativeParkCardRepository;
 import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -21,7 +16,6 @@ import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Order;
-import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 import org.hibernate.HibernateException;
@@ -94,6 +88,22 @@ public class RelativeParkCardRepositoryImpl
     }
     return query.getResultList();
   }
+
+  @Override
+  public List<RelativeParkCard> getRelativeParkCardByCustomerId(Integer customerId) {
+    Session session = this.factory.getObject().getCurrentSession();
+    CriteriaBuilder b = session.getCriteriaBuilder();
+    CriteriaQuery<RelativeParkCard> q = b.createQuery(RelativeParkCard.class);
+    Root<RelativeParkCard> r = q.from(RelativeParkCard.class);
+
+    q.where(b.equal(r.get("customerId").get("id"), customerId));
+    q.select(r);
+    q.orderBy(b.desc(r.get("id")));
+
+    Query query = session.createQuery(q);
+    return query.getResultList();
+  }
+
 
   public RelativeParkCard getRelativeParkCardById(int id) {
     Session s = this.factory.getObject().getCurrentSession();

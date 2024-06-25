@@ -9,6 +9,7 @@ import com.dong.pojo.Accounts;
 import com.dong.pojo.Customer;
 import com.dong.service.AccountsService;
 import com.dong.service.CustomerService;
+import com.dong.service.UserService;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import org.hibernate.Hibernate;
@@ -17,9 +18,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -31,9 +35,11 @@ public class ApiUserController {
     @Autowired
     private AccountsService accService;
     @Autowired
+    private UserService userService;
+    @Autowired
     private JwtService jwtService;
 
-    @PostMapping("/login")
+        @PostMapping("/login")
     @CrossOrigin
     public ResponseEntity<UserLoginResponseDto> login(@RequestBody UserLoginRequestDto userLoginRequestDto) {
         if (accService.authenticate(userLoginRequestDto.getUsername(), userLoginRequestDto.getPassword())) {
@@ -44,8 +50,31 @@ public class ApiUserController {
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
     }
+    @GetMapping("/check-avatar")
+    @CrossOrigin
+    public ResponseEntity<?> checkAvatar(@RequestParam("username") String username) {
+        Accounts accounts = accService.getByUserName(username);
+        if (accounts == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+        boolean hasAvatar = accounts.getAvatar() != null && !accounts.getAvatar().isEmpty();
+        return ResponseEntity.ok(hasAvatar);
+    }
+    @PostMapping("/upload-avatar")
+    @CrossOrigin
+    public ResponseEntity<?> uploadAvatar(@RequestParam("file") MultipartFile file, @RequestParam("username") String username) {
+        Accounts accounts = accService.getByUserName(username);
+        if (accounts == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
 
-
+        try {
+            userService.uploadAvatar(accounts, file);
+            return ResponseEntity.ok("Avatar uploaded successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload avatar");
+        }
+    }
     private String generateFirebaseToken(Integer userId) {
         try {
             String firebaseToken = FirebaseAuth.getInstance().createCustomToken(userId.toString());

@@ -31,6 +31,11 @@ public class RelativeParkCardServiceImpl implements RelativeParkCardService {
     }
 
     @Override
+    public List<RelativeParkCard> getRelativeParkCardByCustomerId(Integer customerId) {
+        return this.receiptRepo.getRelativeParkCardByCustomerId(customerId);
+    }
+
+    @Override
     public RelativeParkCard addRelativeParkCard(RelativeParkCard var1) {
         return this.receiptRepo.addRelativeParkCard(var1);
     }
