@@ -8,7 +8,7 @@ import java.util.Map;
 
 public interface ReceiptService {
 
-    List<ReceiptDTO> getReceipt(Map<String, String> params);
+    List<Object> getReceipt(Map<String, String> params);
 
     boolean deleteReceipt(int id);
 

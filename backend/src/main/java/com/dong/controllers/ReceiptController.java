@@ -73,8 +73,8 @@ public class ReceiptController {
     @PostMapping("/addReceipt")
     public String addOrUpdateReceipts(Model model, @RequestParam Map<String, String> params) {
         if (this.detailReceiptService.addOrUpdateDetailReceipt(params) == true 
-                && this.relativeParkCardService.updateRelativeParkCard(params)
-                && this.useServiceService.UpdateUseService(params) ) {
+                && this.relativeParkCardService.updateRelativeParkCard(params) == true
+                && this.useServiceService.UpdateUseService(params) == true) {
             return "redirect:/receipt";
         }
         return "addReceipt";

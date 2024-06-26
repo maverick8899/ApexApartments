@@ -117,7 +117,7 @@ public class DetailReceiptRepositoryImpl implements DetailReceiptRepository {
       //            //? receipt
       boolean isPay = "1".equals(params.get("receipt_isPay"));
       r.setIsPay(isPay);
-      r.setTotal(new BigDecimal(total));
+      r.setTotal(new BigDecimal(total* 100000));
       r.setCustomerId(c);
       r.setDate(new Date());
       session.save(r);

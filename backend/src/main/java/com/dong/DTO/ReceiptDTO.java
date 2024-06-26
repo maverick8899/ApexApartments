@@ -61,5 +61,6 @@ public class ReceiptDTO {
         this.serviceDescription = serviceDescription;
         this.serviceUnit = serviceUnit;
         this.useServiceDate = useServiceDate;
+
     }
 }

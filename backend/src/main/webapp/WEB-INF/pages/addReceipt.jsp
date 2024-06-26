@@ -140,7 +140,7 @@
                                     <td><input type="text" name="parkCards[${counter}].cost"></td>
                                     </c:when>
                                     <c:otherwise>
-                                    <td>${r.cost}</td>
+                                    <td><input type="text" name="parkCards[${counter}].cost" value="${r.cost}"></td>
                                 </c:otherwise>
                             </c:choose>
                         </tr>

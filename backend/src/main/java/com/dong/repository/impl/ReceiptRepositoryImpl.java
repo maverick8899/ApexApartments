@@ -12,6 +12,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -65,7 +66,7 @@ public class ReceiptRepositoryImpl implements ReceiptRepository {
     }
 
     @Override
-    public List<ReceiptDTO> getReceipt(Map<String, String> params) {
+    public List<Object> getReceipt(Map<String, String> params) {
         //? isPay ở đây là selection chứ không phải là giá trị isPay trong db
         int isPay = 0;
         int type = 0;
@@ -104,7 +105,6 @@ public class ReceiptRepositoryImpl implements ReceiptRepository {
                 s.get("description"),
                 s.get("unit"),
                 uS.get("date"),
-                //                b.sum(r.get("cost"))
                 rD.get("cost")
         );
 
@@ -172,8 +172,10 @@ public class ReceiptRepositoryImpl implements ReceiptRepository {
             q.orderBy(b.asc(r.get("id")));
         }
         Query query = session.createQuery(q);
+        int quantity= query.getResultList().size();
         String pageNumber = "";
-        int pageSize = 0;
+        int pageSize = 10;
+        int page = 1;
         if (params != null && !params.isEmpty()) {
             if (params.get("page") != null && !params.get("page").isEmpty()) {
                 pageNumber = params.get("page");
@@ -185,15 +187,19 @@ public class ReceiptRepositoryImpl implements ReceiptRepository {
             }
         }
         if (pageNumber != null && !pageNumber.isEmpty()) {
-            int page = Integer.parseInt(pageNumber);
+            page = Integer.parseInt(pageNumber);
             // 15, 3, 5
             //            int pageSize = this.env.getProperty("PAGE_SIZE", Integer.class);
             int start = (page - 1) * pageSize;
             query.setFirstResult(start);
             query.setMaxResults(pageSize);
         }
-        List<ReceiptDTO> invoices = new ArrayList<>();
+        List<Object> receiptMap = new ArrayList<>();
+        Map<String, Object> pagination = new HashMap<>();
 
+//        Map<String, List<Object>> pagination = new HashMap<>();
+        List<ReceiptDTO> invoices = new ArrayList<>();
+        int i = 0;
         for (Object item : query.getResultList()) {
             if (item instanceof Object[]) {
                 Object[] itemArray = (Object[]) item;
@@ -203,7 +209,7 @@ public class ReceiptRepositoryImpl implements ReceiptRepository {
                 Long discountDateTimestamp = itemArray[12] instanceof Date
                         ? ((Date) itemArray[12]).getTime()
                         : Long.parseLong(itemArray[12].toString());
-
+                i++;
                 invoices.add(
                         new ReceiptDTO(
                                 itemArray[0], // receiptId
@@ -219,12 +225,18 @@ public class ReceiptRepositoryImpl implements ReceiptRepository {
                                 itemArray[10], // serviceUnit
                                 itemArray[11], // receiptDetailCost
                                 parseIntToDate(discountDateTimestamp), // discountDescription (giả sử là discountDescription)
-                                itemArray[13] // receiptDetailCost
+                                itemArray[13] // receiptDetailCost,
                         )
                 );
             }
         }
-        return invoices;
+        pagination.put("quantity", quantity);
+        pagination.put("page", page);
+        pagination.put("pageSize", pageSize);
+        receiptMap.add(pagination);
+        receiptMap.add(invoices);
+
+        return receiptMap;
     }
 
     public Object parseIntToDate(Long timestamp) {

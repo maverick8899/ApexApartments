@@ -9,7 +9,7 @@ import java.util.Map;
 
 public interface ReceiptRepository {
 
-    List<ReceiptDTO> getReceipt(Map<String, String> params);
+    List<Object> getReceipt(Map<String, String> params);
 
     boolean payment(String receiptId);
 

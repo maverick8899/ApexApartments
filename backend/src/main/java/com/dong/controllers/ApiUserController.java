@@ -1,6 +1,5 @@
 package com.dong.controllers;
 
-
 import com.dong.DTO.ChatUserInfoDto;
 import com.dong.DTO.UserLoginRequestDto;
 import com.dong.DTO.UserLoginResponseDto;
@@ -30,6 +29,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/api")
 @CrossOrigin
 public class ApiUserController {
+
     @Autowired
     private ModelMapper modelMapper;
     @Autowired
@@ -39,7 +39,7 @@ public class ApiUserController {
     @Autowired
     private JwtService jwtService;
 
-        @PostMapping("/login")
+    @PostMapping("/login")
     @CrossOrigin
     public ResponseEntity<UserLoginResponseDto> login(@RequestBody UserLoginRequestDto userLoginRequestDto) {
         if (accService.authenticate(userLoginRequestDto.getUsername(), userLoginRequestDto.getPassword())) {
@@ -50,6 +50,7 @@ public class ApiUserController {
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
     }
+
     @GetMapping("/check-avatar")
     @CrossOrigin
     public ResponseEntity<?> checkAvatar(@RequestParam("username") String username) {
@@ -60,6 +61,7 @@ public class ApiUserController {
         boolean hasAvatar = accounts.getAvatar() != null && !accounts.getAvatar().isEmpty();
         return ResponseEntity.ok(hasAvatar);
     }
+
     @PostMapping("/upload-avatar")
     @CrossOrigin
     public ResponseEntity<?> uploadAvatar(@RequestParam("file") MultipartFile file, @RequestParam("username") String username) {
@@ -75,6 +77,7 @@ public class ApiUserController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload avatar");
         }
     }
+
     private String generateFirebaseToken(Integer userId) {
         try {
             String firebaseToken = FirebaseAuth.getInstance().createCustomToken(userId.toString());
@@ -89,7 +92,8 @@ public class ApiUserController {
     public ResponseEntity<List<ChatUserInfoDto>> getAllUsers(@RequestParam(name = "ids") List<Integer> ids) {
         List<Accounts> users = accService.getAccountsByIds(ids);
         users.forEach(user -> Hibernate.initialize(user.getCustomerCollection())); // Initialize the collection
-        return ResponseEntity.ok(entity2Dto(users));    }
+        return ResponseEntity.ok(entity2Dto(users));
+    }
 
     private List<ChatUserInfoDto> entity2Dto(List<Accounts> users) {
         return users.stream()

@@ -45,7 +45,7 @@ public class ApiReceiptController {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     @CrossOrigin
-    public ResponseEntity<List<ReceiptDTO>> list(
+    public ResponseEntity<List<Object>> list(
             @RequestParam Map<String, String> params
     ) {
         return new ResponseEntity<>(this.recSerivce.getReceipt(params), HttpStatus.OK);

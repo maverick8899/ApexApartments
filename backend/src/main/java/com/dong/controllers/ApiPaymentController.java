@@ -97,8 +97,10 @@ public class ApiPaymentController {
         paymentResDTO.setStatus("OK");
         paymentResDTO.setMessage("Successfully");
         paymentResDTO.setURL(paymentUrl);
+        if (!paymentUrl.isEmpty()) {
+            recSerivce.payment(receiptId);
+        }
         //? update DB that was paid
-        recSerivce.payment(receiptId);
         return ResponseEntity.status(HttpStatus.OK).body(paymentResDTO);
     }
 

@@ -40,7 +40,7 @@ public class ApiSurveyController {
             path = "/survey/answers",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    @CrossOrigin
+//    @CrossOrigin
     public ResponseEntity<Boolean> list(@RequestBody SurveyDTO params) {
         return new ResponseEntity<>(this.surveyService.answerSurvey(params), HttpStatus.OK);
 
@@ -51,7 +51,7 @@ public class ApiSurveyController {
             path = "/survey/questions",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    @CrossOrigin
+//    @CrossOrigin
     public ResponseEntity<List<Object>> list2(@RequestParam Map<String, String> params) {
         return new ResponseEntity<>(this.surveyService.getQuestionsBySurvey(params), HttpStatus.OK);
 

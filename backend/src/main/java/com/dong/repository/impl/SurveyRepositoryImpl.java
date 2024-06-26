@@ -76,7 +76,8 @@ public class SurveyRepositoryImpl implements SurveyRepository {
         q.multiselect(a.get("answer"),
                 qs.get("type"),
                 cS.get("date"),
-                qs.get("question"));
+                qs.get("question"),
+                qs.get("id"));
         //
         predicates.add(b.equal(cSD.get("answerId"), a.get("id")));
         predicates.add(b.equal(cSD.get("questionId"), qs.get("id")));
@@ -106,6 +107,7 @@ public class SurveyRepositoryImpl implements SurveyRepository {
             feedbackInfo.put("type", itemArray[1]);
             feedbackInfo.put("date", parseIntToDate(discountDateTimestamp));
             feedbackInfo.put("question", itemArray[3]);
+            feedbackInfo.put("question_id", itemArray[4]);
 
             feedbackMap.add(feedbackInfo);
         }
@@ -201,7 +203,7 @@ public class SurveyRepositoryImpl implements SurveyRepository {
     }
 
     @Override
-    public List<Object> getPersonalOpinion(Map<String, String> params) { 
+    public List<Object> getPersonalOpinion(Map<String, String> params) {
         Session session = this.factory.getObject().getCurrentSession();
         CriteriaBuilder b = session.getCriteriaBuilder();
         CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
@@ -210,7 +212,7 @@ public class SurveyRepositoryImpl implements SurveyRepository {
         Root c = q.from(Customer.class);
 
         List<Predicate> predicates = new ArrayList<>();
-        q.multiselect(c.get("name"), cS.get("personalOpinion"), cS.get("date")); 
+        q.multiselect(c.get("name"), cS.get("personalOpinion"), cS.get("date"));
 //        predicates.add(b.equal(cS.get("id"), cS.get("surveyId").get("id")));
         predicates.add(b.equal(cS.get("customerId").get("id"), c.get("id")));
 
@@ -250,7 +252,7 @@ public class SurveyRepositoryImpl implements SurveyRepository {
         List<Predicate> predicates = new ArrayList<>();
         q.multiselect(
                 qs.get("surveyId").get("id"),
-                qs.get("id"), qs.get("question"));
+                qs.get("id"), qs.get("question"), s.get("date"));
 
 //        predicates.add(b.equal(cSD.get("questionId"), qs.get("id")));
         predicates.add(b.equal(s.get("active"), 1));
@@ -262,6 +264,7 @@ public class SurveyRepositoryImpl implements SurveyRepository {
         List<Object> feedbackMap = new ArrayList<>();
         Map<String, List<Object>> r = new HashMap<>();
         Map<String, Object> r1 = new HashMap<>();
+        Map<String, Object> r2 = new HashMap<>();
 
         for (Object item : query.getResultList()) {
             //            System.out.println("####" + item);
@@ -270,15 +273,23 @@ public class SurveyRepositoryImpl implements SurveyRepository {
 //            feedbackInfo.put("survey_id", itemArray[0]);
             feedbackInfo.put("question_id", itemArray[1]);
             feedbackInfo.put("question_content", itemArray[2]);
+//            feedbackInfo.put("date", itemArray[3]);
 
             r1.put("survey_id", itemArray[0]);
+            Long discountDateTimestamp = itemArray[3] instanceof Date
+                    ? ((Date) itemArray[3]).getTime()
+                    : Long.parseLong(itemArray[3].toString());
+            r2.put("date", parseIntToDate(discountDateTimestamp));
+
             feedbackMap.add(feedbackInfo);
         }
         r.put("questions", feedbackMap);
         List<Object> list = new ArrayList<>();
         list.add(r);
         list.add(r1);
+        list.add(r2);
 
         return list;
     }
+
 }

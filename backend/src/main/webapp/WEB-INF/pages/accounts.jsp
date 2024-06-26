@@ -13,12 +13,12 @@
         <label for="username">username</label>
         <form:errors path="username" element="div" cssClass="text-danger" />
     </div>
-<%--    <div class="form-floating mb-3 mt-3">--%>
-<%--        <form:input type="text" class="form-control"--%>
-<%--                    path="password" id="password" placeholder="password" />--%>
-<%--        <label for="password">password</label>--%>
-<%--        <form:errors path="password" element="div" cssClass="text-danger" />--%>
-<%--    </div>--%>
+    <div class="form-floating mb-3 mt-3">
+        <form:input type="text" class="form-control"
+                    path="password" id="password" placeholder="password" />
+        <label for="password">password</label>
+        <form:errors path="password" element="div" cssClass="text-danger" />
+    </div>
     <div class="form-floating mb-3 mt-3">
         <form:input type="text" class="form-control"
                     path="role" id="role" placeholder="Vai trò" />

@@ -17,7 +17,7 @@ public class ReceiptServiceImpl implements ReceiptService {
     private ReceiptRepository receiptRepo;
 
     @Override
-    public List<ReceiptDTO> getReceipt(Map<String, String> params) {
+    public List<Object> getReceipt(Map<String, String> params) {
         return this.receiptRepo.getReceipt(params);
     }
 

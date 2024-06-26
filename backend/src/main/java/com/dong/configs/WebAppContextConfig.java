@@ -1,24 +1,23 @@
 package com.dong.configs;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.text.SimpleDateFormat;
-
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.dong.formatters.*;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -31,19 +30,19 @@ import org.springframework.web.servlet.config.annotation.*;
 @Configuration
 @EnableWebMvc
 @EnableTransactionManagement
-@ComponentScan(basePackages = {
-        "com.dong.controllers",
-        "com.dong.repository",
-        "com.dong.service"
-})
+@ComponentScan(
+        basePackages = {
+            "com.dong.controllers", "com.dong.repository", "com.dong.service",}
+)
 @PropertySource("classpath:configs.properties")
 public class WebAppContextConfig implements WebMvcConfigurer {
 
     @Override
-    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+    public void configureDefaultServletHandling(
+            DefaultServletHandlerConfigurer configurer
+    ) {
         configurer.enable();
     }
-
 
     @Override
     public void addFormatters(FormatterRegistry registry) {
@@ -52,15 +51,18 @@ public class WebAppContextConfig implements WebMvcConfigurer {
         registry.addFormatter(new AccountsFormatter());
         registry.addFormatter(new ServiceFormat());
         registry.addFormatter(new MerchandiseFormatter());
-
     }
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/js/**").addResourceLocations("/WEB-INF/resources/js/");
-        registry.addResourceHandler("/css/**").addResourceLocations("/WEB-INF/resources/css/");
-
+        registry
+                .addResourceHandler("/js/**")
+                .addResourceLocations("/WEB-INF/resources/js/");
+        registry
+                .addResourceHandler("/css/**")
+                .addResourceLocations("/WEB-INF/resources/css/");
     }
+
     @Bean
     public CommonsMultipartResolver multipartResolver() {
         CommonsMultipartResolver resolver = new CommonsMultipartResolver();
@@ -75,12 +77,19 @@ public class WebAppContextConfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .allowedOrigins("http://localhost:3000")
+        System.out.println("");
+        registry
+                .addMapping("/**")
+                // .allowedOrigins("http://localhost:3000")
+                .allowedOrigins("http://localhost:3000",
+                        "http://wsl.local",
+                        "http://frontend",
+                        "http://app.devsops.online")
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "HEAD")
                 .allowedHeaders("*")
                 .allowCredentials(true);
     }
+
     @Bean
     public void initFireBase() {
         try {
@@ -117,10 +126,8 @@ public class WebAppContextConfig implements WebMvcConfigurer {
 
     @Bean(name = "validator")
     public LocalValidatorFactoryBean validator() {
-        LocalValidatorFactoryBean bean
-                = new LocalValidatorFactoryBean();
+        LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
         bean.setValidationMessageSource(messageSource());
         return bean;
     }
-
 }

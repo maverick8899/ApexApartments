@@ -49,8 +49,8 @@
         </thead>
         <tbody>
 
-            <c:if test="${receipts != null}">
-                <c:forEach items="${receipts}" var="r">
+            <c:if test="${receipts[1] != null}">
+                <c:forEach items="${receipts[1]}" var="r">
                     <tr>
                         <td>${r.receiptId}</td>
                         <td>${r.customerId}</td>

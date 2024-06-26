@@ -2,7 +2,6 @@
 // Source code recreated from a .class file by IntelliJ IDEA
 // (powered by FernFlower decompiler)
 //
-
 package com.dong.service.impl;
 
 import com.dong.pojo.MerchandiseCabinet;
@@ -16,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class MerchandiseCabinetServiceImpl implements MerchandiseCabinetService {
+
     @Autowired
     private MerchandiseCabinetRepository merCaRep;
 
@@ -34,7 +34,9 @@ public class MerchandiseCabinetServiceImpl implements MerchandiseCabinetService 
         return null;
     }
 
-    public List<MerchandiseCabinetDetail> getMerchandiseByCustomerId(int customerId) {
-        return this.merCaRep.getMerchandiseByCustomerId(customerId);
+    @Override
+    public List<MerchandiseCabinetDetail> getMerchandiseByCustomerId(int var1) {
+        return merCaRep.getMerchandiseByCustomerId(var1);
     }
+
 }
