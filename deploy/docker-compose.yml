@@ -1,7 +1,7 @@
 services:
     db:
         image: mysql:8.0.33-oracle
-        container_name: mysql
+        container_name: db
         ports:
             - '3307:3306' #/ '3306:3306'
         networks:
@@ -17,21 +17,21 @@ services:
             # MYSQL_INIT_COMMAND: "SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));"
 
     backend:
-        image: maverick0809/tomcat
-        container_name: tomcat
+        # image: maverick0809/tomcat:8.5.100-ubuntu-22.04-java11  #? just tomcat for bind mount
+        image: maverick0809/apartment-backend:8.5.100-ubuntu-22.04-java11
+        container_name: backend
         ports:
             - '8081:8080'
         restart: unless-stopped
         networks:
             - webapp
             # - webapp
-        volumes:
-            # - ../backend/target:/opt/tomcat/webapps
-            - ./webapps:/opt/tomcat/webapps
+        # volumes:
+        # - ../backend/target/:/opt/tomcat/webapps
+        # - ./webapps:/opt/tomcat/webapps
         depends_on: [db, traefik]
         labels:
             - 'traefik.enable=true'
-            #* Routers
             #/ backend
             # - 'traefik.http.routers.backend.rule=Host(`app.devops.online`)' #? domain or pass across header
             - 'traefik.http.routers.backend.rule=Host(`backend.localhost`)' #? domain or pass across header
@@ -47,6 +47,48 @@ services:
 
             #* Services
             - 'traefik.http.services.backend.loadbalancer.server.port=8080' #? auto-generated
+            - 'traefik.http.middlewares.test-errorpages.errors.status=400-599'
+            - 'traefik.http.middlewares.test-errorpages.errors.service=error'
+            - 'traefik.http.middlewares.test-errorpages.errors.query=/{status}.html'
+            - 'traefik.http.middlewares.test-compress.compress=true'
+            - 'traefik.http.middlewares.test-ratelimit.ratelimit.average=5' #? 2reqs / 1second
+
+            #* 5 Redirect Scheme HTTP -> HTTPS  (Moved Permanently : 301) zalo
+            # - 'traefik.http.middlewares.test-redirectscheme.redirectscheme.scheme=https'
+            # - 'traefik.http.middlewares.test-redirectscheme.redirectscheme.permanent=true'
+
+    frontend:
+        # build:
+        #     context: ./frontend
+        #     dockerfile: Dockerfile
+        image: maverick0809/apartment-frontend
+        restart: unless-stopped
+        container_name: frontend
+        ports:
+            - '3000:80'
+        # volumes:
+        # - ../../frontend:/app/:ro
+        # - ../../frontend/nginx.conf:/etc/nginx/nginx.conf
+        networks: #? react chỉ giao tiếp đến backend
+            - webapp
+        labels:
+            - 'traefik.enable=true'
+            #* Routers
+            #/ frontend
+            # - 'traefik.http.routers.frontend.rule=Host(`app.devops.online`)' #? domain or pass across header
+            - 'traefik.http.routers.frontend.rule=Host(`frontend.localhost`)' #? domain or pass across header
+            - 'traefik.http.routers.frontend.service=frontend' #? auto-generated
+            - 'traefik.http.routers.frontend.entrypoints=web' #? port 80
+            # - 'traefik.http.routers.frontend.middlewares=test-redirectscheme'
+
+            #/ frontend-secure
+            # - 'traefik.http.routers.frontend-secure.rule=Host(`app.devops.online`)' #? domain or pass across header
+            # - 'traefik.http.routers.frontend-secure.entrypoints=websecure' #? port 443 for tls
+            # - 'traefik.http.routers.frontend-secure.tls.certresolver=myresolver' #? tls configuration
+            # - 'traefik.http.routers.frontend-secure.middlewares=basic-auth, test-compress, test-errorpages,test-ratelimit'
+
+            #* Services
+            - 'traefik.http.services.frontend.loadbalancer.server.port=80' #? auto-generated
 
             #@ Middleware
             #* 1 BasicAuth Middleware
@@ -74,11 +116,16 @@ services:
             #* 5 Redirect Scheme HTTP -> HTTPS  (Moved Permanently : 301) zalo
             # - 'traefik.http.middlewares.test-redirectscheme.redirectscheme.scheme=https'
             # - 'traefik.http.middlewares.test-redirectscheme.redirectscheme.permanent=true'
-
-    #* Error Page service, was customed page 404,500,...
-    #) https://github.com/guillaumebriday/traefik-custom-error-pages
+        # healthcheck:
+        #     test: ['CMD', 'curl', '-f', 'http://localhost']
+        #     interval: 200s
+        #     timeout: 200s
+        #     retries: 5
+        depends_on:
+            - backend
     error:
         image: guillaumebriday/traefik-custom-error-pages
+        container_name: gateway-error-pages
         networks:
             - webapp
         labels:
@@ -89,6 +136,7 @@ services:
             - 'traefik.http.routers.error.entrypoints=web'
     traefik:
         image: traefik:v3.0
+        container_name: gateway
         #* use traefik.yml instead
         # command:
         #     - '--api.insecure=true'
@@ -108,8 +156,8 @@ services:
             - AWS_REGION=${AWS_REGION}
             - AWS_HOSTED_ZONE_ID=${AWS_HOSTED_ZONE_ID}
         ports:
-            - '8000:80'
-            - '8443:443'
+            - '80:80'
+            - '443:443'
             - '8080:8080'
         networks:
             - traefik
@@ -121,15 +169,17 @@ services:
             - ./letsencrypt:/letsencrypt
               # Mounts the Traefik static configuration inside the Traefik container
             - ./traefik.yml:/etc/traefik/traefik.yml
+            - ./logs:/var/log/traefik/
         healthcheck:
             test: ['CMD', 'traefik', 'healthcheck']
             interval: 10s
             timeout: 2s
             retries: 3
             start_period: 5s
-   
+
     prometheus:
         image: prom/prometheus:v2.52.0
+        container_name: prometheus
         networks:
             - webapp
         volumes:
@@ -151,8 +201,11 @@ services:
 
     grafana:
         image: grafana/grafana:7.3.1
+        container_name: grafana
         networks:
             - webapp
+        ports:
+            - '3003:3000'
         depends_on:
             - prometheus
         volumes:
@@ -169,6 +222,85 @@ services:
             - 'traefik.http.services.grafana.loadbalancer.server.port=3000'
             - 'traefik.docker.network=webapp'
         restart: on-failure
+    elasticsearch:
+        image: docker.elastic.co/elasticsearch/elasticsearch:7.17.3
+        networks:
+            - webapp
+        ports:
+            - '9200:9200'
+        container_name: elasticsearch
+        environment:
+            - ELASTIC_PASSWORD=myelasticpass
+            - KIBANA_PASSWORD=kibanapass
+            - discovery.type=single-node
+            - xpack.security.http.ssl.enabled=false
+            - cluster.routing.allocation.disk.threshold_enabled=false
+            # - xpack.security.enabled=true
+            # - xpack.security.authc.api_key.enabled=true
+        labels:
+            - 'traefik.enable=true'
+            - 'traefik.http.routers.elasticsearch.rule=Host(`elasticsearch.localhost`)'
+            - 'traefik.http.routers.elasticsearch.service=elasticsearch'
+            - 'traefik.http.routers.elasticsearch.entrypoints=web'
+            - 'traefik.http.services.elasticsearch.loadbalancer.server.port=9200'
+            - 'traefik.docker.network=webapp'
+        # restart: on-failure
+        volumes:
+            - ./elk/data:/usr/share/elasticsearch/data
+    logstash:
+        image: docker.elastic.co/logstash/logstash:7.5.0
+        networks:
+            - webapp
+        container_name: logstash
+        volumes:
+            - ./elk/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+        environment:
+            - ELASTIC_USER=elastic
+            - ELASTIC_PASSWORD=myelasticpass
+            - ELASTIC_HOSTS=http://elasticsearch:9200
+            - XPACK_MONITORING_ELASTICSEARCH_HOSTS=[ "http://elasticsearch:9200" ]
+            # - XPACK_MANAGEMENT_ENABLED=false
+            # - XPACK_MANAGEMENT_ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+            # - XPACK_MANAGEMENT_ELASTICSEARCH_USERNAME=elastic
+            # - XPACK_MANAGEMENT_ELASTICSEARCH_PASSWORD=myelasticpass
+            # - XPACK_MONITORING_ENABLED=true
+            # - XPACK_MONITORING_ELASTICSEARCH_SSL_VERIFICATION_MODE=none  
+        depends_on:
+            - elasticsearch
+        # restart: on-failure
+    kibana:
+        image: docker.elastic.co/kibana/kibana:7.17.3
+        networks:
+            - webapp
+        container_name: kibana
+        environment:
+            - SERVER_NAME=kibana
+            - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+            - ELASTICSEARCH_USERNAME=kibana_system
+            - ELASTICSEARCH_PASSWORD=kibanapass
+        ports:
+            - '5601:5601'
+        depends_on:
+            - elasticsearch
+        labels:
+            - 'traefik.enable=true'
+            - 'traefik.http.routers.kibana.rule=Host(`kibana.localhost`)'
+            - 'traefik.http.routers.kibana.service=kibana'
+            - 'traefik.http.routers.kibana.entrypoints=web'
+            - 'traefik.http.services.kibana.loadbalancer.server.port=5601'
+            - 'traefik.docker.network=webapp'
+        # restart: on-failure
+    filebeat:
+        image: docker.elastic.co/beats/filebeat:7.17.3
+        container_name: filebeat
+        networks:
+            - webapp
+        command: filebeat -e -strict.perms=false
+        volumes:
+            - ./elk/filebeat.yml:/usr/share/filebeat/filebeat.yml
+            - ./logs:/var/log/server
+        # restart: on-failure
+        
 networks:
     traefik:
         driver: bridge

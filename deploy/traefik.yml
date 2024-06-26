@@ -7,21 +7,35 @@ api:
 providers:
     docker:
         exposedByDefault: false
+# providers:
+#     file: #? Required,  If you update your YAML or TOML files with new routing rules, Traefik will automatically reload the configuration and apply the changes without restarting the service.
+#         directory: /etc/traefik
+#         watch: true
+#     swarm:
+#         watch: true
+#         exposedbydefault: false  
+#         endpoint: 'unix:///var/run/docker.sock' # not be 'tcp://127.0.0.1:2377'
 
 #* Traefik Logging
 log:
-    # level: INFO
-    level: DEBUG
+    level: INFO
+    # level: DEBUG
+    filePath: '/var/log/traefik/traefik.log'
+    format: json
 
 #* Access Logging
 # accessLog: {} #? enable Access logs
 #/ Configuring Multiple Filters, Chỉ lưu lại log qualified filters
 accessLog:
-    filters:
-        statusCodes: #/ ghi lại các yêu cầu có mã trạng thái "404" (Not Found).
-            - '404'
-        retryAttempts: true #/ Traefik sẽ ghi lại các log truy cập cho các yêu cầu mà Traefik đã cố gắng gửi lại.
-        minDuration: '10ms' #/ các yêu cầu có thời gian xử lý ít nhất 10ms mới được ghi lại vào log truy cập.
+    addInternals: true
+    format: json
+    filePath: '/var/log/traefik/access.log'
+# accessLog:
+#     filters:
+#         statusCodes: #/ ghi lại các yêu cầu có mã trạng thái "404" (Not Found).
+#             - '404'
+#         retryAttempts: true #/ Traefik sẽ ghi lại các log truy cập cho các yêu cầu mà Traefik đã cố gắng gửi lại.
+#         minDuration: '10ms' #/ các yêu cầu có thời gian xử lý ít nhất 10ms mới được ghi lại vào log truy cập.
 
 #* Static configuration
 # serversTransport:
@@ -41,21 +55,13 @@ entryPoints:
         address: ':80'
     websecure:
         address: ':443'
-#* Challenge HTTP
+# #* Challenge HTTP
 # certificatesResolvers:
-#     myresolver:
-#         #?  ACME là một giao thức được sử dụng để tự động hóa việc lấy chứng chỉ SSL/TLS từ các CA (Certificate Authorities) như Let's Encrypt.
+#     myresolver: 
 #         acme:
 #             email: trankimbang0809@gmail.com #? email owner and get notified when cert is expired
-#             #? Đây là đường dẫn đến tệp lưu trữ thông tin chứng chỉ. Tệp này sẽ được tạo tự động bởi Traefik.
 #             storage: /letsencrypt/acme.json
-# #~ http
-# httpChallenge: #? xác thực thông qua entrypoint
-#     entryPoint: web
-#~ tls
-# tlsChallenge: true
-#~ dns
-# dnsChallenge:
-#     # provider: digitalocean
-#     provider: route53
-#     delayBeforeCheck: 0
+#             dnsChallenge:
+#                 # provider: digitalocean
+#                 provider: route53
+#                 delayBeforeCheck: "0" 

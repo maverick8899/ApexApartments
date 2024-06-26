@@ -39,7 +39,8 @@ scrape_configs:
       dns_sd_configs:
           #/  tìm các mục tiêu bằng tên DNS tasks.traefik.
           - names:
-                - 'tasks.traefik'
+                - 'traefik'  #* compose
+                # - 'tasks.traefik'  #* swarm
             type: 'A' #/chỉ ra loại bản ghi DNS để tìm kiếm. A là bản ghi địa chỉ IPv4.
             port: 8080
 #? docker-compose không hỗ trợ tạo dns

@@ -1,0 +1,9 @@
+filebeat.inputs:
+    - type: filestream
+      id: gateway-input
+      paths:
+          - '/var/log/server/*.log'
+      tags: ['beats','json','traefik']
+      
+output.logstash:
+    hosts: ['logstash:5044']

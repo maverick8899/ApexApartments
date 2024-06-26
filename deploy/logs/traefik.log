@@ -1,0 +1,19 @@
+{"level":"info","version":"3.0.0","time":"2024-06-26T17:32:20Z","message":"Traefik version 3.0.0 built on 2024-04-29T14:25:59Z"}
+{"level":"info","time":"2024-06-26T17:32:20Z","message":"\nStats collection is disabled.\nHelp us improve Traefik by turning this feature on :)\nMore details on: https://doc.traefik.io/traefik/contributing/data-collection/\n"}
+{"level":"info","time":"2024-06-26T17:32:20Z","message":"Starting provider aggregator aggregator.ProviderAggregator"}
+{"level":"info","time":"2024-06-26T17:32:20Z","message":"Starting provider *acme.ChallengeTLSALPN"}
+{"level":"info","time":"2024-06-26T17:32:20Z","message":"Starting provider *traefik.Provider"}
+{"level":"info","time":"2024-06-26T17:32:20Z","message":"Starting provider *docker.Provider"}
+{"level":"error","providerName":"docker","providerName":"docker","middlewareName":"test-ratelimit","configuration":["backend-deploy-c0cb2d22e1ee7b9bdda560444e0119f3097e41b55544f32cb7db27fdaef9b4bb","frontend-deploy-d966ef5e0b512791a130772b7524a63a5ce7b4593224e20b23e331444bde088b"],"time":"2024-06-26T17:32:21Z","message":"Middleware defined multiple times with different configurations"}
+{"level":"error","providerName":"docker","providerName":"docker","middlewareName":"test-ratelimit","configuration":["backend-deploy-c0cb2d22e1ee7b9bdda560444e0119f3097e41b55544f32cb7db27fdaef9b4bb","frontend-deploy-d966ef5e0b512791a130772b7524a63a5ce7b4593224e20b23e331444bde088b"],"time":"2024-06-26T17:32:35Z","message":"Middleware defined multiple times with different configurations"}
+{"level":"warn","time":"2024-06-26T17:42:26Z","message":"A new release has been found: 3.0.3. Please consider updating."}
+{"level":"info","time":"2024-06-26T17:55:07Z","message":"I have to go..."}
+{"level":"info","time":"2024-06-26T17:55:07Z","message":"Stopping server gracefully"}
+{"level":"error","entryPointName":"traefik","error":"accept tcp [::]:8080: use of closed network connection","time":"2024-06-26T17:55:07Z"}
+{"level":"error","entryPointName":"traefik","error":"close tcp [::]:8080: use of closed network connection","time":"2024-06-26T17:55:07Z"}
+{"level":"error","entryPointName":"web","error":"accept tcp [::]:80: use of closed network connection","time":"2024-06-26T17:55:07Z"}
+{"level":"error","entryPointName":"web","error":"close tcp [::]:80: use of closed network connection","time":"2024-06-26T17:55:07Z"}
+{"level":"error","entryPointName":"websecure","error":"accept tcp [::]:443: use of closed network connection","time":"2024-06-26T17:55:07Z"}
+{"level":"error","entryPointName":"websecure","error":"close tcp [::]:443: use of closed network connection","time":"2024-06-26T17:55:07Z"}
+{"level":"info","time":"2024-06-26T17:55:08Z","message":"Server stopped"}
+{"level":"info","time":"2024-06-26T17:55:08Z","message":"Shutting down"}

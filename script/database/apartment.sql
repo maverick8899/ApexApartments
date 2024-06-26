@@ -125,7 +125,7 @@ CREATE TABLE `relative_park_card` (
 CREATE TABLE `receipt` (
     `id` INT PRIMARY KEY AUTO_INCREMENT,
     `date` DATE NOT NULL,
-    `total` DECIMAL(10 , 2 ) NOT,
+    `total` DECIMAL(10 , 2 ),
     `is_pay` BIT(1) DEFAULT 0,
     `customer_id` INT NOT NULL,
     KEY `fk_receipt_customer` (`customer_id`),
