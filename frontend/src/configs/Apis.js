@@ -2,12 +2,14 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 
 const SERVER_CONTEXT = '/apartment_manager';
-const SERVER = 'http://localhost:8080';
+const SERVER = 'http://localhost:8080'; //? dev
+// const SERVER = '/'; //? prod
 
 export const endpoints = {
     customer: `${SERVER_CONTEXT}/api/customers/`,
     relativeparkcard:(customerId)=> `${SERVER_CONTEXT}/api/relativeparkcard/${customerId}`,
-    merchandisecabinet: (customerId) => `${SERVER_CONTEXT}/api/merchandisecabinet/${customerId}`,
+    merchandisecabinet: (customerId, page) =>
+        `${SERVER_CONTEXT}/api/merchandisecabinet/${customerId}?page=${page}`,
     service: `${SERVER_CONTEXT}/api/service/`,
     customer_service: `${SERVER_CONTEXT}/api/service/customers`,
     add_use_service: `${SERVER_CONTEXT}/api/use-services`,
@@ -24,11 +26,15 @@ export const endpoints = {
     use_service_by_customer_and_service: (customerId, serviceId) =>
         `${SERVER_CONTEXT}/api/use-services?customerId=${customerId}&serviceId=${serviceId}`,
     use_service: (id) => `${SERVER_CONTEXT}/api/use_service/${id}`,
-    receipt_paid: (customerId) => `${SERVER_CONTEXT}/api/receipts?type=1&isPay=2&kw=${customerId}`,
-    receipt_unpaid: (customerId) =>
-        `${SERVER_CONTEXT}/api/receipts?type=1&isPay=1&kw=${customerId}`,
+    receipt_paid: (customerId, page) =>
+        `${SERVER_CONTEXT}/api/receipts?type=1&isPay=1&kw=${customerId}&page=${page}`,
+    receipt_unpaid: (customerId, page) =>
+        `${SERVER_CONTEXT}/api/receipts?type=1&isPay=2&kw=${customerId}&page=${page}`,
+    receipt: (customerId, page) =>
+        `${SERVER_CONTEXT}/api/receipts?type=1&kw=${customerId}&page=${page}`,
     login: `${SERVER_CONTEXT}/api/login`,
     'get-chat-users': `${SERVER_CONTEXT}/api/users/get-chat-users`,
+    receipt_payment: (receiptID) => `${SERVER_CONTEXT}/receipt/payment?receiptID=${receiptID}`,
 };
 export const authApi = axios.create({
     baseURL: SERVER,

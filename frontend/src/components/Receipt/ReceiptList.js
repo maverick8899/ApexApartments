@@ -1,46 +1,69 @@
 import React, { useState, useEffect, useContext } from 'react';
 import Apis, { endpoints } from '../../configs/Apis';
-import './ReceiptList.css'; 
+import './ReceiptList.css';
 import MyPagination from '../MyPagination';
 import UserContext from '../../contexts/UserContext';
+import { useNavigate } from 'react-router-dom';
 
 const ReceiptList = () => {
     const [receipt_paid, setReceiptsPaid] = useState([]);
     const [receipt_unpaid, setReceiptsUnPaid] = useState([]);
-    const [user] = useContext(UserContext); 
-
+    const [user] = useContext(UserContext);
+    const [page, setPage] = useState(1);
+    const [paginate, setPaginate] = useState();
+    const navigate = useNavigate();
+    console.log({ paginate });
     useEffect(() => {
         const fetchReceipts = async () => {
             try {
-                const response = await Apis.get(endpoints.receipt_paid(user.id));
-                setReceiptsPaid(response.data);
+                const response = await Apis.get(endpoints.receipt_paid(user.id, page));
+                setReceiptsPaid(response.data[1]);
             } catch (error) {
                 console.error('Error fetching the receipts:', error);
             }
         };
 
         fetchReceipts();
-    }, [user.id]);
+    }, [user.id, page]);
+
+    useEffect(() => {
+        (async () => {
+            try {
+                const response = await Apis.get(endpoints.receipt_unpaid(user.id, page));
+                setReceiptsUnPaid(response.data[1]);
+                console.log(response.data[0]);
+            } catch (error) {
+                console.error('Error fetching the receipts:', error);
+            }
+        })();
+    }, [page]);
+
+    // useEffect(() => {
+    //     window.location.href = url;
+    // }, [url]);
 
     useEffect(() => {
         const fetchReceipts = async () => {
             try {
-                const response = await Apis.get(endpoints.receipt_unpaid(user.id));
-                setReceiptsUnPaid(response.data);
+                const response = await Apis.get(endpoints.receipt_unpaid(user.id, page));
+                localStorage.setItem('paginate.receipt', JSON.stringify(response.data[0]));
+                setPaginate(response.data[0]);
             } catch (error) {
                 console.error('Error fetching the receipts:', error);
             }
         };
 
         fetchReceipts();
-    }, [user.id]);
+    }, [user.id, page]);
 
     const handlePayment = async (receiptId, amount, month) => {
         try {
             const response = await Apis.get(endpoints.payment(amount, receiptId, month));
             console.log('Payment response:', response);
+            // await Apis.post(endpoints.receipt_payment(receiptId));
             const paymentUrl = response.data.url;
             if (paymentUrl) {
+                // navigate(paymentUrl);
                 window.location.href = paymentUrl;
             } else {
                 console.error('Payment URL not found in the response');
@@ -82,7 +105,7 @@ const ReceiptList = () => {
                                 <td>{new Date(receipt.receiptDate).getMonth() + 1}</td>
                                 <td>{new Date(receipt.receiptDate).getFullYear()}</td>
                                 <td>{receipt.receiptDetailCost}</td>
-                                <td>{receipt.receiptTotal*100000}</td>
+                                <td>{receipt.receiptTotal}</td>
                                 <td>
                                     <button
                                         className="button details"
@@ -102,14 +125,14 @@ const ReceiptList = () => {
                                 <td>{new Date(receipt.receiptDate).getMonth() + 1}</td>
                                 <td>{new Date(receipt.receiptDate).getFullYear()}</td>
                                 <td>{receipt.receiptDetailCost}</td>
-                                <td>{receipt.receiptTotal*100000}</td>
+                                <td>{receipt.receiptTotal}</td>
                                 <td>
                                     <button
                                         className="button payment"
                                         onClick={() =>
                                             handlePayment(
                                                 receipt.receiptId,
-                                                receipt.receiptTotal*100000,
+                                                receipt.receiptTotal,
                                                 new Date(receipt.receiptDate).getMonth() + 1,
                                             )
                                         }
@@ -124,7 +147,9 @@ const ReceiptList = () => {
             ) : (
                 <p>No receipts found</p>
             )}
-           <div className='d-flex justify-content-center'> <MyPagination /></div>
+            <div className="d-flex justify-content-center">
+                <MyPagination setPage={setPage} />
+            </div>
         </div>
     );
 };

@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Apis, { authApi, endpoints } from '../configs/Apis';
 import { Form, Button } from 'react-bootstrap';
 import styled from 'styled-components';
-import { inputValidate } from '../helper/inputValidate';
-import { useToast } from '@chakra-ui/react';
+import { inputValidate } from '../helper/inputValidate'; 
 const Container = styled.div`
     margin-top: 20px;
     display: flex;
@@ -50,7 +49,6 @@ const Feedback = () => {
     const [fetch, setFetch] = useState(false);
     const [content, setContent] = useState([]);
     const [title, setTitle] = useState([]);
-    const toast = useToast();
 
     const handleSubmit = async (e) => {
         e.preventDefault(); 
@@ -69,26 +67,26 @@ const Feedback = () => {
     const handleInputContent = (e) => {
         setContent(e.target.value);
         const { error } = inputValidate(content);
-        if (error) {
-            return toast({
-                title: error.details[0].message,
-                status: 'error',
-                duration: 3000,
-                position: 'top',
-            });
-        }
+        // if (error) {
+        //     return toast({
+        //         title: error.details[0].message,
+        //         status: 'error',
+        //         duration: 3000,
+        //         position: 'top',
+        //     });
+        // }
     };
     const handleInputTitle = (e) => {
         setTitle(e.target.value);
         const { error } = inputValidate(title);
-        if (error) {
-            return toast({
-                title: error.details[0].message,
-                status: 'error',
-                duration: 3000,
-                position: 'top',
-            });
-        }
+        // if (error) {
+        //     return toast({
+        //         title: error.details[0].message,
+        //         status: 'error',
+        //         duration: 3000,
+        //         position: 'top',
+        //     });
+        // }
     };
     // useEffect(() => {
     // const fetchData = async () => {

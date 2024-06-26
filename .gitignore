@@ -13,5 +13,13 @@ frontend/package-lock.json
 backend/src/main/resources/databases.properties
 deploy/webapps
 ./src
-frontend/src
+# frontend/src
 deploy/.env
+.terraform
+terraform-key
+terraform-key.pub
+terraform.tfstate
+terraform.tfstate.backup
+.terraform.lock.hcl
+api-keys
+deploy/elk/data

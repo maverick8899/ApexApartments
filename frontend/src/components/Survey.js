@@ -97,6 +97,17 @@ const Survey = () => {
                 customer_id: 1,
                 personal_opinion: personalOpinion,
                 answers,
+            }); 
+            toast.success(`Gửi khảo sát thành công`, {
+                position: 'top-center',
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: 'light',
+                transition: Bounce,
             });
             console.log({ res });
         } catch (error) {
