@@ -14,7 +14,9 @@ datasources:
   # <string, required> datasource type. Required
   type: prometheus
   # <string, required> access mode. direct or proxy. Required
-  access: direct
+  #@ direct = browser
+  #@ proxy = Server
+  access: proxy
   # <int> org id. will default to orgId 1 if not specified
   orgId: 1
   # <string> url
@@ -30,7 +32,7 @@ datasources:
   # <string> basic auth username
   basicAuthUser: admin
   # <string> basic auth password
-  basicAuthPassword: foobar
+  basicAuthPassword: admin
   # <bool> enable/disable with credentials headers
   withCredentials:
   # <bool> mark as default datasource. Max one per org

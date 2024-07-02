@@ -1,0 +1,181 @@
+groups:
+    - name: rules
+      rules:
+          - alert: service_down
+            expr: up == 0
+            for: 0m
+            labels:
+                severity: critical
+                app_type: linux
+            annotations:
+                summary: 'Instance {{ $labels.instance }} down'
+                description: '{{ $labels.instance }} of job {{ $labels.job }} has been down right away.'
+
+          - alert: node_high_load
+            expr: node_load1 > 1.5
+            # for: 2m
+            labels:
+                severity: warning
+                app_type: linux
+            annotations:
+                summary: 'Instance {{ $labels.instance }} under high load, VALUE = {{ $value }}'
+                description: '{{ $labels.instance }} of job {{ $labels.job }} is under high load.'
+          #@----FRONTEND----################################################################
+          - alert: frontend_down
+            expr: absent(container_memory_usage_bytes{name="frontend*"}) == 0
+            for: 0m
+            labels:
+                severity: critical
+                app_type: container
+            annotations:
+                summary: 'Frontend server was down'
+
+          #* CPU usage
+          - alert: frontend_high_cpu_load
+            expr: sum(irate(container_cpu_usage_seconds_total{image="maverick0809/apartment-frontend:latest@sha256:8484ad866e8bc40044ca97f1fbe0b29522beee49d2d0cc0b8422af3a32aed970"}[1m])) by (container_label_com_docker_swarm_service_name) * 100 > 0.8
+            # for: 2m
+            labels:
+                severity: warning
+                app_type: container
+                category: cpu
+            annotations:
+                summary: 'Frontend Hight CPU Usage, VALUE = {{ $value }} for more than 2 minutes'
+                description: "frontend's threshold is 1.5 CPU"
+          - alert: frontend_very_high_cpu_load
+            expr: sum(irate(container_cpu_usage_seconds_total{image="maverick0809/apartment-frontend:latest@sha256:8484ad866e8bc40044ca97f1fbe0b29522beee49d2d0cc0b8422af3a32aed970"}[1m])) by (container_label_com_docker_swarm_service_name) * 100 > 1.2
+            for: 0m
+            labels:
+                severity: critical
+                app_type: container
+                category: cpu
+            annotations:
+                summary: 'Frontend Hight CPU Usage, VALUE = {{ $value }}'
+                description: "frontend's threshold is 1.5 CPU"
+          #* RAM usage
+          - alert: frontend_very_high_ram_usage
+            expr: sum(container_memory_usage_bytes{image="maverick0809/apartment-frontend:latest@sha256:8484ad866e8bc40044ca97f1fbe0b29522beee49d2d0cc0b8422af3a32aed970"}) by (container_label_com_docker_swarm_service_name) / 10^9 > 0.8
+            # for: 2m
+            labels:
+                severity: warning
+                app_type: container
+                category: memory
+            annotations:
+                summary: 'Frontend Hight RAM Usage, VALUE = {{ $value }} for more than 2 minutes'
+                description: "frontend's threshold RAM is 1.5 GiB"
+
+          - alert: frontend_very_high_ram_usage
+            expr: sum(container_memory_usage_bytes{image="maverick0809/apartment-frontend:latest@sha256:8484ad866e8bc40044ca97f1fbe0b29522beee49d2d0cc0b8422af3a32aed970"}) by (container_label_com_docker_swarm_service_name) / 10^9 > 1.2
+            for: 0m
+            labels:
+                severity: critical
+                app_type: container
+                category: memory
+            annotations:
+                summary: 'Frontend Hight RAM Usage, VALUE = {{ $value }}'
+                description: "Frontend's threshold RAM is 1.5 GiB"
+          #@----BACKEND----################################################################
+          - alert: backend_down
+            expr: absent(container_memory_usage_bytes{name="backend*"}) == 0
+            for: 0m
+            labels:
+                severity: critical
+                app_type: container
+            annotations:
+                summary: 'Backend server was down'
+
+          #* CPU usage
+          - alert: backend_high_cpu_load
+            expr: sum(irate(container_cpu_usage_seconds_total{image="maverick0809/apartment-backend:8.5.100-ubuntu-22.04-java11@sha256:803f4ae73912ef30bd8bff5777857bf7400da96cdd14c7737b59c4a29cba5044"}[1m])) by (container_label_com_docker_swarm_service_name) * 100 > 0.8
+            # for: 2m
+            labels:
+                severity: warning
+                app_type: container
+                category: cpu
+            annotations:
+                summary: 'Backend Hight CPU Usage, VALUE = {{ $value }} for more than 2 minutes'
+                description: "Backend's threshold is 1.5 CPU"
+          - alert: backend_very_high_cpu_load
+            expr: sum(irate(container_cpu_usage_seconds_total{image="maverick0809/apartment-backend:8.5.100-ubuntu-22.04-java11@sha256:803f4ae73912ef30bd8bff5777857bf7400da96cdd14c7737b59c4a29cba5044"}[1m])) by (container_label_com_docker_swarm_service_name) * 100 > 1.2
+            for: 0m
+            labels:
+                severity: critical
+                app_type: container
+                category: cpu
+            annotations:
+                summary: 'Backend Hight CPU Usage, VALUE = {{ $value }}'
+                description: "Backend's threshold is 1.5 CPU"
+          #* RAM usage
+          - alert: backend_very_high_ram_usage
+            expr: sum(container_memory_usage_bytes{image="maverick0809/apartment-backend:8.5.100-ubuntu-22.04-java11@sha256:803f4ae73912ef30bd8bff5777857bf7400da96cdd14c7737b59c4a29cba5044"}) by (container_label_com_docker_swarm_service_name) / 10^9 > 0.8
+            # for: 2m
+            labels:
+                severity: warning
+                app_type: container
+                category: memory
+            annotations:
+                summary: 'Backend Hight RAM Usage, VALUE = {{ $value }}, for more than 2 minutes'
+                description: "Backend's threshold RAM is 1.5 GiB"
+
+          - alert: backend_very_high_ram_usage
+            expr: sum(container_memory_usage_bytes{image="maverick0809/apartment-backend:8.5.100-ubuntu-22.04-java11@sha256:803f4ae73912ef30bd8bff5777857bf7400da96cdd14c7737b59c4a29cba5044"}) by (container_label_com_docker_swarm_service_name) / 10^9 > 1.2
+            for: 0m
+            labels:
+                severity: critical
+                app_type: container
+                category: memory
+            annotations:
+                summary: 'Backend Hight RAM Usage, VALUE = {{ $value }}'
+                description: "Backend's threshold RAM is 1.5 GiB"
+          #@----DATABASE----################################################################
+          - alert: database_down
+            expr: absent(container_memory_usage_bytes{name="database*"}) == 0
+            for: 0m
+            labels:
+                severity: critical
+                app_type: container
+            annotations:
+                summary: 'Database server was down'
+
+          #* CPU usage
+          - alert: database_high_cpu_load
+            expr: sum(irate(container_cpu_usage_seconds_total{image="mysql:8.0.33-oracle@sha256:ea68e51ffe9b96fef6076f1218af11301aeaf13c6201e0ec9aaef5791d5ddc5d"}[1m])) by (container_label_com_docker_swarm_service_name) * 100 > 0.8
+            # for: 2m
+            labels:
+                severity: warning
+                app_type: container
+                category: cpu
+            annotations:
+                summary: 'Database Hight CPU Usage, VALUE = {{ $value }} for more than 2 minutes'
+                description: "database's threshold is 1.5 CPU"
+          - alert: database_very_high_cpu_load
+            expr: sum(irate(container_cpu_usage_seconds_total{image="mysql:8.0.33-oracle@sha256:ea68e51ffe9b96fef6076f1218af11301aeaf13c6201e0ec9aaef5791d5ddc5d"}[1m])) by (container_label_com_docker_swarm_service_name) * 100 > 1.2
+            for: 0m
+            labels:
+                severity: critical
+                app_type: container
+                category: cpu
+            annotations:
+                summary: 'Database Hight CPU Usage, VALUE = {{ $value }}'
+                description: "database's threshold is 1.5 CPU"
+          #* RAM usage
+          - alert: database_very_high_ram_usage
+            expr: sum(container_memory_usage_bytes{image="mysql:8.0.33-oracle@sha256:ea68e51ffe9b96fef6076f1218af11301aeaf13c6201e0ec9aaef5791d5ddc5d"}) by (container_label_com_docker_swarm_service_name) / 10^9 > 0.8
+            # for: 2m
+            labels:
+                severity: warning
+                app_type: container
+                category: memory
+            annotations:
+                summary: 'Database Hight RAM Usage, VALUE = {{ $value }}, for more than 2 minutes'
+                description: "database's threshold RAM is 1.5 GiB"
+
+          - alert: database_very_high_ram_usage
+            expr: sum(container_memory_usage_bytes{image="mysql:8.0.33-oracle@sha256:ea68e51ffe9b96fef6076f1218af11301aeaf13c6201e0ec9aaef5791d5ddc5d"}) by (container_label_com_docker_swarm_service_name) / 10^9 > 1.2
+            for: 0m
+            labels:
+                severity: critical
+                app_type: container
+                category: memory
+            annotations:
+                summary: 'Database Hight RAM Usage, VALUE = {{ $value }}'
+                description: "Database's threshold RAM is 1.5 GiB"

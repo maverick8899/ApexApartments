@@ -1,0 +1,69 @@
+#* API and dashboard configuration
+api:
+    dashboard: true
+    insecure: true
+
+# #* Docker configuration backend
+# providers:
+#     docker:
+#         exposedByDefault: false
+providers:
+    file: #? Required,  If you update your YAML or TOML files with new routing rules, Traefik will automatically reload the configuration and apply the changes without restarting the service.
+        directory: /etc/traefik
+        watch: true
+    swarm:
+        watch: true
+        exposedbydefault: false
+        endpoint: 'unix:///var/run/docker.sock' # not be 'tcp://127.0.0.1:2377'
+
+#* Traefik Logging
+log:
+    level: INFO
+    # level: DEBUG
+    filePath: '/var/log/traefik/traefik.log'
+    format: json
+
+#* Access Logging
+#/ Configuring Multiple Filters, Chỉ lưu lại log qualified filters
+accessLog:
+    addInternals: true
+    format: json
+    filePath: '/var/log/traefik/access.log'
+#* Static configuration
+# serversTransport:
+#   maxIdleConnsPerHost: 7
+ping: {}
+ 
+# tracing:
+# #   serviceName: "traefik"
+#   jaeger:
+#     samplingServerURL: "http://jaeger:5778/sampling"
+#     localAgentHostPort: "jaeger:6831"
+#     samplingType: "const"
+#     samplingParam: 1.0
+#     gen128Bit: true
+
+#* Prometheus Metrics
+metrics:
+    prometheus:
+        buckets:
+            - 0.1
+            - 0.3
+            - 1.2
+            - 5.0
+#* Entrypoint
+entryPoints:
+    web:
+        address: ':80'
+    websecure:
+        address: ':443'
+# #* Challenge HTTP
+# certificatesResolvers:
+#     myresolver:
+#         acme:
+#             email: trankimbang0809@gmail.com #? email owner and get notified when cert is expired
+#             storage: /letsencrypt/acme.json
+#             dnsChallenge:
+#                 # provider: digitalocean
+#                 provider: route53
+#                 delayBeforeCheck: "0"

@@ -1,0 +1,58 @@
+# global:
+#     smtp_from: 'trankimbang0809@gmail.com'
+#     smtp_smarthost: smtp.gmail.com:587
+#     smtp_auth_username: 'trankimbang0809@gmail.com'
+#     smtp_auth_identity: 'trankimbang0809@gmail.com'
+#     smtp_auth_password: 'jnaqzpgihhuupldk'
+# #@ inhibit_rules
+inhibit_rules:
+    - source_match:
+          severity: critical
+      target_match:
+          severity: warning
+      equal: ['app_type', 'category']
+route:
+    group_interval: 5s  #1m
+    group_wait: 5s
+    repeat_interval: 1h
+    receiver: slack-general #^ fallback receiver
+    routes:
+        - match_re:
+              app_type: (linux|container)
+          routes:
+              - match:
+                    severity: warning
+                receiver: slack-warning
+                continue: true  
+              - match:
+                    severity: critical
+                receiver: slack-alert
+                    #   continue: true  
+                    # - match:
+                    #       severity: (warning|critical)
+                    #   receiver: admin
+receivers:
+    - name: 'slack-alert'
+      slack_configs:
+          - api_url: 'https://hooks.slack.com/services/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'
+            channel: '#alert'
+            send_resolved: true
+            title: "{{ range .Alerts }}{{ .Annotations.summary }}\n{{ end }}"
+            text: "{{ range .Alerts }}{{ .Annotations.description }}{{ .Annotations.timestamp }}\n{{ end }}"
+    - name: 'slack-warning'
+      slack_configs:
+          - api_url: 'https://hooks.slack.com/services/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'
+            channel: '#warning'
+            send_resolved: true
+            title: "{{ range .Alerts }}{{ .Annotations.summary }}\n{{ end }}"
+            text: "{{ range .Alerts }}{{ .Annotations.description }}{{ .Annotations.timestamp }}\n{{ end }}"
+    - name: 'slack-general'
+      slack_configs:
+          - api_url: 'https://hooks.slack.com/services/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'
+            channel: '#general'
+            send_resolved: true
+            title: "{{ range .Alerts }}{{ .Annotations.summary }}\n{{ end }}"
+            text: "{{ range .Alerts }}{{ .Annotations.description }}{{ .Annotations.timestamp }}\n{{ end }}"
+    # - name: admin
+    #   email_configs:
+    #       - to: '2151050035bang@ou.edu.vn'
