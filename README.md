@@ -1,4 +1,5 @@
 
+  
 <h2 align="center">Reach me on <img src="https://media.giphy.com/media/mGcNjsfWAjY5AEZNw6/giphy.gif" width="50"></h2>
 
 <p align="center">
@@ -10,6 +11,9 @@
 # ApexApartment Project
 
 **ApexApartment** is an innovative condominium management project aimed at enhancing the quality of life and residential experience in upscale residential areas. With a mission to create a harmonious, peaceful, and convenient living environment, ApexApartment combines modern technology and attentive resident care services to provide the best living experience for all residents.
+
+## Technology Architecture
+![enter image description here](https://res.cloudinary.com/dgiozc0lj/image/upload/v1719901425/qvz7vnbo3vzjhw32fgua.jpg)
 
 ## Feature
 
