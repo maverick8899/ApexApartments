@@ -1,0 +1,19 @@
+---
+- name: Setup Gitlab
+  hosts: gitlab
+  become: yes
+  roles:
+    - role: geerlingguy.gitlab
+  # vars:
+  #     ip_address: '192.168.140.31' # Thay đổi IP này theo nhu cầu của bạn
+  # tasks:
+  #     - name: Copy install script to server
+  #       copy:
+  #           src: ./scripts/gitlab_setup.sh
+  #           dest: /tmp/gitlab_setup.sh
+  #           mode: '0755'
+
+  #     - name: Run the install script
+  #       shell: /tmp/gitlab_setup.sh
+  #       environment:
+  #           IP_ADDRESS: '{{ ip_address }}'

@@ -1,0 +1,11 @@
+---
+- name: Mount NFS server to Client
+  hosts: swarm
+  become: yes
+  vars:
+      nfs_shares:
+          - mnt_path: /data
+            remote_path: 192.168.140.30:/data/nfs_export
+            nfs_mount_opts: auto,nofail,ro,noatime,nolock,intr,tcp,actimeo=1800
+  roles:
+      - nfs_client

@@ -1,0 +1,5 @@
+---
+# defaults file for nfs-client
+
+nfs_shares: []
+nfs_mount_opts: auto,nofail,noatime,nolock,intr,tcp,actimeo=1800

@@ -1,0 +1,59 @@
+---
+#@ swarm
+
+#> docker swarm init
+- name: check/init swarm
+  docker_swarm: #? module for swarm
+      state: present
+      advertise_addr: enp0s8:2377 #? specify net layer to communicate, cuz vagrant use 2 interfaces
+  register: __output_swarm #? stash cmd join
+  # when: inventory_hostname in groups['managers'][0] #? when hostname belong to first manager in inventory.yml (192.168.140.10)
+  when: inventory_hostname == groups['managers'][0] #? more exact
+
+#* Join manager node
+#> docker swarm join --token <manager-token> --advertise-addr <manager-ip>:2377
+
+- name: install manager
+  docker_swarm:
+      state: join
+      timeout: 60
+      join_token: "{{ hostvars[groups['managers'][0]]['__output_swarm']['swarm_facts']['JoinTokens']['Manager']}}" #? zalo (join_token)
+      remote_addrs: "{{ groups['managers'][0] }}" #? ip manager node to join
+      advertise_addr: enp0s8:2377
+  # when: inventory_hostname in groups['managers'] and inventory_hostname not in groups['managers'][0]
+  when: #? more exact
+      - inventory_hostname in groups['managers']
+      - inventory_hostname != groups['managers'][0]
+
+#* Join worker node
+#> docker swarm join --token <worker-token> <manager-ip>:2377
+
+- name: install worker
+  docker_swarm:
+      state: join
+      timeout: 60
+      join_token: "{{ hostvars[groups['managers'][0]]['__output_swarm']['swarm_facts']['JoinTokens']['Worker'] }}"
+      remote_addrs: "{{ groups['managers'][0] }}"
+      advertise_addr: enp0s8:2377
+  when: inventory_hostname in groups['workers']
+
+#@ custom add portainer
+- name: Run Portainer service
+  shell: docker run -d -p 8888:8000 -p 9999:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:alpine-sts
+  register: portainer_service
+  when: #? more exact
+      - portainer == true
+      - inventory_hostname in groups['managers']
+      - inventory_hostname == groups['managers'][0]
+  #@ create network for each group
+# - name: create traefik network
+#   docker_network:
+#       name: traefik
+#       driver: overlay
+#   when: inventory_hostname in groups['managers']
+
+# - name: create traefik network
+#   docker_network:
+#       name: webapp
+#       driver: overlay
+#   when: inventory_hostname in groups['workers']

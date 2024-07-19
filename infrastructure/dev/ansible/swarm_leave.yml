@@ -1,0 +1,10 @@
+---
+- name: Destroy swarm
+  hosts: all
+  become: yes
+  tasks:
+      - name: Nodes Leaving the Swarm
+        docker_swarm:
+            state: absent
+            force: true
+        ignore_errors: true #/ Thiết lập này cho phép Ansible bỏ qua các lỗi nếu task không thành công. Trong trường hợp này, nếu không thể xoá các nút khỏi Swarm (ví dụ: do các nút không khả dụng), Ansible sẽ tiếp tục thực hiện các nhiệm vụ tiếp theo mà không dừng lại vì lỗi này.

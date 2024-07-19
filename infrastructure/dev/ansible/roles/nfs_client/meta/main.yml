@@ -1,0 +1,23 @@
+galaxy_info:
+  author: Mohit Sharma
+  description: Ansible role for mounting nfs shares on clients
+  company: NYU CUSP
+
+  issue_tracker_url: https://github.com/ansible-nfs-client/issues
+
+  license: license MIT
+
+  min_ansible_version: 2.3
+
+  platforms:
+  - name: Ubuntu
+    versions:
+    - xenial
+    - trusty
+
+  galaxy_tags:
+    - "nfs"
+    - "utils"
+    - "cusp"
+
+dependencies: []

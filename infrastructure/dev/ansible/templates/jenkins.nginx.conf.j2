@@ -1,0 +1,26 @@
+server {
+    listen 80;
+    server_name {{ jenkins_hostname }};
+
+    # Chuyển hướng tất cả các yêu cầu HTTP sang HTTPS
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 443 ssl;
+    server_name {{ jenkins_hostname }};
+
+    ssl_certificate /etc/nginx/ssl/jenkins.crt;
+    ssl_certificate_key /etc/nginx/ssl/jenkins.key;
+    
+    access_log /var/log/nginx/{{ jenkins_hostname }}_access.log;
+    error_log /var/log/nginx/{{ jenkins_hostname }}_error.log error;
+    
+    location / {
+        proxy_pass http://localhost:8080;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}

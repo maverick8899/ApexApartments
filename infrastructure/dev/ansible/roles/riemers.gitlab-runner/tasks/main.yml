@@ -1,0 +1,39 @@
+---
+- name: Load platform-specific variables
+  include_vars: "{{ lookup('first_found', possible_files) }}"
+  vars:
+    possible_files:
+      files:
+        - '{{ ansible_distribution }}.yml'
+        - '{{ ansible_os_family }}.yml'
+        - 'default.yml'
+      paths:
+        - 'vars'
+
+- name: Validate GitLab Runner configurations
+  include_tasks: validate-runner-config.yml
+  vars:
+    actual_gitlab_runner_name: "{{ gitlab_runner.name|default(ansible_hostname+'-'+gitlab_runner_index|string) }}"
+  loop: "{{ gitlab_runner_runners }}"
+  loop_control:
+    label: "{{ actual_gitlab_runner_name }}"
+    index_var: gitlab_runner_index
+    loop_var: gitlab_runner
+
+- name: Install Gitlab Runner (Container)
+  vars:
+    gitlab_install_target_platform: container
+  include_tasks: main-container.yml
+  when: gitlab_runner_container_install
+
+- name: Install GitLab Runner (Unix)
+  vars:
+    gitlab_install_target_platform: unix
+  include_tasks: main-unix.yml
+  when: ansible_os_family != 'Windows' and not gitlab_runner_container_install
+
+- name: Install GitLab Runner (Windows)
+  vars:
+    gitlab_install_target_platform: windows
+  include_tasks: main-windows.yml
+  when: ansible_os_family == 'Windows' and not gitlab_runner_container_install

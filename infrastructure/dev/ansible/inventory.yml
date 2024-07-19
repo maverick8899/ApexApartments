@@ -1,0 +1,34 @@
+all:
+    vars:
+        ansible_user: vagrant
+        ansible_ssh_pass: vagrant
+    hosts:
+        master1:
+            ansible_host: 192.168.140.10
+            # ansible_user: <username>
+            # ansible_ssh_pass: <password>
+        worker1:
+            ansible_host: 192.168.140.21
+        worker2:
+            ansible_host: 192.168.140.22
+        nfs_srv:
+            ansible_host: 192.168.140.30
+        gitlab:
+            ansible_host: 192.168.140.31
+        jenkins:
+            ansible_host: 192.168.140.32
+        monitoring:
+            ansible_host: 192.168.140.33
+
+    children: #? groups [managers, workers]
+        managers:
+            hosts:
+                master1:
+        workers:
+            hosts:
+                worker1:
+                worker2:
+        swarm:
+            children:
+                managers:
+                workers:

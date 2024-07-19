@@ -1,0 +1,6 @@
+---
+- name: Setup NFS
+  hosts: nfs_srv
+  become: yes 
+  roles:
+    - geerlingguy.nfs

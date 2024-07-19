@@ -1,0 +1,9 @@
+---
+- name: Initializing swarm
+  hosts: swarm
+  become: yes
+  vars:
+      portainer: true #@ custom
+  roles:
+      - docker
+      - swarm

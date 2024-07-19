@@ -1,0 +1,14 @@
+---
+
+- hosts: localhost
+  connection: local
+  gather_facts: no
+  become: yes
+  vars:
+    nfs_shares:
+      - mnt_path: /media/test_export
+        remote_path: 10.8.10.67:/var/nfs/general
+        nfs_mount_opts: auto,nofail,ro,noatime,nolock,intr,tcp,actimeo=1800
+
+  roles:
+    - role_under_test

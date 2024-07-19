@@ -1,0 +1,21 @@
+---
+# tasks file for nfs-client
+
+- name: Install NFS utils
+  apt:
+      name: nfs-common
+      state: present
+      update_cache: yes
+      cache_valid_time: 3600
+  become: yes
+
+- name: Mount NFS shares
+  mount:
+      path: '{{ item.mnt_path }}'
+      src: '{{ item.remote_path }}'
+      opts: '{{ item.opts | default(nfs_mount_opts) }}'
+      fstype: nfs4
+      state: mounted
+  with_items:
+      - '{{ nfs_shares }}'
+  become: yes

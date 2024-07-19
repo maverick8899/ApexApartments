@@ -1,0 +1,25 @@
+---
+- name: Ensure Java is installed.
+  package:
+      name: '{{ java_packages }}'
+      state: present
+
+#@ custom: java17 RedHat-----------------------------------------------
+- name: Download specific java version.
+  get_url:
+      url: 'https://download.oracle.com/java/17/latest/jdk-17_linux-x64_bin.rpm'
+      dest: '/tmp/jdk-17_linux-x64_bin.rpm'
+  when: java_packages is defined
+
+- name: Check if we downloaded a specific version of Jenkins.
+  stat:
+      path: '/tmp/jdk-17_linux-x64_bin.rpm'
+  register: specific_version
+  when: java_packages is defined
+
+- name: Install our specific version of Jenkins.
+  package:
+      name: '/tmp/jdk-17_linux-x64_bin.rpm'
+      state: present
+  when: java_packages is defined
+#@ java17 end-----------------------------------------------

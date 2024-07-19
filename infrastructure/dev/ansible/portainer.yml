@@ -1,0 +1,17 @@
+- name: Deploy Portainer service in Docker Swarm
+  hosts: managers
+  become: yes #? run with root if can
+  tasks:
+      - name: Run Portainer service
+        shell: docker run -d -p 8888:8000 -p 9999:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:alpine-sts  
+        register: portainer_service
+        when: #? more exact
+            - inventory_hostname in groups['managers']
+            - inventory_hostname == groups['managers'][0]
+
+      # - name: Confirm Portainer service is running  #? waiting until it works to start task next
+      #   wait_for:
+      #       host: localhost
+      #       port: 8888
+      #       delay: 10
+      #       timeout: 60

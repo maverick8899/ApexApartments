@@ -1,0 +1,14 @@
+---
+services: docker
+
+env:
+  - distro: ubuntu1604
+  - distro: ubuntu1404
+
+script:
+  # Download test shim.
+  - wget -O ${PWD}/tests/test.sh https://gist.githubusercontent.com/Mohitsharma44/24afe26b97064892267d7fb1c16f9530/raw/
+  - chmod +x ${PWD}/tests/test.sh
+
+  # Run tests.
+  - test_idempotence=false ${PWD}/tests/test.sh

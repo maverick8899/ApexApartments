@@ -1,0 +1,13 @@
+---
+- name: Setup Gitlab_Runner.
+  hosts: master1
+  become: yes
+  roles:
+      - riemers.gitlab-runner
+  vars:
+      gitlab_runner_coordinator_url: "{{ gitlab_url }}" # http://gitlab.local
+      gitlab_runner_registration_token: "{{ gitlab_project_token }}" #'GR1348941HsXrsdhmEpdap3ws9JNo'
+      https_local: true
+      gitlab_runner_runners:
+          - name: 'runner-dev-shell'
+            executor: shell

@@ -1,0 +1,11 @@
+---
+extends: default
+
+rules:
+    line-length: #? min-long for each line is 120 characters
+        max: 120
+        level: warning
+
+ignore: | #? ignore lint
+    .github/stale.yml
+    .travis.yml
