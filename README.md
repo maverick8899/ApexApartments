@@ -17,6 +17,8 @@
 ![enter image description here](https://res.cloudinary.com/dgiozc0lj/image/upload/v1719901425/qvz7vnbo3vzjhw32fgua.jpg)
 ## Dev Env Architecture
 ![enter image description here](https://res.cloudinary.com/dgiozc0lj/image/upload/v1721405287/fyf3m9smntomnhyq2kfe.jpg)
+### VM Information
+![enter image description here](https://res.cloudinary.com/dgiozc0lj/image/upload/v1721407530/neyv4p20bxbricrfu4y9.jpg)
 
 ## Feature
 
