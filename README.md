@@ -1,4 +1,5 @@
 
+
   
 <h2 align="center">Reach me on <img src="https://media.giphy.com/media/mGcNjsfWAjY5AEZNw6/giphy.gif" width="50"></h2>
 
@@ -14,6 +15,8 @@
 
 ## Technology Architecture
 ![enter image description here](https://res.cloudinary.com/dgiozc0lj/image/upload/v1719901425/qvz7vnbo3vzjhw32fgua.jpg)
+## Dev Env Architecture
+![enter image description here](https://res.cloudinary.com/dgiozc0lj/image/upload/v1721405287/fyf3m9smntomnhyq2kfe.jpg)
 
 ## Feature
 
