@@ -1,0 +1,17 @@
+services:
+    jenkins:
+        image: maverick0809/jenkins:apartment
+        container_name: jenkins_apartment
+        ports:
+            - '8080:8080'
+            - '50000:50000'
+        volumes:
+            - jenkins_home:/var/jenkins/jenkins_home
+            - /var/run/docker.sock:/var/run/docker.sock
+            - /usr/bin/docker:/usr/bin/docker
+            - ../ansible:/data/ansible
+            - ../terraform:/data/terraform
+        # command: 
+
+volumes:
+    jenkins_home:
