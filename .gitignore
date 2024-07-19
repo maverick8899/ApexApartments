@@ -23,3 +23,6 @@ terraform.tfstate.backup
 .terraform.lock.hcl
 api-keys
 deploy/elk/data
+dist
+.vagrant
+gitlab_setup.sh
