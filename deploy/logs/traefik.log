@@ -3968,3 +3968,447 @@
 {"level":"info","time":"2024-07-01T09:40:27Z","message":"Shutting down"}
 {"level":"info","time":"2024-07-01T09:40:27Z","message":"Server stopped"}
 {"level":"info","time":"2024-07-01T09:40:27Z","message":"Shutting down"}
+{"level":"info","version":"3.0.4","time":"2024-07-12T03:06:27Z","message":"Traefik version 3.0.4 built on 2024-07-02T13:46:37Z"}
+{"level":"info","time":"2024-07-12T03:06:27Z","message":"\nStats collection is disabled.\nHelp us improve Traefik by turning this feature on :)\nMore details on: https://doc.traefik.io/traefik/contributing/data-collection/\n"}
+{"level":"info","time":"2024-07-12T03:06:27Z","message":"Starting provider aggregator aggregator.ProviderAggregator"}
+{"level":"info","time":"2024-07-12T03:06:27Z","message":"Starting provider *file.Provider"}
+{"level":"info","time":"2024-07-12T03:06:27Z","message":"Starting provider *traefik.Provider"}
+{"level":"info","time":"2024-07-12T03:06:27Z","message":"Starting provider *acme.ChallengeTLSALPN"}
+{"level":"info","time":"2024-07-12T03:06:27Z","message":"Starting provider *docker.SwarmProvider"}
+{"level":"info","version":"3.0.4","time":"2024-07-12T03:06:28Z","message":"Traefik version 3.0.4 built on 2024-07-02T13:46:37Z"}
+{"level":"info","time":"2024-07-12T03:06:28Z","message":"\nStats collection is disabled.\nHelp us improve Traefik by turning this feature on :)\nMore details on: https://doc.traefik.io/traefik/contributing/data-collection/\n"}
+{"level":"info","time":"2024-07-12T03:06:28Z","message":"Starting provider aggregator aggregator.ProviderAggregator"}
+{"level":"info","time":"2024-07-12T03:06:28Z","message":"Starting provider *file.Provider"}
+{"level":"info","time":"2024-07-12T03:06:28Z","message":"Starting provider *traefik.Provider"}
+{"level":"info","time":"2024-07-12T03:06:28Z","message":"Starting provider *acme.ChallengeTLSALPN"}
+{"level":"info","time":"2024-07-12T03:06:28Z","message":"Starting provider *docker.SwarmProvider"}
+{"level":"info","version":"3.0.4","time":"2024-07-12T03:06:28Z","message":"Traefik version 3.0.4 built on 2024-07-02T13:46:37Z"}
+{"level":"info","time":"2024-07-12T03:06:28Z","message":"\nStats collection is disabled.\nHelp us improve Traefik by turning this feature on :)\nMore details on: https://doc.traefik.io/traefik/contributing/data-collection/\n"}
+{"level":"info","time":"2024-07-12T03:06:28Z","message":"Starting provider aggregator aggregator.ProviderAggregator"}
+{"level":"info","time":"2024-07-12T03:06:28Z","message":"Starting provider *file.Provider"}
+{"level":"info","time":"2024-07-12T03:06:28Z","message":"Starting provider *traefik.Provider"}
+{"level":"info","time":"2024-07-12T03:06:28Z","message":"Starting provider *acme.ChallengeTLSALPN"}
+{"level":"info","time":"2024-07-12T03:06:28Z","message":"Starting provider *docker.SwarmProvider"}
+{"level":"info","time":"2024-07-12T03:11:49Z","message":"I have to go..."}
+{"level":"info","time":"2024-07-12T03:11:49Z","message":"I have to go..."}
+{"level":"info","time":"2024-07-12T03:11:49Z","message":"Stopping server gracefully"}
+{"level":"info","time":"2024-07-12T03:11:49Z","message":"Stopping server gracefully"}
+{"level":"error","entryPointName":"traefik","error":"accept tcp [::]:8080: use of closed network connection","time":"2024-07-12T03:11:49Z"}
+{"level":"error","entryPointName":"traefik","error":"accept tcp [::]:8080: use of closed network connection","time":"2024-07-12T03:11:49Z"}
+{"level":"error","entryPointName":"websecure","error":"accept tcp [::]:443: use of closed network connection","time":"2024-07-12T03:11:49Z"}
+{"level":"error","entryPointName":"web","error":"accept tcp [::]:80: use of closed network connection","time":"2024-07-12T03:11:49Z"}
+{"level":"error","entryPointName":"traefik","error":"close tcp [::]:8080: use of closed network connection","time":"2024-07-12T03:11:49Z"}
+{"level":"info","time":"2024-07-12T03:11:49Z","message":"I have to go..."}
+{"level":"info","time":"2024-07-12T03:11:49Z","message":"Stopping server gracefully"}
+{"level":"error","entryPointName":"web","error":"accept tcp [::]:80: use of closed network connection","time":"2024-07-12T03:11:49Z"}
+{"level":"error","entryPointName":"websecure","error":"accept tcp [::]:443: use of closed network connection","time":"2024-07-12T03:11:49Z"}
+{"level":"error","entryPointName":"websecure","error":"close tcp [::]:443: use of closed network connection","time":"2024-07-12T03:11:49Z"}
+{"level":"error","entryPointName":"web","error":"accept tcp [::]:80: use of closed network connection","time":"2024-07-12T03:11:49Z"}
+{"level":"error","entryPointName":"websecure","error":"close tcp [::]:443: use of closed network connection","time":"2024-07-12T03:11:49Z"}
+{"level":"error","entryPointName":"traefik","error":"close tcp [::]:8080: use of closed network connection","time":"2024-07-12T03:11:49Z"}
+{"level":"error","entryPointName":"web","error":"close tcp [::]:80: use of closed network connection","time":"2024-07-12T03:11:49Z"}
+{"level":"error","entryPointName":"web","error":"close tcp [::]:80: use of closed network connection","time":"2024-07-12T03:11:49Z"}
+{"level":"error","entryPointName":"web","error":"close tcp [::]:80: use of closed network connection","time":"2024-07-12T03:11:49Z"}
+{"level":"error","entryPointName":"traefik","error":"accept tcp [::]:8080: use of closed network connection","time":"2024-07-12T03:11:49Z"}
+{"level":"info","time":"2024-07-12T03:11:49Z","message":"Server stopped"}
+{"level":"error","entryPointName":"websecure","error":"accept tcp [::]:443: use of closed network connection","time":"2024-07-12T03:11:49Z"}
+{"level":"info","time":"2024-07-12T03:11:49Z","message":"Shutting down"}
+{"level":"error","entryPointName":"traefik","error":"close tcp [::]:8080: use of closed network connection","time":"2024-07-12T03:11:49Z"}
+{"level":"info","time":"2024-07-12T03:11:49Z","message":"Server stopped"}
+{"level":"info","time":"2024-07-12T03:11:49Z","message":"Shutting down"}
+{"level":"error","entryPointName":"websecure","error":"close tcp [::]:443: use of closed network connection","time":"2024-07-12T03:11:49Z"}
+{"level":"info","time":"2024-07-12T03:11:49Z","message":"Server stopped"}
+{"level":"info","time":"2024-07-12T03:11:49Z","message":"Shutting down"}
+{"level":"info","version":"3.0.4","time":"2024-07-16T06:19:38Z","message":"Traefik version 3.0.4 built on 2024-07-02T13:46:37Z"}
+{"level":"info","version":"3.0.4","time":"2024-07-16T06:19:38Z","message":"Traefik version 3.0.4 built on 2024-07-02T13:46:37Z"}
+{"level":"info","time":"2024-07-16T06:19:38Z","message":"\nStats collection is disabled.\nHelp us improve Traefik by turning this feature on :)\nMore details on: https://doc.traefik.io/traefik/contributing/data-collection/\n"}
+{"level":"info","time":"2024-07-16T06:19:38Z","message":"\nStats collection is disabled.\nHelp us improve Traefik by turning this feature on :)\nMore details on: https://doc.traefik.io/traefik/contributing/data-collection/\n"}
+{"level":"info","time":"2024-07-16T06:19:38Z","message":"Starting provider aggregator aggregator.ProviderAggregator"}
+{"level":"info","time":"2024-07-16T06:19:38Z","message":"Starting provider aggregator aggregator.ProviderAggregator"}
+{"level":"info","time":"2024-07-16T06:19:38Z","message":"Starting provider *file.Provider"}
+{"level":"info","time":"2024-07-16T06:19:38Z","message":"Starting provider *file.Provider"}
+{"level":"info","version":"3.0.4","time":"2024-07-16T06:19:38Z","message":"Traefik version 3.0.4 built on 2024-07-02T13:46:37Z"}
+{"level":"info","time":"2024-07-16T06:19:38Z","message":"Starting provider *traefik.Provider"}
+{"level":"info","time":"2024-07-16T06:19:38Z","message":"Starting provider *docker.SwarmProvider"}
+{"level":"info","time":"2024-07-16T06:19:38Z","message":"Starting provider *acme.ChallengeTLSALPN"}
+{"level":"info","time":"2024-07-16T06:19:38Z","message":"Starting provider *traefik.Provider"}
+{"level":"info","time":"2024-07-16T06:19:38Z","message":"Starting provider *acme.ChallengeTLSALPN"}
+{"level":"info","time":"2024-07-16T06:19:38Z","message":"Starting provider *docker.SwarmProvider"}
+{"level":"info","time":"2024-07-16T06:19:38Z","message":"\nStats collection is disabled.\nHelp us improve Traefik by turning this feature on :)\nMore details on: https://doc.traefik.io/traefik/contributing/data-collection/\n"}
+{"level":"info","time":"2024-07-16T06:19:38Z","message":"Starting provider aggregator aggregator.ProviderAggregator"}
+{"level":"info","time":"2024-07-16T06:19:38Z","message":"Starting provider *file.Provider"}
+{"level":"info","time":"2024-07-16T06:19:38Z","message":"Starting provider *traefik.Provider"}
+{"level":"info","time":"2024-07-16T06:19:38Z","message":"Starting provider *acme.ChallengeTLSALPN"}
+{"level":"info","time":"2024-07-16T06:19:38Z","message":"Starting provider *docker.SwarmProvider"}
+{"level":"warn","time":"2024-07-16T06:29:40Z","message":"A new release has been found: 3.1.0. Please consider updating."}
+{"level":"warn","time":"2024-07-16T06:29:40Z","message":"A new release has been found: 3.1.0. Please consider updating."}
+{"level":"warn","time":"2024-07-16T06:29:40Z","message":"A new release has been found: 3.1.0. Please consider updating."}
+{"level":"info","time":"2024-07-16T06:53:02Z","message":"I have to go..."}
+{"level":"info","time":"2024-07-16T06:53:02Z","message":"Stopping server gracefully"}
+{"level":"error","entryPointName":"traefik","error":"accept tcp [::]:8080: use of closed network connection","time":"2024-07-16T06:53:02Z"}
+{"level":"error","entryPointName":"traefik","error":"accept tcp [::]:8080: use of closed network connection","time":"2024-07-16T06:53:02Z","message":"Error while starting server"}
+{"level":"error","entryPointName":"websecure","error":"accept tcp [::]:443: use of closed network connection","time":"2024-07-16T06:53:02Z"}
+{"level":"error","entryPointName":"websecure","error":"close tcp [::]:443: use of closed network connection","time":"2024-07-16T06:53:02Z"}
+{"level":"error","entryPointName":"web","error":"accept tcp [::]:80: use of closed network connection","time":"2024-07-16T06:53:02Z"}
+{"level":"error","entryPointName":"web","error":"close tcp [::]:80: use of closed network connection","time":"2024-07-16T06:53:02Z"}
+{"level":"info","time":"2024-07-16T06:53:02Z","message":"I have to go..."}
+{"level":"info","time":"2024-07-16T06:53:02Z","message":"Stopping server gracefully"}
+{"level":"error","entryPointName":"web","error":"accept tcp [::]:80: use of closed network connection","time":"2024-07-16T06:53:02Z"}
+{"level":"error","entryPointName":"web","error":"close tcp [::]:80: use of closed network connection","time":"2024-07-16T06:53:02Z"}
+{"level":"info","time":"2024-07-16T06:53:02Z","message":"I have to go..."}
+{"level":"error","entryPointName":"websecure","error":"accept tcp [::]:443: use of closed network connection","time":"2024-07-16T06:53:02Z"}
+{"level":"info","time":"2024-07-16T06:53:02Z","message":"Stopping server gracefully"}
+{"level":"error","entryPointName":"traefik","error":"accept tcp [::]:8080: use of closed network connection","time":"2024-07-16T06:53:02Z"}
+{"level":"error","entryPointName":"traefik","error":"accept tcp [::]:8080: use of closed network connection","time":"2024-07-16T06:53:02Z"}
+{"level":"error","entryPointName":"traefik","error":"close tcp [::]:8080: use of closed network connection","time":"2024-07-16T06:53:02Z"}
+{"level":"error","entryPointName":"traefik","error":"close tcp [::]:8080: use of closed network connection","time":"2024-07-16T06:53:02Z"}
+{"level":"error","entryPointName":"websecure","error":"close tcp [::]:443: use of closed network connection","time":"2024-07-16T06:53:02Z"}
+{"level":"error","entryPointName":"web","error":"accept tcp [::]:80: use of closed network connection","time":"2024-07-16T06:53:02Z"}
+{"level":"error","entryPointName":"websecure","error":"accept tcp [::]:443: use of closed network connection","time":"2024-07-16T06:53:02Z"}
+{"level":"error","entryPointName":"websecure","error":"close tcp [::]:443: use of closed network connection","time":"2024-07-16T06:53:02Z"}
+{"level":"error","entryPointName":"web","error":"close tcp [::]:80: use of closed network connection","time":"2024-07-16T06:53:02Z"}
+{"level":"info","time":"2024-07-16T06:53:02Z","message":"Server stopped"}
+{"level":"info","time":"2024-07-16T06:53:02Z","message":"Shutting down"}
+{"level":"info","time":"2024-07-16T06:53:02Z","message":"Server stopped"}
+{"level":"info","time":"2024-07-16T06:53:02Z","message":"Shutting down"}
+{"level":"info","time":"2024-07-16T06:53:02Z","message":"Server stopped"}
+{"level":"info","time":"2024-07-16T06:53:02Z","message":"Shutting down"}
+{"level":"info","version":"3.0.4","time":"2024-07-16T07:13:01Z","message":"Traefik version 3.0.4 built on 2024-07-02T13:46:37Z"}
+{"level":"info","time":"2024-07-16T07:13:01Z","message":"\nStats collection is disabled.\nHelp us improve Traefik by turning this feature on :)\nMore details on: https://doc.traefik.io/traefik/contributing/data-collection/\n"}
+{"level":"info","time":"2024-07-16T07:13:01Z","message":"Starting provider aggregator aggregator.ProviderAggregator"}
+{"level":"info","time":"2024-07-16T07:13:01Z","message":"Starting provider *file.Provider"}
+{"level":"info","time":"2024-07-16T07:13:01Z","message":"Starting provider *traefik.Provider"}
+{"level":"info","time":"2024-07-16T07:13:01Z","message":"Starting provider *acme.ChallengeTLSALPN"}
+{"level":"info","time":"2024-07-16T07:13:01Z","message":"Starting provider *docker.SwarmProvider"}
+{"level":"info","version":"3.0.4","time":"2024-07-16T07:13:01Z","message":"Traefik version 3.0.4 built on 2024-07-02T13:46:37Z"}
+{"level":"info","time":"2024-07-16T07:13:01Z","message":"\nStats collection is disabled.\nHelp us improve Traefik by turning this feature on :)\nMore details on: https://doc.traefik.io/traefik/contributing/data-collection/\n"}
+{"level":"info","time":"2024-07-16T07:13:01Z","message":"Starting provider aggregator aggregator.ProviderAggregator"}
+{"level":"info","time":"2024-07-16T07:13:01Z","message":"Starting provider *file.Provider"}
+{"level":"info","time":"2024-07-16T07:13:01Z","message":"Starting provider *traefik.Provider"}
+{"level":"info","time":"2024-07-16T07:13:01Z","message":"Starting provider *docker.SwarmProvider"}
+{"level":"info","version":"3.0.4","time":"2024-07-16T07:13:01Z","message":"Traefik version 3.0.4 built on 2024-07-02T13:46:37Z"}
+{"level":"info","time":"2024-07-16T07:13:01Z","message":"\nStats collection is disabled.\nHelp us improve Traefik by turning this feature on :)\nMore details on: https://doc.traefik.io/traefik/contributing/data-collection/\n"}
+{"level":"info","time":"2024-07-16T07:13:01Z","message":"Starting provider *acme.ChallengeTLSALPN"}
+{"level":"info","time":"2024-07-16T07:13:01Z","message":"Starting provider aggregator aggregator.ProviderAggregator"}
+{"level":"info","time":"2024-07-16T07:13:01Z","message":"Starting provider *file.Provider"}
+{"level":"info","time":"2024-07-16T07:13:01Z","message":"Starting provider *traefik.Provider"}
+{"level":"info","time":"2024-07-16T07:13:01Z","message":"Starting provider *acme.ChallengeTLSALPN"}
+{"level":"info","time":"2024-07-16T07:13:01Z","message":"Starting provider *docker.SwarmProvider"}
+{"level":"info","time":"2024-07-16T07:13:50Z","message":"I have to go..."}
+{"level":"info","time":"2024-07-16T07:13:50Z","message":"Stopping server gracefully"}
+{"level":"error","entryPointName":"traefik","error":"accept tcp [::]:8080: use of closed network connection","time":"2024-07-16T07:13:50Z"}
+{"level":"error","entryPointName":"traefik","error":"close tcp [::]:8080: use of closed network connection","time":"2024-07-16T07:13:50Z"}
+{"level":"error","entryPointName":"web","error":"accept tcp [::]:80: use of closed network connection","time":"2024-07-16T07:13:50Z"}
+{"level":"error","entryPointName":"websecure","error":"accept tcp [::]:443: use of closed network connection","time":"2024-07-16T07:13:50Z"}
+{"level":"error","entryPointName":"websecure","error":"close tcp [::]:443: use of closed network connection","time":"2024-07-16T07:13:50Z"}
+{"level":"error","entryPointName":"web","error":"close tcp [::]:80: use of closed network connection","time":"2024-07-16T07:13:50Z"}
+{"level":"info","time":"2024-07-16T07:13:50Z","message":"I have to go..."}
+{"level":"info","time":"2024-07-16T07:13:50Z","message":"Stopping server gracefully"}
+{"level":"error","entryPointName":"traefik","error":"accept tcp [::]:8080: use of closed network connection","time":"2024-07-16T07:13:50Z"}
+{"level":"error","entryPointName":"traefik","error":"close tcp [::]:8080: use of closed network connection","time":"2024-07-16T07:13:50Z"}
+{"level":"error","entryPointName":"websecure","error":"accept tcp [::]:443: use of closed network connection","time":"2024-07-16T07:13:50Z"}
+{"level":"error","entryPointName":"web","error":"accept tcp [::]:80: use of closed network connection","time":"2024-07-16T07:13:50Z"}
+{"level":"error","entryPointName":"web","error":"close tcp [::]:80: use of closed network connection","time":"2024-07-16T07:13:50Z"}
+{"level":"error","entryPointName":"websecure","error":"close tcp [::]:443: use of closed network connection","time":"2024-07-16T07:13:50Z"}
+{"level":"info","time":"2024-07-16T07:13:50Z","message":"I have to go..."}
+{"level":"info","time":"2024-07-16T07:13:50Z","message":"Stopping server gracefully"}
+{"level":"error","entryPointName":"traefik","error":"accept tcp [::]:8080: use of closed network connection","time":"2024-07-16T07:13:50Z"}
+{"level":"error","entryPointName":"traefik","error":"close tcp [::]:8080: use of closed network connection","time":"2024-07-16T07:13:50Z"}
+{"level":"error","entryPointName":"web","error":"accept tcp [::]:80: use of closed network connection","time":"2024-07-16T07:13:50Z"}
+{"level":"error","entryPointName":"websecure","error":"accept tcp [::]:443: use of closed network connection","time":"2024-07-16T07:13:50Z"}
+{"level":"error","entryPointName":"websecure","error":"close tcp [::]:443: use of closed network connection","time":"2024-07-16T07:13:50Z"}
+{"level":"error","entryPointName":"web","error":"close tcp [::]:80: use of closed network connection","time":"2024-07-16T07:13:50Z"}
+{"level":"info","time":"2024-07-16T07:13:50Z","message":"Server stopped"}
+{"level":"info","time":"2024-07-16T07:13:50Z","message":"Shutting down"}
+{"level":"info","time":"2024-07-16T07:13:50Z","message":"Server stopped"}
+{"level":"info","time":"2024-07-16T07:13:50Z","message":"Shutting down"}
+{"level":"info","time":"2024-07-16T07:13:50Z","message":"Server stopped"}
+{"level":"info","time":"2024-07-16T07:13:50Z","message":"Shutting down"}
+{"level":"info","version":"3.0.4","time":"2024-07-17T13:39:04Z","message":"Traefik version 3.0.4 built on 2024-07-02T13:46:37Z"}
+{"level":"info","time":"2024-07-17T13:39:04Z","message":"\nStats collection is disabled.\nHelp us improve Traefik by turning this feature on :)\nMore details on: https://doc.traefik.io/traefik/contributing/data-collection/\n"}
+{"level":"info","time":"2024-07-17T13:39:04Z","message":"Starting provider aggregator aggregator.ProviderAggregator"}
+{"level":"info","time":"2024-07-17T13:39:04Z","message":"Starting provider *file.Provider"}
+{"level":"info","time":"2024-07-17T13:39:04Z","message":"Starting provider *traefik.Provider"}
+{"level":"info","time":"2024-07-17T13:39:04Z","message":"Starting provider *acme.ChallengeTLSALPN"}
+{"level":"info","time":"2024-07-17T13:39:04Z","message":"Starting provider *docker.SwarmProvider"}
+{"level":"info","version":"3.0.4","time":"2024-07-17T13:39:04Z","message":"Traefik version 3.0.4 built on 2024-07-02T13:46:37Z"}
+{"level":"info","time":"2024-07-17T13:39:04Z","message":"\nStats collection is disabled.\nHelp us improve Traefik by turning this feature on :)\nMore details on: https://doc.traefik.io/traefik/contributing/data-collection/\n"}
+{"level":"info","time":"2024-07-17T13:39:04Z","message":"Starting provider aggregator aggregator.ProviderAggregator"}
+{"level":"info","time":"2024-07-17T13:39:04Z","message":"Starting provider *file.Provider"}
+{"level":"info","time":"2024-07-17T13:39:04Z","message":"Starting provider *traefik.Provider"}
+{"level":"info","time":"2024-07-17T13:39:04Z","message":"Starting provider *acme.ChallengeTLSALPN"}
+{"level":"info","time":"2024-07-17T13:39:04Z","message":"Starting provider *docker.SwarmProvider"}
+{"level":"info","version":"3.0.4","time":"2024-07-17T13:39:04Z","message":"Traefik version 3.0.4 built on 2024-07-02T13:46:37Z"}
+{"level":"info","time":"2024-07-17T13:39:04Z","message":"\nStats collection is disabled.\nHelp us improve Traefik by turning this feature on :)\nMore details on: https://doc.traefik.io/traefik/contributing/data-collection/\n"}
+{"level":"info","time":"2024-07-17T13:39:04Z","message":"Starting provider aggregator aggregator.ProviderAggregator"}
+{"level":"info","time":"2024-07-17T13:39:04Z","message":"Starting provider *file.Provider"}
+{"level":"info","time":"2024-07-17T13:39:04Z","message":"Starting provider *traefik.Provider"}
+{"level":"info","time":"2024-07-17T13:39:04Z","message":"Starting provider *docker.SwarmProvider"}
+{"level":"info","time":"2024-07-17T13:39:04Z","message":"Starting provider *acme.ChallengeTLSALPN"}
+{"level":"info","time":"2024-07-17T13:45:59Z","message":"I have to go..."}
+{"level":"info","time":"2024-07-17T13:45:59Z","message":"Stopping server gracefully"}
+{"level":"error","entryPointName":"traefik","error":"accept tcp [::]:8080: use of closed network connection","time":"2024-07-17T13:45:59Z"}
+{"level":"error","entryPointName":"websecure","error":"accept tcp [::]:443: use of closed network connection","time":"2024-07-17T13:45:59Z"}
+{"level":"error","entryPointName":"traefik","error":"close tcp [::]:8080: use of closed network connection","time":"2024-07-17T13:45:59Z"}
+{"level":"error","entryPointName":"websecure","error":"close tcp [::]:443: use of closed network connection","time":"2024-07-17T13:45:59Z"}
+{"level":"error","entryPointName":"web","error":"accept tcp [::]:80: use of closed network connection","time":"2024-07-17T13:45:59Z"}
+{"level":"error","entryPointName":"web","error":"close tcp [::]:80: use of closed network connection","time":"2024-07-17T13:45:59Z"}
+{"level":"info","time":"2024-07-17T13:45:59Z","message":"I have to go..."}
+{"level":"info","time":"2024-07-17T13:45:59Z","message":"Stopping server gracefully"}
+{"level":"error","entryPointName":"traefik","error":"accept tcp [::]:8080: use of closed network connection","time":"2024-07-17T13:45:59Z"}
+{"level":"error","entryPointName":"traefik","error":"close tcp [::]:8080: use of closed network connection","time":"2024-07-17T13:45:59Z"}
+{"level":"error","entryPointName":"websecure","error":"accept tcp [::]:443: use of closed network connection","time":"2024-07-17T13:45:59Z"}
+{"level":"error","entryPointName":"websecure","error":"close tcp [::]:443: use of closed network connection","time":"2024-07-17T13:45:59Z"}
+{"level":"error","entryPointName":"web","error":"accept tcp [::]:80: use of closed network connection","time":"2024-07-17T13:45:59Z"}
+{"level":"error","entryPointName":"web","error":"close tcp [::]:80: use of closed network connection","time":"2024-07-17T13:45:59Z"}
+{"level":"info","time":"2024-07-17T13:45:59Z","message":"I have to go..."}
+{"level":"info","time":"2024-07-17T13:45:59Z","message":"Stopping server gracefully"}
+{"level":"error","entryPointName":"traefik","error":"accept tcp [::]:8080: use of closed network connection","time":"2024-07-17T13:45:59Z"}
+{"level":"error","entryPointName":"traefik","error":"close tcp [::]:8080: use of closed network connection","time":"2024-07-17T13:45:59Z"}
+{"level":"error","entryPointName":"websecure","error":"accept tcp [::]:443: use of closed network connection","time":"2024-07-17T13:45:59Z"}
+{"level":"error","entryPointName":"web","error":"accept tcp [::]:80: use of closed network connection","time":"2024-07-17T13:45:59Z"}
+{"level":"error","entryPointName":"web","error":"close tcp [::]:80: use of closed network connection","time":"2024-07-17T13:45:59Z"}
+{"level":"error","entryPointName":"websecure","error":"close tcp [::]:443: use of closed network connection","time":"2024-07-17T13:45:59Z"}
+{"level":"info","time":"2024-07-17T13:45:59Z","message":"Server stopped"}
+{"level":"info","time":"2024-07-17T13:45:59Z","message":"Shutting down"}
+{"level":"info","time":"2024-07-17T13:45:59Z","message":"Server stopped"}
+{"level":"info","time":"2024-07-17T13:45:59Z","message":"Shutting down"}
+{"level":"info","time":"2024-07-17T13:45:59Z","message":"Server stopped"}
+{"level":"info","time":"2024-07-17T13:45:59Z","message":"Shutting down"}
+{"level":"info","version":"3.0.4","time":"2024-07-17T13:47:23Z","message":"Traefik version 3.0.4 built on 2024-07-02T13:46:37Z"}
+{"level":"info","time":"2024-07-17T13:47:23Z","message":"\nStats collection is disabled.\nHelp us improve Traefik by turning this feature on :)\nMore details on: https://doc.traefik.io/traefik/contributing/data-collection/\n"}
+{"level":"info","time":"2024-07-17T13:47:23Z","message":"Starting provider aggregator aggregator.ProviderAggregator"}
+{"level":"info","time":"2024-07-17T13:47:23Z","message":"Starting provider *file.Provider"}
+{"level":"info","time":"2024-07-17T13:47:23Z","message":"Starting provider *traefik.Provider"}
+{"level":"info","time":"2024-07-17T13:47:23Z","message":"Starting provider *docker.SwarmProvider"}
+{"level":"info","time":"2024-07-17T13:47:23Z","message":"Starting provider *acme.ChallengeTLSALPN"}
+{"level":"info","version":"3.0.4","time":"2024-07-17T13:47:23Z","message":"Traefik version 3.0.4 built on 2024-07-02T13:46:37Z"}
+{"level":"info","time":"2024-07-17T13:47:23Z","message":"\nStats collection is disabled.\nHelp us improve Traefik by turning this feature on :)\nMore details on: https://doc.traefik.io/traefik/contributing/data-collection/\n"}
+{"level":"info","time":"2024-07-17T13:47:23Z","message":"Starting provider aggregator aggregator.ProviderAggregator"}
+{"level":"info","time":"2024-07-17T13:47:23Z","message":"Starting provider *file.Provider"}
+{"level":"info","time":"2024-07-17T13:47:23Z","message":"Starting provider *traefik.Provider"}
+{"level":"info","time":"2024-07-17T13:47:23Z","message":"Starting provider *docker.SwarmProvider"}
+{"level":"info","time":"2024-07-17T13:47:23Z","message":"Starting provider *acme.ChallengeTLSALPN"}
+{"level":"info","version":"3.0.4","time":"2024-07-17T13:47:23Z","message":"Traefik version 3.0.4 built on 2024-07-02T13:46:37Z"}
+{"level":"info","time":"2024-07-17T13:47:23Z","message":"\nStats collection is disabled.\nHelp us improve Traefik by turning this feature on :)\nMore details on: https://doc.traefik.io/traefik/contributing/data-collection/\n"}
+{"level":"info","time":"2024-07-17T13:47:23Z","message":"Starting provider aggregator aggregator.ProviderAggregator"}
+{"level":"info","time":"2024-07-17T13:47:23Z","message":"Starting provider *file.Provider"}
+{"level":"info","time":"2024-07-17T13:47:23Z","message":"Starting provider *traefik.Provider"}
+{"level":"info","time":"2024-07-17T13:47:23Z","message":"Starting provider *docker.SwarmProvider"}
+{"level":"info","time":"2024-07-17T13:47:23Z","message":"Starting provider *acme.ChallengeTLSALPN"}
+{"level":"error","entryPointName":"web","routerName":"frontend@swarm","error":"the service \"error@swarm\" does not exist","time":"2024-07-17T13:47:39Z"}
+{"level":"error","entryPointName":"web","routerName":"dashboard@swarm","error":"the service \"error@swarm\" does not exist","time":"2024-07-17T13:47:39Z"}
+{"level":"error","entryPointName":"websecure","routerName":"dashboard@swarm","error":"the service \"error@swarm\" does not exist","time":"2024-07-17T13:47:39Z"}
+{"level":"error","entryPointName":"web","routerName":"frontend@swarm","error":"the service \"error@swarm\" does not exist","time":"2024-07-17T13:47:39Z"}
+{"level":"error","entryPointName":"web","routerName":"dashboard@swarm","error":"the service \"error@swarm\" does not exist","time":"2024-07-17T13:47:39Z"}
+{"level":"error","entryPointName":"websecure","routerName":"dashboard@swarm","error":"the service \"error@swarm\" does not exist","time":"2024-07-17T13:47:39Z"}
+{"level":"error","entryPointName":"web","routerName":"dashboard@swarm","error":"the service \"error@swarm\" does not exist","time":"2024-07-17T13:47:39Z"}
+{"level":"error","entryPointName":"web","routerName":"frontend@swarm","error":"the service \"error@swarm\" does not exist","time":"2024-07-17T13:47:39Z"}
+{"level":"error","entryPointName":"websecure","routerName":"dashboard@swarm","error":"the service \"error@swarm\" does not exist","time":"2024-07-17T13:47:39Z"}
+{"level":"error","error":"read tcp 10.0.0.16:80->10.0.0.2:58640: i/o timeout","time":"2024-07-17T13:49:37Z","message":"Error while Peeking first byte"}
+{"level":"error","error":"read tcp 10.0.0.15:80->10.0.0.2:58657: i/o timeout","time":"2024-07-17T13:50:49Z","message":"Error while Peeking first byte"}
+{"level":"info","time":"2024-07-17T13:51:29Z","message":"I have to go..."}
+{"level":"info","time":"2024-07-17T13:51:29Z","message":"Stopping server gracefully"}
+{"level":"error","entryPointName":"websecure","error":"accept tcp [::]:443: use of closed network connection","time":"2024-07-17T13:51:29Z"}
+{"level":"error","entryPointName":"traefik","error":"accept tcp [::]:8080: use of closed network connection","time":"2024-07-17T13:51:29Z"}
+{"level":"error","entryPointName":"web","error":"accept tcp [::]:80: use of closed network connection","time":"2024-07-17T13:51:29Z"}
+{"level":"error","entryPointName":"websecure","error":"close tcp [::]:443: use of closed network connection","time":"2024-07-17T13:51:29Z"}
+{"level":"error","entryPointName":"traefik","error":"close tcp [::]:8080: use of closed network connection","time":"2024-07-17T13:51:29Z"}
+{"level":"error","entryPointName":"web","error":"close tcp [::]:80: use of closed network connection","time":"2024-07-17T13:51:29Z"}
+{"level":"info","time":"2024-07-17T13:51:29Z","message":"I have to go..."}
+{"level":"info","time":"2024-07-17T13:51:29Z","message":"I have to go..."}
+{"level":"info","time":"2024-07-17T13:51:29Z","message":"Stopping server gracefully"}
+{"level":"info","time":"2024-07-17T13:51:29Z","message":"Stopping server gracefully"}
+{"level":"error","entryPointName":"web","error":"accept tcp [::]:80: use of closed network connection","time":"2024-07-17T13:51:29Z"}
+{"level":"error","entryPointName":"web","error":"close tcp [::]:80: use of closed network connection","time":"2024-07-17T13:51:29Z"}
+{"level":"error","entryPointName":"traefik","error":"accept tcp [::]:8080: use of closed network connection","time":"2024-07-17T13:51:29Z"}
+{"level":"error","entryPointName":"traefik","error":"accept tcp [::]:8080: use of closed network connection","time":"2024-07-17T13:51:29Z"}
+{"level":"error","entryPointName":"web","error":"accept tcp [::]:80: use of closed network connection","time":"2024-07-17T13:51:29Z"}
+{"level":"error","entryPointName":"traefik","error":"close tcp [::]:8080: use of closed network connection","time":"2024-07-17T13:51:29Z"}
+{"level":"error","entryPointName":"websecure","error":"accept tcp [::]:443: use of closed network connection","time":"2024-07-17T13:51:29Z"}
+{"level":"error","entryPointName":"websecure","error":"accept tcp [::]:443: use of closed network connection","time":"2024-07-17T13:51:29Z"}
+{"level":"error","entryPointName":"websecure","error":"close tcp [::]:443: use of closed network connection","time":"2024-07-17T13:51:29Z"}
+{"level":"info","time":"2024-07-17T13:51:29Z","message":"Server stopped"}
+{"level":"error","entryPointName":"websecure","error":"close tcp [::]:443: use of closed network connection","time":"2024-07-17T13:51:29Z"}
+{"level":"info","time":"2024-07-17T13:51:29Z","message":"Shutting down"}
+{"level":"error","entryPointName":"web","error":"close tcp [::]:80: use of closed network connection","time":"2024-07-17T13:51:29Z"}
+{"level":"error","entryPointName":"traefik","error":"close tcp [::]:8080: use of closed network connection","time":"2024-07-17T13:51:29Z"}
+{"level":"info","time":"2024-07-17T13:51:29Z","message":"Server stopped"}
+{"level":"info","time":"2024-07-17T13:51:29Z","message":"Shutting down"}
+{"level":"info","time":"2024-07-17T13:51:29Z","message":"Server stopped"}
+{"level":"info","time":"2024-07-17T13:51:29Z","message":"Shutting down"}
+{"level":"info","version":"3.0.4","time":"2024-07-17T13:54:32Z","message":"Traefik version 3.0.4 built on 2024-07-02T13:46:37Z"}
+{"level":"info","time":"2024-07-17T13:54:32Z","message":"\nStats collection is disabled.\nHelp us improve Traefik by turning this feature on :)\nMore details on: https://doc.traefik.io/traefik/contributing/data-collection/\n"}
+{"level":"info","time":"2024-07-17T13:54:33Z","message":"Starting provider aggregator aggregator.ProviderAggregator"}
+{"level":"info","time":"2024-07-17T13:54:33Z","message":"Starting provider *file.Provider"}
+{"level":"info","time":"2024-07-17T13:54:33Z","message":"Starting provider *traefik.Provider"}
+{"level":"info","time":"2024-07-17T13:54:33Z","message":"Starting provider *acme.ChallengeTLSALPN"}
+{"level":"info","time":"2024-07-17T13:54:33Z","message":"Starting provider *docker.SwarmProvider"}
+{"level":"info","version":"3.0.4","time":"2024-07-17T13:54:33Z","message":"Traefik version 3.0.4 built on 2024-07-02T13:46:37Z"}
+{"level":"info","time":"2024-07-17T13:54:33Z","message":"\nStats collection is disabled.\nHelp us improve Traefik by turning this feature on :)\nMore details on: https://doc.traefik.io/traefik/contributing/data-collection/\n"}
+{"level":"info","time":"2024-07-17T13:54:33Z","message":"Starting provider aggregator aggregator.ProviderAggregator"}
+{"level":"info","time":"2024-07-17T13:54:33Z","message":"Starting provider *file.Provider"}
+{"level":"info","time":"2024-07-17T13:54:33Z","message":"Starting provider *traefik.Provider"}
+{"level":"info","time":"2024-07-17T13:54:33Z","message":"Starting provider *acme.ChallengeTLSALPN"}
+{"level":"info","time":"2024-07-17T13:54:33Z","message":"Starting provider *docker.SwarmProvider"}
+{"level":"info","version":"3.0.4","time":"2024-07-17T13:54:33Z","message":"Traefik version 3.0.4 built on 2024-07-02T13:46:37Z"}
+{"level":"info","time":"2024-07-17T13:54:33Z","message":"\nStats collection is disabled.\nHelp us improve Traefik by turning this feature on :)\nMore details on: https://doc.traefik.io/traefik/contributing/data-collection/\n"}
+{"level":"info","time":"2024-07-17T13:54:33Z","message":"Starting provider aggregator aggregator.ProviderAggregator"}
+{"level":"info","time":"2024-07-17T13:54:33Z","message":"Starting provider *file.Provider"}
+{"level":"info","time":"2024-07-17T13:54:33Z","message":"Starting provider *traefik.Provider"}
+{"level":"info","time":"2024-07-17T13:54:33Z","message":"Starting provider *docker.SwarmProvider"}
+{"level":"info","time":"2024-07-17T13:54:33Z","message":"Starting provider *acme.ChallengeTLSALPN"}
+{"level":"error","entryPointName":"web","routerName":"frontend@swarm","error":"the service \"error@swarm\" does not exist","time":"2024-07-17T13:54:33Z"}
+{"level":"error","entryPointName":"web","routerName":"frontend@swarm","error":"the service \"error@swarm\" does not exist","time":"2024-07-17T13:54:33Z"}
+{"level":"error","entryPointName":"web","routerName":"frontend@swarm","error":"the service \"error@swarm\" does not exist","time":"2024-07-17T13:54:34Z"}
+{"level":"error","error":"read tcp 10.0.0.21:80->10.0.0.2:59113: i/o timeout","time":"2024-07-17T13:55:44Z","message":"Error while Peeking first byte"}
+{"level":"error","error":"read tcp 10.0.0.19:80->10.0.0.2:59256: i/o timeout","time":"2024-07-17T13:57:52Z","message":"Error while Peeking first byte"}
+{"level":"info","time":"2024-07-17T14:02:29Z","message":"I have to go..."}
+{"level":"info","time":"2024-07-17T14:02:29Z","message":"Stopping server gracefully"}
+{"level":"error","entryPointName":"web","error":"accept tcp [::]:80: use of closed network connection","time":"2024-07-17T14:02:29Z"}
+{"level":"error","entryPointName":"web","error":"close tcp [::]:80: use of closed network connection","time":"2024-07-17T14:02:29Z"}
+{"level":"error","entryPointName":"traefik","error":"accept tcp [::]:8080: use of closed network connection","time":"2024-07-17T14:02:29Z"}
+{"level":"error","entryPointName":"websecure","error":"accept tcp [::]:443: use of closed network connection","time":"2024-07-17T14:02:29Z"}
+{"level":"error","entryPointName":"websecure","error":"close tcp [::]:443: use of closed network connection","time":"2024-07-17T14:02:29Z"}
+{"level":"error","entryPointName":"traefik","error":"close tcp [::]:8080: use of closed network connection","time":"2024-07-17T14:02:29Z"}
+{"level":"info","time":"2024-07-17T14:02:29Z","message":"I have to go..."}
+{"level":"info","time":"2024-07-17T14:02:29Z","message":"Stopping server gracefully"}
+{"level":"error","entryPointName":"web","error":"accept tcp [::]:80: use of closed network connection","time":"2024-07-17T14:02:29Z"}
+{"level":"error","entryPointName":"web","error":"close tcp [::]:80: use of closed network connection","time":"2024-07-17T14:02:29Z"}
+{"level":"error","entryPointName":"traefik","error":"accept tcp [::]:8080: use of closed network connection","time":"2024-07-17T14:02:29Z"}
+{"level":"error","entryPointName":"websecure","error":"accept tcp [::]:443: use of closed network connection","time":"2024-07-17T14:02:29Z"}
+{"level":"info","time":"2024-07-17T14:02:29Z","message":"I have to go..."}
+{"level":"error","entryPointName":"websecure","error":"close tcp [::]:443: use of closed network connection","time":"2024-07-17T14:02:29Z"}
+{"level":"error","entryPointName":"traefik","error":"close tcp [::]:8080: use of closed network connection","time":"2024-07-17T14:02:29Z"}
+{"level":"info","time":"2024-07-17T14:02:29Z","message":"Stopping server gracefully"}
+{"level":"info","time":"2024-07-17T14:02:29Z","message":"Server stopped"}
+{"level":"info","time":"2024-07-17T14:02:29Z","message":"Shutting down"}
+{"level":"error","entryPointName":"web","error":"accept tcp [::]:80: use of closed network connection","time":"2024-07-17T14:02:29Z"}
+{"level":"error","entryPointName":"web","error":"close tcp [::]:80: use of closed network connection","time":"2024-07-17T14:02:29Z"}
+{"level":"error","entryPointName":"websecure","error":"accept tcp [::]:443: use of closed network connection","time":"2024-07-17T14:02:29Z"}
+{"level":"error","entryPointName":"traefik","error":"accept tcp [::]:8080: use of closed network connection","time":"2024-07-17T14:02:29Z"}
+{"level":"error","entryPointName":"traefik","error":"close tcp [::]:8080: use of closed network connection","time":"2024-07-17T14:02:29Z"}
+{"level":"error","entryPointName":"websecure","error":"close tcp [::]:443: use of closed network connection","time":"2024-07-17T14:02:29Z"}
+{"level":"info","time":"2024-07-17T14:02:29Z","message":"Server stopped"}
+{"level":"info","time":"2024-07-17T14:02:29Z","message":"Shutting down"}
+{"level":"info","time":"2024-07-17T14:02:30Z","message":"Server stopped"}
+{"level":"info","time":"2024-07-17T14:02:30Z","message":"Shutting down"}
+{"level":"info","version":"3.0.4","time":"2024-07-17T14:03:35Z","message":"Traefik version 3.0.4 built on 2024-07-02T13:46:37Z"}
+{"level":"info","time":"2024-07-17T14:03:35Z","message":"\nStats collection is disabled.\nHelp us improve Traefik by turning this feature on :)\nMore details on: https://doc.traefik.io/traefik/contributing/data-collection/\n"}
+{"level":"info","time":"2024-07-17T14:03:35Z","message":"Starting provider aggregator aggregator.ProviderAggregator"}
+{"level":"info","time":"2024-07-17T14:03:35Z","message":"Starting provider *file.Provider"}
+{"level":"info","time":"2024-07-17T14:03:35Z","message":"Starting provider *traefik.Provider"}
+{"level":"info","time":"2024-07-17T14:03:35Z","message":"Starting provider *docker.SwarmProvider"}
+{"level":"info","time":"2024-07-17T14:03:35Z","message":"Starting provider *acme.ChallengeTLSALPN"}
+{"level":"info","version":"3.0.4","time":"2024-07-17T14:03:35Z","message":"Traefik version 3.0.4 built on 2024-07-02T13:46:37Z"}
+{"level":"info","time":"2024-07-17T14:03:35Z","message":"\nStats collection is disabled.\nHelp us improve Traefik by turning this feature on :)\nMore details on: https://doc.traefik.io/traefik/contributing/data-collection/\n"}
+{"level":"info","time":"2024-07-17T14:03:35Z","message":"Starting provider aggregator aggregator.ProviderAggregator"}
+{"level":"info","time":"2024-07-17T14:03:35Z","message":"Starting provider *file.Provider"}
+{"level":"info","time":"2024-07-17T14:03:35Z","message":"Starting provider *traefik.Provider"}
+{"level":"info","time":"2024-07-17T14:03:35Z","message":"Starting provider *docker.SwarmProvider"}
+{"level":"info","time":"2024-07-17T14:03:35Z","message":"Starting provider *acme.ChallengeTLSALPN"}
+{"level":"info","version":"3.0.4","time":"2024-07-17T14:03:35Z","message":"Traefik version 3.0.4 built on 2024-07-02T13:46:37Z"}
+{"level":"info","time":"2024-07-17T14:03:35Z","message":"\nStats collection is disabled.\nHelp us improve Traefik by turning this feature on :)\nMore details on: https://doc.traefik.io/traefik/contributing/data-collection/\n"}
+{"level":"info","time":"2024-07-17T14:03:35Z","message":"Starting provider aggregator aggregator.ProviderAggregator"}
+{"level":"info","time":"2024-07-17T14:03:35Z","message":"Starting provider *file.Provider"}
+{"level":"info","time":"2024-07-17T14:03:35Z","message":"Starting provider *traefik.Provider"}
+{"level":"info","time":"2024-07-17T14:03:35Z","message":"Starting provider *docker.SwarmProvider"}
+{"level":"info","time":"2024-07-17T14:03:35Z","message":"Starting provider *acme.ChallengeTLSALPN"}
+{"level":"error","error":"read tcp 10.0.0.25:80->10.0.0.2:59752: i/o timeout","time":"2024-07-17T14:04:49Z","message":"Error while Peeking first byte"}
+{"level":"info","time":"2024-07-17T14:05:10Z","message":"I have to go..."}
+{"level":"info","time":"2024-07-17T14:05:10Z","message":"Stopping server gracefully"}
+{"level":"error","entryPointName":"traefik","error":"accept tcp [::]:8080: use of closed network connection","time":"2024-07-17T14:05:10Z"}
+{"level":"error","entryPointName":"web","error":"accept tcp [::]:80: use of closed network connection","time":"2024-07-17T14:05:10Z"}
+{"level":"error","entryPointName":"websecure","error":"accept tcp [::]:443: use of closed network connection","time":"2024-07-17T14:05:10Z"}
+{"level":"error","entryPointName":"web","error":"close tcp [::]:80: use of closed network connection","time":"2024-07-17T14:05:10Z"}
+{"level":"error","entryPointName":"traefik","error":"close tcp [::]:8080: use of closed network connection","time":"2024-07-17T14:05:10Z"}
+{"level":"error","entryPointName":"websecure","error":"close tcp [::]:443: use of closed network connection","time":"2024-07-17T14:05:10Z"}
+{"level":"info","time":"2024-07-17T14:05:10Z","message":"I have to go..."}
+{"level":"info","time":"2024-07-17T14:05:10Z","message":"Stopping server gracefully"}
+{"level":"info","time":"2024-07-17T14:05:10Z","message":"I have to go..."}
+{"level":"error","entryPointName":"traefik","error":"accept tcp [::]:8080: use of closed network connection","time":"2024-07-17T14:05:10Z"}
+{"level":"error","entryPointName":"web","error":"accept tcp [::]:80: use of closed network connection","time":"2024-07-17T14:05:10Z"}
+{"level":"info","time":"2024-07-17T14:05:10Z","message":"Stopping server gracefully"}
+{"level":"error","entryPointName":"websecure","error":"accept tcp [::]:443: use of closed network connection","time":"2024-07-17T14:05:10Z"}
+{"level":"error","entryPointName":"traefik","error":"accept tcp [::]:8080: use of closed network connection","time":"2024-07-17T14:05:10Z"}
+{"level":"error","entryPointName":"websecure","error":"close tcp [::]:443: use of closed network connection","time":"2024-07-17T14:05:10Z"}
+{"level":"error","entryPointName":"traefik","error":"close tcp [::]:8080: use of closed network connection","time":"2024-07-17T14:05:10Z"}
+{"level":"error","entryPointName":"traefik","error":"close tcp [::]:8080: use of closed network connection","time":"2024-07-17T14:05:10Z"}
+{"level":"error","entryPointName":"web","error":"close tcp [::]:80: use of closed network connection","time":"2024-07-17T14:05:10Z"}
+{"level":"error","entryPointName":"web","error":"accept tcp [::]:80: use of closed network connection","time":"2024-07-17T14:05:10Z"}
+{"level":"error","entryPointName":"websecure","error":"accept tcp [::]:443: use of closed network connection","time":"2024-07-17T14:05:10Z"}
+{"level":"error","entryPointName":"websecure","error":"close tcp [::]:443: use of closed network connection","time":"2024-07-17T14:05:10Z"}
+{"level":"error","entryPointName":"web","error":"close tcp [::]:80: use of closed network connection","time":"2024-07-17T14:05:10Z"}
+{"level":"info","time":"2024-07-17T14:05:10Z","message":"Server stopped"}
+{"level":"info","time":"2024-07-17T14:05:10Z","message":"Shutting down"}
+{"level":"info","time":"2024-07-17T14:05:10Z","message":"Server stopped"}
+{"level":"info","time":"2024-07-17T14:05:10Z","message":"Shutting down"}
+{"level":"info","time":"2024-07-17T14:05:10Z","message":"Server stopped"}
+{"level":"info","time":"2024-07-17T14:05:10Z","message":"Shutting down"}
+{"level":"info","version":"3.0.4","time":"2024-07-17T14:06:03Z","message":"Traefik version 3.0.4 built on 2024-07-02T13:46:37Z"}
+{"level":"info","time":"2024-07-17T14:06:03Z","message":"\nStats collection is disabled.\nHelp us improve Traefik by turning this feature on :)\nMore details on: https://doc.traefik.io/traefik/contributing/data-collection/\n"}
+{"level":"info","time":"2024-07-17T14:06:03Z","message":"Starting provider aggregator aggregator.ProviderAggregator"}
+{"level":"info","time":"2024-07-17T14:06:03Z","message":"Starting provider *file.Provider"}
+{"level":"info","time":"2024-07-17T14:06:03Z","message":"Starting provider *traefik.Provider"}
+{"level":"info","time":"2024-07-17T14:06:03Z","message":"Starting provider *acme.ChallengeTLSALPN"}
+{"level":"info","time":"2024-07-17T14:06:03Z","message":"Starting provider *docker.SwarmProvider"}
+{"level":"info","version":"3.0.4","time":"2024-07-17T14:06:03Z","message":"Traefik version 3.0.4 built on 2024-07-02T13:46:37Z"}
+{"level":"info","time":"2024-07-17T14:06:03Z","message":"\nStats collection is disabled.\nHelp us improve Traefik by turning this feature on :)\nMore details on: https://doc.traefik.io/traefik/contributing/data-collection/\n"}
+{"level":"info","time":"2024-07-17T14:06:03Z","message":"Starting provider aggregator aggregator.ProviderAggregator"}
+{"level":"info","time":"2024-07-17T14:06:03Z","message":"Starting provider *file.Provider"}
+{"level":"info","time":"2024-07-17T14:06:03Z","message":"Starting provider *traefik.Provider"}
+{"level":"info","time":"2024-07-17T14:06:03Z","message":"Starting provider *acme.ChallengeTLSALPN"}
+{"level":"info","time":"2024-07-17T14:06:03Z","message":"Starting provider *docker.SwarmProvider"}
+{"level":"info","version":"3.0.4","time":"2024-07-17T14:06:04Z","message":"Traefik version 3.0.4 built on 2024-07-02T13:46:37Z"}
+{"level":"info","time":"2024-07-17T14:06:04Z","message":"\nStats collection is disabled.\nHelp us improve Traefik by turning this feature on :)\nMore details on: https://doc.traefik.io/traefik/contributing/data-collection/\n"}
+{"level":"info","time":"2024-07-17T14:06:04Z","message":"Starting provider aggregator aggregator.ProviderAggregator"}
+{"level":"info","time":"2024-07-17T14:06:04Z","message":"Starting provider *file.Provider"}
+{"level":"info","time":"2024-07-17T14:06:04Z","message":"Starting provider *docker.SwarmProvider"}
+{"level":"info","time":"2024-07-17T14:06:04Z","message":"Starting provider *traefik.Provider"}
+{"level":"info","time":"2024-07-17T14:06:04Z","message":"Starting provider *acme.ChallengeTLSALPN"}
+{"level":"error","entryPointName":"web","routerName":"dashboard@swarm","error":"the service \"error@swarm\" does not exist","time":"2024-07-17T14:06:18Z"}
+{"level":"error","entryPointName":"websecure","routerName":"dashboard@swarm","error":"the service \"error@swarm\" does not exist","time":"2024-07-17T14:06:18Z"}
+{"level":"error","entryPointName":"websecure","routerName":"dashboard@swarm","error":"the service \"error@swarm\" does not exist","time":"2024-07-17T14:06:19Z"}
+{"level":"error","entryPointName":"web","routerName":"dashboard@swarm","error":"the service \"error@swarm\" does not exist","time":"2024-07-17T14:06:19Z"}
+{"level":"error","entryPointName":"web","routerName":"dashboard@swarm","error":"the service \"error@swarm\" does not exist","time":"2024-07-17T14:06:19Z"}
+{"level":"error","entryPointName":"websecure","routerName":"dashboard@swarm","error":"the service \"error@swarm\" does not exist","time":"2024-07-17T14:06:19Z"}
+{"level":"error","entryPointName":"websecure","routerName":"dashboard@swarm","error":"the service \"error@swarm\" does not exist","time":"2024-07-17T14:06:34Z"}
+{"level":"error","entryPointName":"web","routerName":"dashboard@swarm","error":"the service \"error@swarm\" does not exist","time":"2024-07-17T14:06:34Z"}
+{"level":"error","entryPointName":"web","routerName":"dashboard@swarm","error":"the service \"error@swarm\" does not exist","time":"2024-07-17T14:06:34Z"}
+{"level":"error","entryPointName":"websecure","routerName":"dashboard@swarm","error":"the service \"error@swarm\" does not exist","time":"2024-07-17T14:06:34Z"}
+{"level":"error","entryPointName":"web","routerName":"dashboard@swarm","error":"the service \"error@swarm\" does not exist","time":"2024-07-17T14:06:35Z"}
+{"level":"error","entryPointName":"websecure","routerName":"dashboard@swarm","error":"the service \"error@swarm\" does not exist","time":"2024-07-17T14:06:35Z"}
+{"level":"error","error":"read tcp 10.0.0.27:80->10.0.0.2:59904: i/o timeout","time":"2024-07-17T14:07:13Z","message":"Error while Peeking first byte"}
+{"level":"warn","time":"2024-07-17T14:16:06Z","message":"A new release has been found: 3.1.0. Please consider updating."}
+{"level":"warn","time":"2024-07-17T14:16:06Z","message":"A new release has been found: 3.1.0. Please consider updating."}
+{"level":"warn","time":"2024-07-17T14:16:07Z","message":"A new release has been found: 3.1.0. Please consider updating."}
+{"level":"info","time":"2024-07-17T14:26:50Z","message":"I have to go..."}
+{"level":"info","time":"2024-07-17T14:26:50Z","message":"Stopping server gracefully"}
+{"level":"error","entryPointName":"web","error":"accept tcp [::]:80: use of closed network connection","time":"2024-07-17T14:26:50Z"}
+{"level":"error","entryPointName":"web","error":"close tcp [::]:80: use of closed network connection","time":"2024-07-17T14:26:50Z"}
+{"level":"error","entryPointName":"traefik","error":"accept tcp [::]:8080: use of closed network connection","time":"2024-07-17T14:26:50Z"}
+{"level":"error","entryPointName":"websecure","error":"accept tcp [::]:443: use of closed network connection","time":"2024-07-17T14:26:50Z"}
+{"level":"error","entryPointName":"websecure","error":"close tcp [::]:443: use of closed network connection","time":"2024-07-17T14:26:50Z"}
+{"level":"error","entryPointName":"traefik","error":"close tcp [::]:8080: use of closed network connection","time":"2024-07-17T14:26:50Z"}
+{"level":"info","time":"2024-07-17T14:26:50Z","message":"Server stopped"}
+{"level":"info","time":"2024-07-17T14:26:50Z","message":"Shutting down"}
+{"level":"info","time":"2024-07-17T14:26:50Z","message":"I have to go..."}
+{"level":"info","time":"2024-07-17T14:26:50Z","message":"Stopping server gracefully"}
+{"level":"error","entryPointName":"websecure","error":"accept tcp [::]:443: use of closed network connection","time":"2024-07-17T14:26:50Z"}
+{"level":"error","entryPointName":"websecure","error":"close tcp [::]:443: use of closed network connection","time":"2024-07-17T14:26:50Z"}
+{"level":"error","entryPointName":"traefik","error":"accept tcp [::]:8080: use of closed network connection","time":"2024-07-17T14:26:50Z"}
+{"level":"error","entryPointName":"web","error":"accept tcp [::]:80: use of closed network connection","time":"2024-07-17T14:26:50Z"}
+{"level":"error","entryPointName":"web","error":"close tcp [::]:80: use of closed network connection","time":"2024-07-17T14:26:51Z"}
+{"level":"error","entryPointName":"traefik","error":"close tcp [::]:8080: use of closed network connection","time":"2024-07-17T14:26:51Z"}
+{"level":"info","time":"2024-07-17T14:26:51Z","message":"Server stopped"}
+{"level":"info","time":"2024-07-17T14:26:51Z","message":"Shutting down"}
+{"level":"info","time":"2024-07-17T14:26:51Z","message":"I have to go..."}
+{"level":"info","time":"2024-07-17T14:26:51Z","message":"Stopping server gracefully"}
+{"level":"error","entryPointName":"web","error":"accept tcp [::]:80: use of closed network connection","time":"2024-07-17T14:26:51Z"}
+{"level":"error","entryPointName":"websecure","error":"accept tcp [::]:443: use of closed network connection","time":"2024-07-17T14:26:51Z"}
+{"level":"error","entryPointName":"traefik","error":"accept tcp [::]:8080: use of closed network connection","time":"2024-07-17T14:26:51Z"}
+{"level":"error","entryPointName":"web","error":"close tcp [::]:80: use of closed network connection","time":"2024-07-17T14:26:51Z"}
+{"level":"error","entryPointName":"websecure","error":"close tcp [::]:443: use of closed network connection","time":"2024-07-17T14:26:51Z"}
+{"level":"error","entryPointName":"traefik","error":"close tcp [::]:8080: use of closed network connection","time":"2024-07-17T14:26:51Z"}
+{"level":"info","time":"2024-07-17T14:26:51Z","message":"Server stopped"}
+{"level":"info","time":"2024-07-17T14:26:51Z","message":"Shutting down"}

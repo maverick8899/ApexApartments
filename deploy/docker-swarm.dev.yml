@@ -1,6 +1,6 @@
 services:
     db:
-        image: mysql:8.0.33-oracle
+        image: maverick0809/mysql:apartment # mysql:8.0.33-oracle
         ports:
             - target: 3306
               published: 3307
@@ -59,6 +59,7 @@ services:
             update_config:
                 parallelism: 2
                 delay: 10s
+                order: start-first
             rollback_config: #? xác định cách xử lý các bản cập nhật dịch vụ không thành công và quay trở lại phiên bản trước đó.
                 parallelism: 1 #?  Xác định số lượng tác vụ (tasks) sẽ được quay lại (rollback) song song cùng một lúc.
                 failure_action: pause #? nếu có bất kỳ tác vụ nào không thể quay lại thành công, hệ thống sẽ tạm dừng quá trình rollback.
@@ -153,8 +154,8 @@ services:
                 # - 'traefik.http.middlewares.test-redirectscheme.redirectscheme.permanent=true'
         depends_on:
             - backend
-        volumes:
-            - ./nginx.conf:/etc/nginx/nginx.conf
+            # volumes:
+            #     - ./nginx.conf:/etc/nginx/nginx.conf
     error:
         image: guillaumebriday/traefik-custom-error-pages
         networks:
@@ -385,7 +386,7 @@ services:
     #                 memory: 64M
 
     grafana:
-        image: grafana/grafana:7.3.1 #11.0.0
+        image: maverick0809/grafana:apartment # maverick0809/mysql:apartment #grafana/grafana:7.3.1 #11.0.0
         networks:
             - webapp
         ports:
@@ -396,7 +397,7 @@ services:
             - prometheus
         volumes:
             - grafana_data:/var/lib/grafana
-            - ./grafana/provisioning/:/etc/grafana/provisioning/
+            # - ./grafana/provisioning/:/etc/grafana/provisioning/
         env_file:
             - ./grafana/config.monitoring
         user: '104'

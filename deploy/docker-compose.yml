@@ -25,7 +25,6 @@ services:
         restart: unless-stopped
         networks:
             - webapp
-            # - webapp
         # volumes:
         # - ../backend/target/:/opt/tomcat/webapps
         # - ./webapps:/opt/tomcat/webapps
