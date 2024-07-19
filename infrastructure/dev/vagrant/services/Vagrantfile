@@ -1,0 +1,60 @@
+Vagrant.configure("2") do |config|
+
+  ssh_config = <<-SHELL
+  sed -i 's/ChallengeResponseAuthentication no/ChallengeResponseAuthentication yes/g' /etc/ssh/sshd_config
+  sudo systemctl restart sshd
+  SHELL
+
+  config.vm.define "NFS" do |nfs|
+    nfs.vm.hostname = "nfs"
+    nfs.vm.box = "ubuntu/focal64"
+    nfs.vm.network "private_network", ip: "192.168.140.30"
+    nfs.vm.network "public_network"
+    nfs.vm.provider "virtualbox" do |vb|
+      vb.name = "STORAGE"
+      vb.memory = "512"
+      vb.cpus = 1
+    end
+    nfs.vm.provision :shell, inline: ssh_config
+  end
+
+  config.vm.define "GITLAB" do |gitlab|
+    gitlab.vm.hostname = "gitlab"
+    gitlab.vm.box = "ubuntu/focal64"
+    gitlab.vm.network "private_network", ip: "192.168.140.31"
+    gitlab.vm.network "public_network"
+    gitlab.vm.provider "virtualbox" do |vb|
+      vb.name = "GITLAB"
+      vb.memory = "5120"
+      vb.cpus = 2
+    end
+    gitlab.vm.provision :shell, inline: ssh_config
+  end
+
+  config.vm.define "JENKINS" do |jenkins|
+    jenkins.vm.hostname = "jenkins"
+    jenkins.vm.box = "ubuntu/focal64"
+    jenkins.vm.network "private_network", ip: "192.168.140.32"
+    jenkins.vm.network "public_network"
+    jenkins.vm.provider "virtualbox" do |vb|
+      vb.name = "JENKINS"
+      vb.memory = "2048"
+      vb.cpus = 2
+    end
+    jenkins.vm.provision :shell, inline: ssh_config
+  end
+
+  config.vm.define "MONIT" do |monit|
+    monit.vm.hostname = "monit"
+    monit.vm.box = "ubuntu/focal64"
+    monit.vm.network "private_network", ip: "192.168.140.33"
+    monit.vm.network "public_network"
+    monit.vm.provider "virtualbox" do |vb|
+      vb.name = "MONIT"
+      vb.memory = "2048"
+      vb.cpus = 1
+    end
+    monit.vm.provision :shell, inline: ssh_config
+  end
+
+end
