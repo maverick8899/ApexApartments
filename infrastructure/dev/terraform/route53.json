@@ -1,0 +1,18 @@
+{
+    "Comment": "Update record to reflect new IP address for a system",
+    "Changes": [
+        {
+            "Action": "UPSERT",
+            "ResourceRecordSet": {
+                "Name": "devsops.online",
+                "Type": "A",
+                "TTL": 300,
+                "ResourceRecords": [
+                    {
+                        "Value": "47.129.29.208"
+                    }
+                ]
+            }
+        }
+    ]
+}
