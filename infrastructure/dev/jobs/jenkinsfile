@@ -1,0 +1,72 @@
+pipeline {
+    agent any
+    environment { 
+        REMOTE_USER = "ubuntu"
+        ANSIBLE_PATH = "/data/ansible"
+    }
+
+    stages {
+        stage("Setup Jenkins") {
+            steps {
+                ansiblePlaybook disableHostKeyChecking: true, installation: 'ansible', inventory: "${ANSIBLE_PATH}/inventory.yml", playbook: "${ANSIBLE_PATH}/jenkins.yml", vaultTmpPath: ''
+            }
+        }
+        
+        stage("Setup Swarm") {
+            steps {
+                ansiblePlaybook disableHostKeyChecking: true, installation: 'ansible', inventory: "${ANSIBLE_PATH}", playbook: "${ANSIBLE_PATH}/swarm_init.yml", vaultTmpPath: ''
+            }
+        }
+
+        stage("Setup NFS") {
+            steps {
+                ansiblePlaybook disableHostKeyChecking: true, installation: 'ansible', inventory: "${ANSIBLE_PATH}", playbook: "${ANSIBLE_PATH}/nfs_server.yml", vaultTmpPath: ''
+                ansiblePlaybook disableHostKeyChecking: true, installation: 'ansible', inventory: "${ANSIBLE_PATH}", playbook: "${ANSIBLE_PATH}/nfs_client.yml", vaultTmpPath: ''
+            }
+        }
+
+        stage("Setup Monitoring") {
+            steps {
+                ansiblePlaybook disableHostKeyChecking: true, installation: 'ansible', inventory: "${ANSIBLE_PATH}", playbook: "${ANSIBLE_PATH}/monitoring.yml", vaultTmpPath: ''
+            }
+        }
+        
+        stage("Setup GitLab") {
+            steps {
+                ansiblePlaybook disableHostKeyChecking: true, installation: 'ansible', inventory: "${ANSIBLE_PATH}", playbook: "${ANSIBLE_PATH}/gitlab.yml", vaultTmpPath: '' 
+
+            }
+        }  
+
+        stage("Setup Registry") {
+            steps {
+                sh '''
+                    cd /data/terraform
+                    terraform init
+                    terraform fmt && terraform validate
+                    terraform apply -auto-approve 
+                ''' 
+            }
+        }
+        stage("install harbor on Registry Server") {
+            steps { 
+                sshagent(['ec2']) {
+                    sh '''
+                    cd /data/terraform
+                    REMOTE_IP=$(cat pub_ip.txt)
+                    sudo sed -i 's|"Value": "[^"]*"|"Value": "'"${REMOTE_IP}"'"|' route53.json
+                    aws route53 change-resource-record-sets --hosted-zone-id Z00293713CTSFD58RHY3S \\
+                        --change-batch file://./route53.json --profile maverick
+
+                    sleep 30
+                    
+                    ssh -o StrictHostKeyChecking=no ${REMOTE_USER}@${REMOTE_IP} "mkdir -p ~/data/helper && chmod 0755 ~/data/helper"
+                    scp -o StrictHostKeyChecking=no /data/helper/harbor_setup.sh ${REMOTE_USER}@${REMOTE_IP}:~/data/harbor_setup.sh
+                    ssh -o StrictHostKeyChecking=no ${REMOTE_USER}@${REMOTE_IP} "sudo chmod +x ~/data/harbor_setup.sh ; sudo ~/data/harbor_setup.sh"
+                    '''  
+            }
+        }
+    }
+}
+//*END PIPILINE */
+}
