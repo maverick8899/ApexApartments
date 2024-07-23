@@ -1,5 +1,6 @@
 
 
+
   
 <h2 align="center">Reach me on <img src="https://media.giphy.com/media/mGcNjsfWAjY5AEZNw6/giphy.gif" width="50"></h2>
 
@@ -20,6 +21,8 @@
 ### VM Information
 ![enter image description here](https://res.cloudinary.com/dgiozc0lj/image/upload/v1721407530/neyv4p20bxbricrfu4y9.jpg)
 
+## Pipeline Setup for VMs through Jenkins
+![enter image description here](https://res.cloudinary.com/dgiozc0lj/image/upload/v1721748926/ikuz5xdtmexq4cffo2gc.jpg)
 ## Feature
 
 *Coming Soon*
