@@ -3,38 +3,38 @@ pipeline {
     environment { 
         REMOTE_USER = "ubuntu"
         ANSIBLE_PATH = "/data/ansible"
+        INVENTORY_PATH = "/data/ansible/inventory.yml"
     }
 
     stages {
         stage("Setup Jenkins") {
             steps {
-                ansiblePlaybook disableHostKeyChecking: true, installation: 'ansible', inventory: "${ANSIBLE_PATH}/inventory.yml", playbook: "${ANSIBLE_PATH}/jenkins.yml", vaultTmpPath: ''
+                ansiblePlaybook disableHostKeyChecking: true, installation: 'ansible', inventory: "${INVENTORY_PATH}", playbook: "${ANSIBLE_PATH}/jenkins.yml", vaultTmpPath: '' 
             }
         }
         
         stage("Setup Swarm") {
             steps {
-                ansiblePlaybook disableHostKeyChecking: true, installation: 'ansible', inventory: "${ANSIBLE_PATH}", playbook: "${ANSIBLE_PATH}/swarm_init.yml", vaultTmpPath: ''
+                ansiblePlaybook disableHostKeyChecking: true, installation: 'ansible', inventory: "${INVENTORY_PATH}", playbook: "${ANSIBLE_PATH}/swarm_init.yml", vaultTmpPath: ''
             }
         }
 
         stage("Setup NFS") {
             steps {
-                ansiblePlaybook disableHostKeyChecking: true, installation: 'ansible', inventory: "${ANSIBLE_PATH}", playbook: "${ANSIBLE_PATH}/nfs_server.yml", vaultTmpPath: ''
-                ansiblePlaybook disableHostKeyChecking: true, installation: 'ansible', inventory: "${ANSIBLE_PATH}", playbook: "${ANSIBLE_PATH}/nfs_client.yml", vaultTmpPath: ''
+                ansiblePlaybook disableHostKeyChecking: true, installation: 'ansible', inventory: "${INVENTORY_PATH}", playbook: "${ANSIBLE_PATH}/nfs_server.yml", vaultTmpPath: ''
+                ansiblePlaybook disableHostKeyChecking: true, installation: 'ansible', inventory: "${INVENTORY_PATH}", playbook: "${ANSIBLE_PATH}/nfs_client.yml", vaultTmpPath: ''
             }
         }
 
         stage("Setup Monitoring") {
             steps {
-                ansiblePlaybook disableHostKeyChecking: true, installation: 'ansible', inventory: "${ANSIBLE_PATH}", playbook: "${ANSIBLE_PATH}/monitoring.yml", vaultTmpPath: ''
+                ansiblePlaybook disableHostKeyChecking: true, installation: 'ansible', inventory: "${INVENTORY_PATH}", playbook: "${ANSIBLE_PATH}/monitoring.yml", vaultTmpPath: ''
             }
         }
         
         stage("Setup GitLab") {
             steps {
-                ansiblePlaybook disableHostKeyChecking: true, installation: 'ansible', inventory: "${ANSIBLE_PATH}", playbook: "${ANSIBLE_PATH}/gitlab.yml", vaultTmpPath: '' 
-
+                ansiblePlaybook disableHostKeyChecking: true, installation: 'ansible', inventory: "${INVENTORY_PATH}", playbook: "${ANSIBLE_PATH}/gitlab.yml", vaultTmpPath: '' 
             }
         }  
 
@@ -54,7 +54,7 @@ pipeline {
                     sh '''
                     cd /data/terraform
                     REMOTE_IP=$(cat pub_ip.txt)
-                    sudo sed -i 's|"Value": "[^"]*"|"Value": "'"${REMOTE_IP}"'"|' route53.json
+                    sed -i 's|"Value": "[^"]*"|"Value": "'"${REMOTE_IP}"'"|' route53.json
                     aws route53 change-resource-record-sets --hosted-zone-id Z00293713CTSFD58RHY3S \\
                         --change-batch file://./route53.json --profile maverick
 
