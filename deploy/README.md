@@ -7,3 +7,15 @@ sudo docker swarm init --advertise-addr `manager_ip`
 sudo docker network create --driver overlay traefik
 sudo docker network create --driver overlay webapp
 sudo docker stack deploy -c docker-compose.yaml
+docker stack deploy --detach=false -c docker-swarm.devcluster.yml apartment
+-jenkins
+local: scp inventory.yml vagrant@jenkins.local:~/
+sudo bash -c 'echo "192.168.30.31 gitlab.local" >> /etc/hosts'
+
+-nfs
+sudo bash -c 'echo "192.168.30.31 gitlab.local" >> /etc/hosts'
+cd /data/nfs_export
+sudo git config --global http.sslVerify false
+sudo git clone https://root:Root2003%40@gitlab.local/apartment/apartment_deploy
+mv apartment_deploy/.??\* .
+rmdir apartment_deploy

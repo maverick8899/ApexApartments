@@ -1,6 +1,6 @@
 services:
     db:
-        image: maverick0809/mysql:apartment # mysql:8.0.33-oracle
+        image: mysql:8.0.33-oracle
         ports:
             - target: 3306
               published: 3307
@@ -31,7 +31,7 @@ services:
                     memory: 256M
 
     backend:
-        image: maverick0809/apartment-backend:8.5.100-ubuntu-22.04-java11
+        image: maverick0809/apartment-backend:9.0.91-ubuntu-22.04-java11 #maverick0809/apartment-backend:8.5.100-ubuntu-22.04-java11
         # ports:
         #     - target: 8080
         #       published: 8081
@@ -68,10 +68,10 @@ services:
             labels:
                 - 'traefik.enable=true'
                 # - 'traefik.http.routers.backend.rule=Host(`admin.app.devops.online`)'
-                - 'traefik.http.routers.backend.rule=Host(`backend.localhost`)'
+                - 'traefik.http.routers.backend.rule=Host(`backend.local`)'
                 - 'traefik.http.routers.backend.service=backend' #? auto-generated
                 - 'traefik.http.routers.backend.entrypoints=web'
-                - 'traefik.http.routers.backend.rule=Host(`backend.localhost`) && (PathPrefix(`/apartment_manager/`) || PathPrefix(`/`))'
+                - 'traefik.http.routers.backend.rule=Host(`backend.local`) && (PathPrefix(`/apartment_manager/`) || PathPrefix(`/`))'
                 - 'traefik.http.routers.backend.middlewares=redirect-to-context'
 
                 # - 'traefik.http.routers.backend.middlewares=test-errorpages, test-redirectscheme'
@@ -131,7 +131,7 @@ services:
                 #* Routers
                 #/ frontend
                 # - 'traefik.http.routers.frontend.rule=Host(`app.devops.online`)'
-                - 'traefik.http.routers.frontend.rule=Host(`frontend.localhost`)'
+                - 'traefik.http.routers.frontend.rule=Host(`frontend.local`)'
                 - 'traefik.http.routers.frontend.service=frontend' #? auto-generated
                 - 'traefik.http.routers.frontend.entrypoints=web' #? port 80
                 - 'traefik.http.routers.frontend.middlewares=test-errorpages'
@@ -163,7 +163,7 @@ services:
         deploy:
             labels:
                 - 'traefik.enable=true'
-                - 'traefik.http.routers.error.rule=Host(`error.localhost`)'
+                - 'traefik.http.routers.error.rule=Host(`error.local`)'
                 - 'traefik.http.routers.error.service=error'
                 - 'traefik.http.services.error.loadbalancer.server.port=80' #? default
                 - 'traefik.http.routers.error.entrypoints=web'
@@ -221,7 +221,7 @@ services:
                     memory: 256M
             labels:
                 - 'traefik.enable=true'
-                - 'traefik.http.routers.dashboard.rule=Host(`traefik.localhost`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`) || PathPrefix(`/`))'
+                - 'traefik.http.routers.dashboard.rule=Host(`traefik.local`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`) || PathPrefix(`/`))'
                 - 'traefik.http.routers.dashboard.service=api@internal'
                 # - 'traefik.http.routers.dashboard.entrypoints=websecure'
                 # - 'traefik.http.routers.dashboard.tls=true'
@@ -261,7 +261,7 @@ services:
         deploy:
             labels:
                 - 'traefik.enable=true'
-                - 'traefik.http.routers.prometheus.rule=Host(`prometheus.localhost`)'
+                - 'traefik.http.routers.prometheus.rule=Host(`prometheus.local`)'
                 - 'traefik.http.routers.prometheus.service=prometheus'
                 - 'traefik.http.routers.prometheus.entrypoints=web'
                 - 'traefik.http.services.prometheus.loadbalancer.server.port=9090'
@@ -291,7 +291,7 @@ services:
         deploy:
             labels:
                 - 'traefik.enable=true'
-                - 'traefik.http.routers.alertmanager.rule=Host(`alertmanager.localhost`)'
+                - 'traefik.http.routers.alertmanager.rule=Host(`alertmanager.local`)'
                 - 'traefik.http.routers.alertmanager.service=alertmanager'
                 - 'traefik.http.routers.alertmanager.entrypoints=web'
                 - 'traefik.http.services.alertmanager.loadbalancer.server.port=9093'
@@ -330,7 +330,7 @@ services:
                     memory: 64M
             labels:
                 - 'traefik.enable=true'
-                - 'traefik.http.routers.cadvisor.rule=Host(`cadvisor.localhost`)'
+                - 'traefik.http.routers.cadvisor.rule=Host(`cadvisor.local`)'
                 - 'traefik.http.routers.cadvisor.service=cadvisor'
                 - 'traefik.http.routers.cadvisor.entrypoints=web'
                 - 'traefik.http.services.cadvisor.loadbalancer.server.port=8080'
@@ -386,7 +386,7 @@ services:
     #                 memory: 64M
 
     grafana:
-        image: maverick0809/grafana:apartment # maverick0809/mysql:apartment #grafana/grafana:7.3.1 #11.0.0
+        image: grafana/grafana:7.3.1 #11.0.0
         networks:
             - webapp
         ports:
@@ -396,15 +396,15 @@ services:
         depends_on:
             - prometheus
         volumes:
-            - grafana_data:/var/lib/grafana
-            # - ./grafana/provisioning/:/etc/grafana/provisioning/
+            - grafana_data:/var/lib/grafana 
+            - ./grafana/provisioning/:/etc/grafana/provisioning/
         env_file:
             - ./grafana/config.monitoring
         user: '104'
         deploy:
             labels:
                 - 'traefik.enable=true'
-                - 'traefik.http.routers.grafana.rule=Host(`grafana.localhost`)'
+                - 'traefik.http.routers.grafana.rule=Host(`grafana.local`)'
                 - 'traefik.http.routers.grafana.service=grafana'
                 - 'traefik.http.routers.grafana.entrypoints=web'
                 - 'traefik.http.services.grafana.loadbalancer.server.port=3000'
@@ -435,7 +435,7 @@ services:
         deploy:
             labels:
                 - 'traefik.enable=true'
-                - 'traefik.http.routers.elasticsearch.rule=Host(`elasticsearch.localhost`)'
+                - 'traefik.http.routers.elasticsearch.rule=Host(`elasticsearch.local`)'
                 - 'traefik.http.routers.elasticsearch.service=elasticsearch'
                 - 'traefik.http.routers.elasticsearch.entrypoints=web'
                 - 'traefik.http.services.elasticsearch.loadbalancer.server.port=9200'
@@ -485,7 +485,7 @@ services:
         deploy:
             labels:
                 - 'traefik.enable=true'
-                - 'traefik.http.routers.kibana.rule=Host(`kibana.localhost`)'
+                - 'traefik.http.routers.kibana.rule=Host(`kibana.local`)'
                 - 'traefik.http.routers.kibana.service=kibana'
                 - 'traefik.http.routers.kibana.entrypoints=web'
                 - 'traefik.http.services.kibana.loadbalancer.server.port=5601'

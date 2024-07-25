@@ -34,21 +34,21 @@ route:
 receivers:
     - name: 'slack-alert'
       slack_configs:
-          - api_url: 'https://hooks.slack.com/services/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'
+          - api_url: 'https://hooks.slack.com/services/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'
             channel: '#alert'
             send_resolved: true
             title: "{{ range .Alerts }}{{ .Annotations.summary }}\n{{ end }}"
             text: "{{ range .Alerts }}{{ .Annotations.description }}{{ .Annotations.timestamp }}\n{{ end }}"
     - name: 'slack-warning'
       slack_configs:
-          - api_url: 'https://hooks.slack.com/services/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'
+          - api_url: 'https://hooks.slack.com/services/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'
             channel: '#warning'
             send_resolved: true
             title: "{{ range .Alerts }}{{ .Annotations.summary }}\n{{ end }}"
             text: "{{ range .Alerts }}{{ .Annotations.description }}{{ .Annotations.timestamp }}\n{{ end }}"
     - name: 'slack-general'
       slack_configs:
-          - api_url: 'https://hooks.slack.com/services/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'
+          - api_url: 'https://hooks.slack.com/services/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'
             channel: '#general'
             send_resolved: true
             title: "{{ range .Alerts }}{{ .Annotations.summary }}\n{{ end }}"

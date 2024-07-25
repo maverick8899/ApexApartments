@@ -48,7 +48,7 @@ services:
                 window: 120s
             placement:
                 constraints:
-                    - node.role==worker   #?  node.role!=manager
+                    - node.role==worker #?  node.role!=manager
             resources:
                 limits:
                     cpus: '0.5'
@@ -202,7 +202,7 @@ services:
         env_file:
             - ./.env
         deploy:
-            replicas: 3
+            replicas: 3 #* up to quantity node manage
             restart_policy:
                 condition: on-failure
                 delay: 10s
@@ -215,9 +215,9 @@ services:
                 limits:
                     cpus: '0.5'
                     memory: 512M
-                reservations:
-                    cpus: '0.25'
-                    memory: 256M
+                # reservations:
+                #     cpus: '0.25'
+                #     memory: 256M
             labels:
                 - 'traefik.enable=true'
                 - 'traefik.http.routers.dashboard.rule=Host(`traefik.local`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`) || PathPrefix(`/`))'
@@ -237,69 +237,6 @@ services:
                 - 'traefik.http.middlewares.redirect-to-dashboard.redirectregex.regex=^/$$'
                 - 'traefik.http.middlewares.redirect-to-dashboard.redirectregex.replacement=/dashboard/'
                 - 'traefik.http.middlewares.redirect-to-dashboard.redirectregex.permanent=true'
-
-    prometheus:
-        image: prom/prometheus:v2.45.6
-        networks:
-            - webapp
-        ports:
-            - target: 9090
-              published: 9090
-              mode: host
-        volumes:
-            - ./prometheus/conf/:/etc/prometheus/
-            - prometheus_data:/prometheus
-        # configs:
-        #     - source: prom_conf
-        #       target: /etc/prometheus/
-        command:
-            - '--config.file=/etc/prometheus/prometheus.yml'
-            - '--storage.tsdb.path=/prometheus'
-            - '--web.console.libraries=/usr/share/prometheus/console_libraries'
-            - '--web.console.templates=/usr/share/prometheus/consoles'
-        deploy:
-            labels:
-                - 'traefik.enable=true'
-                - 'traefik.http.routers.prometheus.rule=Host(`prometheus.local`)'
-                - 'traefik.http.routers.prometheus.service=prometheus'
-                - 'traefik.http.routers.prometheus.entrypoints=web'
-                - 'traefik.http.services.prometheus.loadbalancer.server.port=9090'
-                - 'traefik.docker.network=webapp'
-            mode: replicated
-            replicas: 1
-            placement:
-                constraints:
-                    - node.role == manager
-            resources:
-                limits:
-                    memory: 2048M
-                reservations:
-                    memory: 128M
-            restart_policy:
-                condition: on-failure
-    alertmanager:
-        image: prom/alertmanager
-        networks:
-            - webapp
-        ports:
-            - target: 9093
-              published: 9093
-              mode: host
-        volumes:
-            - ./alertmanager/alertmanager.yml:/etc/alertmanager/alertmanager.yml
-        deploy:
-            labels:
-                - 'traefik.enable=true'
-                - 'traefik.http.routers.alertmanager.rule=Host(`alertmanager.local`)'
-                - 'traefik.http.routers.alertmanager.service=alertmanager'
-                - 'traefik.http.routers.alertmanager.entrypoints=web'
-                - 'traefik.http.services.alertmanager.loadbalancer.server.port=9093'
-                - 'traefik.docker.network=webapp'
-            placement:
-                constraints:
-                    - node.role==manager
-            restart_policy:
-                condition: on-failure
     cadvisor:
         image: gcr.io/cadvisor/cadvisor:v0.47.2
         ports:
@@ -323,8 +260,8 @@ services:
         deploy:
             mode: global
             resources:
-                limits:
-                    memory: 128M
+                # limits:
+                #     memory: 128M
                 reservations:
                     memory: 64M
             labels:
@@ -339,83 +276,7 @@ services:
                     - node.role==manager
             restart_policy:
                 condition: on-failure
-    node-exporter:
-        image: prom/node-exporter:latest
-        networks:
-            - webapp
-        volumes:
-            - /sys:/host/sys:ro
-            - /:/rootfs:ro
-            - /proc:/host/proc:ro
-            - /etc/hostname:/etc/nodename
-        configs:
-            - source: node_exporter_entrypoint
-              target: /docker-entrypoint.sh
-        deploy:
-            mode: global
-        environment:
-            - NODE_ID=malpsfhoor6jrrv4qseun0s01 #? swarm node
-        command:
-            - '--path.procfs=/host/proc'
-            - '--path.rootfs=/rootfs'
-            - '--path.sysfs=/host/sys'
-            - '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)'
-            - '--collector.textfile.directory=/home/'
-            - '--no-collector.ipvs'
-        entrypoint: #? run script config
-            - /bin/sh
-            - /docker-entrypoint.sh
-    # dockerd-exporter:
-    #     image: stefanprodan/caddy
-    #     networks:
-    #         - webapp
-    #     environment:
-    #         DOCKER_GWBRIDGE_IP: '172.22.163.223'
-    #     extra_hosts:
-    #         - 'host.docker.internal:172.22.163.223'
-    #     configs:
-    #         - source: dockerd_config
-    #           target: /etc/caddy/Caddyfile
-    #     deploy:
-    #         mode: global
-    #         resources:
-    #             limits:
-    #                 memory: 128M
-    #             reservations:
-    #                 memory: 64M
 
-    grafana:
-        image: maverick0809/grafana:apartment #grafana/grafana:7.3.1 #11.0.0
-        networks:
-            - webapp
-        ports:
-            - target: 3000
-              published: 3003
-              mode: host
-        depends_on:
-            - prometheus
-        volumes:
-            - grafana_data:/var/lib/grafana
-            - ./grafana/provisioning/:/etc/grafana/provisioning/
-            - ./grafana/plugins:/var/lib/grafana/plugins
-        env_file:
-            - ./grafana/config.monitoring
-        user: '104'
-        deploy:
-            labels:
-                - 'traefik.enable=true'
-                - 'traefik.http.routers.grafana.rule=Host(`grafana.local`)'
-                - 'traefik.http.routers.grafana.service=grafana'
-                - 'traefik.http.routers.grafana.entrypoints=web'
-                - 'traefik.http.services.grafana.loadbalancer.server.port=3000'
-                - 'traefik.docker.network=webapp'
-                # - 'traefik.http.routers.grafana.middlewares=add-host-header'
-                # - 'traefik.http.middlewares.add-host-header.headers.customrequestheaders.Host=wsl.local'
-            placement:
-                constraints:
-                    - node.role==manager
-            restart_policy:
-                condition: on-failure
     elasticsearch:
         image: docker.elastic.co/elasticsearch/elasticsearch:7.17.3
         networks:
@@ -465,6 +326,10 @@ services:
             # - XPACK_MANAGEMENT_ELASTICSEARCH_PASSWORD=myelasticpass
             # - XPACK_MONITORING_ENABLED=true
             # - XPACK_MONITORING_ELASTICSEARCH_SSL_VERIFICATION_MODE=none
+        deploy:
+            placement: #? vị trí place prometheus đặt trên node master
+                constraints:
+                    - node.role==manager
         depends_on:
             - elasticsearch
     kibana:
@@ -495,6 +360,31 @@ services:
                     - node.role==manager
             restart_policy:
                 condition: on-failure
+    # portainer:
+    #     image: portainer/portainer-ce:alpine-sts
+    #     networks:
+    #         - webapp
+    #     ports:
+    #         - target: 9000
+    #           published: 9999
+    #           mode: host
+    #     volumes:
+    #         - /var/run/docker.sock:/var/run/docker.sock
+    #         - portainer_data:/data
+    #     deploy:
+    #         replicas: 1
+    #         labels:
+    #             - 'traefik.enable=true'
+    #             - 'traefik.http.routers.portainer.rule=Host(`portainer.local`)'
+    #             - 'traefik.http.routers.portainer.service=portainer'
+    #             - 'traefik.http.routers.portainer.entrypoints=web'
+    #             - 'traefik.http.services.portainer.loadbalancer.server.port=9000'
+    #             - 'traefik.docker.network=webapp'
+    #         placement: #? vị trí place prometheus đặt trên node master
+    #             constraints:
+    #                 - node.role==manager
+    #         restart_policy:
+    #             condition: on-failure
     filebeat:
         image: docker.elastic.co/beats/filebeat:7.17.3
         networks:
@@ -503,6 +393,43 @@ services:
         volumes:
             - ./elk/filebeat.yml:/usr/share/filebeat/filebeat.yml
             - ./logs:/var/log/server
+    agent:
+        image: portainer/agent:2.19.5
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+            - /var/lib/docker/volumes:/var/lib/docker/volumes
+        networks:
+            - traefik
+            - webapp
+        deploy:
+            mode: global
+            # placement:
+            #     constraints: [node.platform.os == linux]
+
+    portainer:
+        image: portainer/portainer-ee:2.19.5
+        command: -H tcp://tasks.agent:9001 --tlsskipverify
+        # ports:
+        #     - '9443:9443'
+        #     - '9000:9000'
+        #     - '8000:8000'
+        volumes:
+            - portainer_data:/data
+            - /var/run/docker.sock:/var/run/docker.sock
+        networks:
+            - traefik
+        deploy:
+            mode: replicated
+            replicas: 1
+            placement:
+                constraints: [node.role == manager]
+            labels:
+                - 'traefik.enable=true'
+                - 'traefik.http.routers.portainer.rule=Host(`portainer.local`)'
+                - 'traefik.http.routers.portainer.service=portainer'
+                - 'traefik.http.routers.portainer.entrypoints=web'
+                - 'traefik.http.services.portainer.loadbalancer.server.port=9000'
+                - 'traefik.docker.network=webapp'
 networks:
     traefik:
         driver: overlay
@@ -513,13 +440,4 @@ networks:
 
 volumes:
     dbdata: {}
-    prometheus_data: {}
-    grafana_data: {}
-
-configs:
-    dockerd_config:
-        file: ./prometheus/dockerd-exporter/Caddyfile
-    # prom_conf:
-    #     file: ./prometheus/conf/
-    node_exporter_entrypoint:
-        file: ./prometheus/node-exporter/docker-entrypoint.sh
+    portainer_data:
