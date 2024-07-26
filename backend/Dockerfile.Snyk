@@ -1,0 +1,13 @@
+FROM node:18.18-alpine 
+WORKDIR /app
+COPY . .
+
+RUN npm install snyk snyk-to-html -g  
+ARG SNYK_AUTH_TOKEN
+ENV SNYK_AUTH_TOKEN=$SNYK_AUTH_TOKEN
+
+ARG OUTPUT_FILENAME
+ENV OUTPUT_FILENAME=$OUTPUT_FILENAME
+ 
+RUN snyk auth $SNYK_AUTH_TOKEN && snyk test --json | snyk-to-html -o $OUTPUT_FILENAME.html || true
+RUN snyk monit --project-name=apartment_backend
