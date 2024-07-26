@@ -1,3 +1,16 @@
+# Sử dụng hình ảnh Maven để build ứng dụng
+FROM maven:3.8.5-openjdk-11 AS build
+
+# Tạo thư mục làm việc
+WORKDIR /app
+
+# Sao chép các tệp cần thiết vào container
+COPY pom.xml .
+COPY src ./src
+
+# Xây dựng ứng dụng
+RUN mvn clean package -DskipTests
+
 FROM ubuntu:22.04
 
 WORKDIR /opt/tomcat
@@ -16,7 +29,9 @@ RUN tar xzvf apache-tomcat-*.tar.gz -C /opt/tomcat --strip-components=1
 
 COPY ./tomcat/xml/* /opt/tomcat/conf/ 
 COPY ./tomcat/webapps/* /opt/tomcat/webapps/
-COPY  target/*.war /opt/tomcat/webapps/apartment_manager.war
+
+COPY --from=build /app/target/*.war /opt/tomcat/webapps/apartment_manager.war
+# COPY  target/*.war /opt/tomcat/webapps/apartment_manager.war
 # Cấu hình cổng để Tomcat lắng nghe
 EXPOSE 8080
 

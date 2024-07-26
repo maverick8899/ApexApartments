@@ -81,14 +81,10 @@ public class WebAppContextConfig implements WebMvcConfigurer {
         registry
                 .addMapping("/**")
                 // .allowedOrigins("http://localhost:3000")
-                .allowedOrigins("http://localhost:3000",
-                        "http://wsl.local",
-                        "http://frontend.local",
-                        "http://frontend",
-                        "http://app.devsops.online")
+                .allowedOrigins("*")
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "HEAD")
                 .allowedHeaders("*")
-                .allowCredentials(true);
+                .allowCredentials(false);
     }
 
     @Bean
