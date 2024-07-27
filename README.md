@@ -50,8 +50,8 @@
 	* [Overview](#Overview)
 	* [Jenkins jobs](#Jenkins-jobs)
 	* [Gitlab CI/CD](#Gitlab-CI/CD)
-* ⏱️[Monitoring](#Monitoring) 
-* 📝[Logging](#Logging)
+* ⏱️[Monitoring](##Monitoring) 
+* 📝[Logging](##Logging)
 * 🛠️[Prerequisites](#prerequisites)
 * 🚀[Getting Started](#getting-started)  
 * 📧[Contact](#contact)
@@ -81,17 +81,12 @@ _Coming Soon_
 <div style="display: flex; flex-wrap: wrap; gap: 10px;"> <img src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1722062509/swuibf5jl5fvlxwj9wfn.png" width="50%" style="flex: 1;"> <img src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1722062509/gmjmwzwmtnljaciw6jz6.jpg" width="50%" style="flex: 1;"> </div>
 
 ## ⏱️Monitoring  
-Monitor the performance of nodes and services within the Swarm cluster.
-- Nodes
-	<img src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1722063739/cow3avxgujgoasbx5blr.jpg" width="50%" style="flex: 1;"> 
-- Swarm  
-	<img src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1722063740/mw2tsvhpjoc6xpe994kp.jpg" width="50%" style="flex: 1;"> 
-- Gateway
-	<img src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1722063739/eax4dwweknpatry1w9oh.jpg" width="50%" style="flex: 1;"> 
+
+<p>Monitor the performance of nodes and services within the Swarm cluster.</p> <div style="display: flex; flex-wrap: wrap; gap: 10px;"> <div style="flex: 1; max-width: 50%;"> <p>Nodes</p> <img src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1722063739/cow3avxgujgoasbx5blr.jpg" width="100%" alt="Nodes"> </div> <div style="flex: 1; max-width: 50%;"> <p>Swarm</p> <img src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1722063740/mw2tsvhpjoc6xpe994kp.jpg" width="100%" alt="Swarm"> </div> <div style="flex: 1; max-width: 50%;"> <p>Gateway</p> <img src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1722063739/eax4dwweknpatry1w9oh.jpg" width="100%" alt="Gateway"> </div> </div>
 
 ## ⏱️Logging
-User request monitoring dashboard through Kibana.
-	<img src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1722064167/s1b5hqkkr2dpyk1cfdgh.jpg" width="50%" style="flex: 1;"> 
+<p>User request monitoring dashboard through Kibana.</p> 
+<div style="display: flex; justify-content: center;"> <img src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1722064167/s1b5hqkkr2dpyk1cfdgh.jpg" width="100%" alt="Logging Dashboard"> </div>
 
 ## 🛠️Prerequisites
 What you need to run the project:
