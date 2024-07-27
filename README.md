@@ -110,14 +110,17 @@ docker compose up
 ```
 Enjoy! 
 
-## 📧Contact
-Don't hesitate to contact me if you have any confusion or questions
-<a href="https://trankimbang0809@gmail.com" target="blank">
-  <img align="center" src="https://img.icons8.com/color/48/000000/gmail--v2.png" alt="trankimbang0809@gmail.com" height="30" width="40">
-</a>
-<a href="http://www.linkedin.com/in/tranbang/" target="blank">
-  <img align="center" src="https://img.icons8.com/?size=100&id=xuvGCOXi8Wyg&format=png&color=000000" alt="1" height="30" width="40" />
-</a>
-<a href="#apartment-management" style="transition: all .25s ease-in-out; position: fixed; bottom: 0; right: 0; display: inline-flex; cursor: pointer; align-items: center; justify-content: center; margin: 0 2em 2em 0; padding: .25em; width: 8em; height: 2em;">
+
+## 📧 Contact
+<p>Don't hesitate to contact me if you have any confusion or questions.</p>
+<div style="display: flex; gap: 10px; align-items: center;">
+    <a href="mailto:trankimbang0809@gmail.com" target="_blank" style="text-decoration: none;">
+        <img src="https://img.icons8.com/color/48/000000/gmail--v2.png" alt="trankimbang0809@gmail.com" height="30" width="40">
+    </a> 
+    <a href="http://www.linkedin.com/in/tranbang/" target="_blank">
+        <img src="https://img.icons8.com/?size=100&id=xuvGCOXi8Wyg&format=png&color=000000" alt="LinkedIn" height="30" width="40">
+    </a>
+</div>
+<a href="#ApexApartment" style="transition: all .25s ease-in-out; position: fixed; bottom: 0; right: 0; display: inline-flex; cursor: pointer; align-items: center; justify-content: center; margin: 0 2em 2em 0; padding: .25em; width: 8em; height: 2em; background-color: #f0f0f0; text-align: center;">
   🔼 Back to top
 </a>
