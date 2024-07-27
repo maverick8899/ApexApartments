@@ -36,7 +36,7 @@
        <img src="https://img.shields.io/badge/Amazon%20Route%2053-8C4FFF?logo=amazonroute53&logoColor=fff&style=for-the-badge" alt="Amazon Route53">
 </p>  
 
-# # ApexApartment
+## ApexApartment
 
 **ApexApartment** is an innovative condominium management project aimed at enhancing the quality of life and residential experience in upscale residential areas. With a mission to create a harmonious, peaceful, and convenient living environment, ApexApartment combines modern technology and attentive resident care services to provide the best living experience for all residents.
 
@@ -50,6 +50,8 @@
 	* [Overview](#Overview)
 	* [Jenkins jobs](#Jenkins-jobs)
 	* [Gitlab CI/CD](#Gitlab-CI/CD)
+* ⏱️[Monitoring](#Monitoring) 
+* 📝[Logging](#Logging)
 * 🛠️[Prerequisites](#prerequisites)
 * 🚀[Getting Started](#getting-started)  
 * 📧[Contact](#contact)
@@ -72,20 +74,22 @@ _Coming Soon_
 ![enter image description here](https://res.cloudinary.com/dgiozc0lj/image/upload/v1721407530/neyv4p20bxbricrfu4y9.jpg)
 - Pipelines
 ![enter image description here](https://res.cloudinary.com/dgiozc0lj/image/upload/v1722062221/vns0qijycadfx5h20bbr.jpg)
-<h3>Jenkins Jobs</h3>
-<div style="display: flex; flex-wrap: wrap; gap: 10px;">
-    <img src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1721748926/ikuz5xdtmexq4cffo2gc.jpg" width="40%" style="flex: 1;">
-    <img src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1721749222/jtths8qftbkg3os4ekvm.jpg" width="40%" style="flex: 1;">
-    <img src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1721749223/iyyqh5uc0ta8h9bfhev6.jpg" width="40%" style="flex: 1;">
-    <img src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1722062455/khrhtmimz3msmrnmhat8.jpg" width="40%" style="flex: 1;">
-    <img src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1722062454/y5p7u4bolcaazwh15rx7.jpg" width="40%" style="flex: 1;">
-</div>
+### Jenkins jobs
+<div style="display: flex; flex-wrap: wrap; gap: 10px;"> <img src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1721748926/ikuz5xdtmexq4cffo2gc.jpg" width="40%" style="flex: 1;"> <img src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1721749222/jtths8qftbkg3os4ekvm.jpg" width="40%" style="flex: 1;"> <img src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1721749223/iyyqh5uc0ta8h9bfhev6.jpg" width="40%" style="flex: 1;"> <img src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1722062455/khrhtmimz3msmrnmhat8.jpg" width="40%" style="flex: 1;"> <img src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1722062454/y5p7u4bolcaazwh15rx7.jpg" width="40%" style="flex: 1;"> </div>
+### Gitlab CI/CD
+<div style="display: flex; flex-wrap: wrap; gap: 10px;"> <img src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1722062509/swuibf5jl5fvlxwj9wfn.png" width="50%" style="flex: 1;"> <img src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1722062509/gmjmwzwmtnljaciw6jz6.jpg" width="50%" style="flex: 1;"> </div>
 
-<h3>GitLab CI/CD</h3>
-<div style="display: flex; flex-wrap: wrap; gap: 10px;">
-    <img src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1722062509/swuibf5jl5fvlxwj9wfn.png" width="50%" style="flex: 1;">
-    <img src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1722062509/gmjmwzwmtnljaciw6jz6.jpg" width="50%" style="flex: 1;">
-</div>
+## ⏱️Monitoring  
+Monitor the performance of nodes and services within the Swarm cluster.
+- Nodes
+		<img src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1722063739/cow3avxgujgoasbx5blr.jpg" width="50%" style="flex: 1;"> 
+- Swarm  
+	<img src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1722063740/mw2tsvhpjoc6xpe994kp.jpg" width="50%" style="flex: 1;"> 
+- Gateway
+<img src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1722063739/eax4dwweknpatry1w9oh.jpg" width="50%" style="flex: 1;"> 
+## ⏱️Logging
+User request monitoring dashboard through Kibana.
+<img src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1722064167/s1b5hqkkr2dpyk1cfdgh.jpg" width="50%" style="flex: 1;"> 
 
 ## 🛠️Prerequisites
 What you need to run the project:
