@@ -1,0 +1,164 @@
+variables:
+    USER_PROJECT: 'apartment'
+    SERVICE_NAME: 'apartment_frontend'
+    IMAGE_VERSION: '${CI_PROJECT_NAME}:${CI_COMMIT_REF_NAME}_${CI_COMMIT_SHORT_SHA}'
+    SNYKSCAN_REPORT: 'snyk_scan_${CI_PROJECT_NAME}_${CI_COMMIT_REF_NAME}_${CI_COMMIT_SHORT_SHA}_report'
+    TRIVY_IMAGE_REPORT: 'security_scan_image_${CI_PROJECT_NAME}_${CI_COMMIT_REF_NAME}_${CI_COMMIT_SHORT_SHA}_report'
+    ARACHNI_WEBSITE_REPORT: 'security_scan_image_${CI_PROJECT_NAME}_${CI_COMMIT_REF_NAME}_${CI_COMMIT_SHORT_SHA}_report'
+    K6_PERFORMACE_TEST_REPORT: 'performace_test_${CI_PROJECT_NAME}_${CI_COMMIT_REF_NAME}_${CI_COMMIT_SHORT_SHA}_report'
+
+stages:
+    - scan source code
+    - build
+    - security scan image
+    - push
+    - deploy
+    - security scan website
+    - performance testing
+    - cleanup
+    # - notify
+
+snyk scan:
+    stage: scan source code
+    variables:
+        GIT_STRATEGY: clone
+    script:
+        - npm i
+        - docker buildx build --rm --network host --build-arg SNYK_AUTH_TOKEN=$SNYK_TOKEN --build-arg OUTPUT_FILENAME=$SNYKSCAN_REPORT -t $SNYKSCAN_REPORT -f Dockerfile.Snyk .
+        - docker create --name $SNYKSCAN_REPORT $SNYKSCAN_REPORT
+        - docker cp $SNYKSCAN_REPORT:/app/$SNYKSCAN_REPORT.html .
+        - docker container rm $SNYKSCAN_REPORT ; docker image rm $SNYKSCAN_REPORT
+    after_script:
+        - sudo chown -R gitlab-runner $(pwd)
+    tags:
+        - runner-dev-shell
+    only:
+        - tags
+    artifacts:
+        paths:
+            - $SNYKSCAN_REPORT.html
+        expire_in: 1 day
+
+build:
+    stage: build
+    variables:
+        GIT_STRATEGY: clone
+    script:
+        - docker buildx build -t $IMAGE_VERSION .
+    tags:
+        - runner-dev-shell
+    only:
+        - tags
+
+trivy scan image:
+    stage: security scan image
+    variables:
+        GIT_STRATEGY: clone
+    script:
+        - docker run --rm -v $(pwd):/${CI_PROJECT_NAME} -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy clean --all
+        - docker run --rm -v $(pwd):/${CI_PROJECT_NAME} -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy image --format template --template "@contrib/html.tpl" --output /${CI_PROJECT_NAME}/${TRIVY_IMAGE_REPORT}.html $IMAGE_VERSION
+    after_script:
+        - sudo chown -R gitlab-runner $(pwd)
+    tags:
+        - runner-dev-shell
+    only:
+        - tags
+    artifacts:
+        paths:
+            - ${TRIVY_IMAGE_REPORT}.html
+        expire_in: 1 day
+push:
+    stage: push
+    before_script:
+        - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASS $CI_REGISTRY_URL
+    script:
+        - docker tag $IMAGE_VERSION $CI_REGISTRY_URL/$CI_REGISTRY_PROJECT/$IMAGE_VERSION
+        - docker push $CI_REGISTRY_URL/$CI_REGISTRY_PROJECT/$IMAGE_VERSION
+    after_script:
+        - docker logout $CI_REGISTRY_URL
+    tags:
+        - runner-dev-shell
+    only:
+        - tags
+
+deploy:
+    stage: deploy
+    before_script:
+        - sudo su ${USER_PROJECT} -c " docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASS $CI_REGISTRY_URL "
+    script:
+        # - docker pull $CI_REGISTRY_URL/$CI_REGISTRY_PROJECT/$IMAGE_VERSION
+        - sudo su ${USER_PROJECT} -c "docker service update --with-registry-auth -d --image $CI_REGISTRY_URL/$CI_REGISTRY_PROJECT/$IMAGE_VERSION ${SERVICE_NAME}"
+    after_script:
+        - docker logout $CI_REGISTRY_URL
+    tags:
+        - runner-dev-shell
+    only:
+        - tags
+
+security scan website:
+    stage: security scan website
+    variables:
+        GIT_STRATEGY: none
+    script:
+        #? scan
+        # docker run --rm  -v /tmp:/tmp --add-host frontend.local:172.22.163.223 maverick0809/arachni:v1.4-0.5.10 bin/arachni --output-verbose --scope-include-subdomains $ARACHNI_DOMAIN_TARGET --report-save-path=/tmp/${ARACHNI_WEBSITE_REPORT}
+        - docker run --rm -v /tmp:/tmp maverick0809/arachni:v1.4-0.5.10  bin/arachni --output-verbose --scope-include-subdomains $ARACHNI_DOMAIN_TARGET --report-save-path=/tmp/${ARACHNI_WEBSITE_REPORT} > /dev/null 2>&1
+        #? export report
+        - docker run --rm -v /tmp:/tmp maverick0809/arachni:v1.4-0.5.10  bin/arachni_reporter /tmp/${ARACHNI_WEBSITE_REPORT} --reporter=html:outfile=/tmp/${ARACHNI_WEBSITE_REPORT}.html.zip
+        - sudo chmod 777 /tmp/${ARACHNI_WEBSITE_REPORT}.html.zip
+        - cp /tmp/${ARACHNI_WEBSITE_REPORT}.html.zip .
+    artifacts:
+        paths:
+            - ${ARACHNI_WEBSITE_REPORT}.html.zip
+        expire_in: 1 day
+    tags:
+        - runner-dev-shell
+    only:
+        - tags
+
+performace testing:
+    stage: performance testing
+    variables:
+        GIT_STRATEGY: clone
+    script:
+        - |
+            if ! command -v jq &> /dev/null; then
+                sudo apt update
+                sudo apt install -y jq
+            fi
+        - chmod -R 777 ./test/
+        #? - docker run --rm -v $(pwd)/test:/test loadimpact/k6 run /test/smoke_test.js  #? for html(take down --summary-export)
+        # - docker run --add-host backend.local:172.22.163.223 --rm -v $(pwd)/test:/test loadimpact/k6 run -e RESULTS_PATH=/test --summary-export=/test/summary_perf.json /test/smoke_test.js
+        - docker run --rm -v $(pwd)/test:/test loadimpact/k6 run -e RESULTS_PATH=/test --summary-export=/test/summary_perf.json /test/smoke_test.js
+        - cat ./test/summary_perf.json | jq -r '["metric", "avg", "min", "med", "max", "p(90)", "p(95)"], (.metrics | to_entries[] | [.key, .value.avg, .value.min, .value.med, .value.max, .value["p(90)"], .value["p(95)"]]) | @csv' > $K6_PERFORMACE_TEST_REPORT.csv
+        - mv ./test/summary.html $(pwd)/$K6_PERFORMACE_TEST_REPORT.html
+    after_script:
+        - sudo chown -R gitlab-runner $(pwd)
+    tags:
+        - runner-dev-shell
+    only:
+        - tags
+    artifacts:
+        paths:
+            - $K6_PERFORMACE_TEST_REPORT.csv
+            - $K6_PERFORMACE_TEST_REPORT.html
+        expire_in: 1 day
+cleanup:
+    stage: cleanup
+    script:
+        - docker image rm $IMAGE_VERSION
+        - docker image rm $CI_REGISTRY_URL/$CI_REGISTRY_PROJECT/$IMAGE_VERSION
+    tags:
+        - runner-dev-shell
+    only:
+        - tags
+# send_email:
+#     stage: notify
+#     when: on_failure
+#     script: curl -s --user "api:$MAILGUN_API_KEY"  \
+#       "https://api.mailgun.net/v3/$MAILGUN_DOMAIN/messages" \
+#       -F from='Gitlab Project Apartment' \
+#       -F to=$GITLAB_USER_EMAIL \
+#       -F subject='Artifact after build' \
+#       -F text='this is resources after pipeline DevSecOps' \
+#       -F attachment='@reports/report.html'
