@@ -25,7 +25,7 @@
     <img src="https://img.shields.io/badge/Grafana-F46800?logo=grafana&logoColor=fff&style=for-the-badge" alt="Grafana">
 </p>
 
-<h2>Infrastructure & Automation</h2>
+<h2>Infrastructure Technologies & Automation Technologies</h2>
 <p>
     <img src="https://img.shields.io/badge/Terraform-844FBA?logo=terraform&logoColor=fff&style=for-the-badge" alt="Terraform">
     <img src="https://img.shields.io/badge/Ansible-E00?logo=ansible&logoColor=fff&style=for-the-badge" alt="Ansible">
