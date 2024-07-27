@@ -26,9 +26,9 @@ services:
                 limits:
                     cpus: '0.5'
                     memory: 512M
-                # reservations:
-                #     cpus: '0.25'
-                #     memory: 256M
+                reservations:
+                    cpus: '0.25'
+                    memory: 256M
 
     backend:
         image: maverick0809/apartment-backend:8.5.100-ubuntu-22.04-java11
@@ -114,9 +114,9 @@ services:
                 limits:
                     cpus: '0.5'
                     memory: 512M
-                # reservations:
-                #     cpus: '0.25'
-                #     memory: 256M
+                reservations:
+                    cpus: '0.25'
+                    memory: 256M
             update_config:
                 parallelism: 2
                 delay: 10s

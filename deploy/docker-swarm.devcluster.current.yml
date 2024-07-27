@@ -31,7 +31,7 @@ services:
                 #     memory: 256M
 
     backend:
-        image: maverick0809/apartment-backend:8.5.100-ubuntu-22.04-java11
+        image: maverick0809/apartment-backend:9.0.91-ubuntu-22.04-java11.3 #maverick0809/apartment-backend:8.5.100-ubuntu-22.04-java11
         # ports:
         #     - target: 8080
         #       published: 8081
@@ -40,7 +40,7 @@ services:
             - webapp
         depends_on: [db, traefik]
         deploy:
-            replicas: 3
+            replicas: 1
             restart_policy:
                 condition: on-failure
                 delay: 10s
@@ -101,7 +101,7 @@ services:
         networks: #? react chỉ giao tiếp đến backend
             - webapp
         deploy:
-            replicas: 3
+            replicas: 1
             restart_policy:
                 condition: on-failure
                 delay: 10s
@@ -202,7 +202,7 @@ services:
         env_file:
             - ./.env
         deploy:
-            replicas: 3 #* up to quantity node manage
+            replicas: 1 #* up to quantity node manage
             restart_policy:
                 condition: on-failure
                 delay: 10s
@@ -215,9 +215,9 @@ services:
                 limits:
                     cpus: '0.5'
                     memory: 512M
-                # reservations:
-                #     cpus: '0.25'
-                #     memory: 256M
+                    #  reservations:
+                    #cpus: '0.25'
+                    #memory: 256M
             labels:
                 - 'traefik.enable=true'
                 - 'traefik.http.routers.dashboard.rule=Host(`traefik.local`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`) || PathPrefix(`/`))'
@@ -243,9 +243,6 @@ services:
             - target: 8080
               published: 8088
               mode: host
-        privileged: true
-        devices:
-            - /dev/kmsg
         networks:
             - webapp
         volumes:
@@ -259,11 +256,11 @@ services:
             - /var/lib/dbus/machine-id:/var/lib/dbus/machine-id:ro
         deploy:
             mode: global
-            resources:
-                # limits:
-                #     memory: 128M
-                reservations:
-                    memory: 64M
+            #resources:
+            #  limits:
+            #memory: 128M
+            #  reservations:
+            #memory: 64M
             labels:
                 - 'traefik.enable=true'
                 - 'traefik.http.routers.cadvisor.rule=Host(`cadvisor.local`)'
@@ -360,31 +357,6 @@ services:
                     - node.role==manager
             restart_policy:
                 condition: on-failure
-    # portainer:
-    #     image: portainer/portainer-ce:alpine-sts
-    #     networks:
-    #         - webapp
-    #     ports:
-    #         - target: 9000
-    #           published: 9999
-    #           mode: host
-    #     volumes:
-    #         - /var/run/docker.sock:/var/run/docker.sock
-    #         - portainer_data:/data
-    #     deploy:
-    #         replicas: 1
-    #         labels:
-    #             - 'traefik.enable=true'
-    #             - 'traefik.http.routers.portainer.rule=Host(`portainer.local`)'
-    #             - 'traefik.http.routers.portainer.service=portainer'
-    #             - 'traefik.http.routers.portainer.entrypoints=web'
-    #             - 'traefik.http.services.portainer.loadbalancer.server.port=9000'
-    #             - 'traefik.docker.network=webapp'
-    #         placement: #? vị trí place prometheus đặt trên node master
-    #             constraints:
-    #                 - node.role==manager
-    #         restart_policy:
-    #             condition: on-failure
     filebeat:
         image: docker.elastic.co/beats/filebeat:7.17.3
         networks:
@@ -430,6 +402,26 @@ services:
                 - 'traefik.http.routers.portainer.entrypoints=web'
                 - 'traefik.http.services.portainer.loadbalancer.server.port=9000'
                 - 'traefik.docker.network=webapp'
+    cloudbeaver:
+        image: dbeaver/cloudbeaver
+        # ports:
+        #     - '8978:8978'
+        networks:
+            - traefik
+        volumes:
+            - cloudbeaver_data:/opt/cloudbeaver/workspace
+        deploy:
+            mode: replicated
+            replicas: 1
+            placement:
+                constraints: [node.role == manager]
+            labels:
+                - 'traefik.enable=true'
+                - 'traefik.http.routers.cloudbeaver.rule=Host(`cloudbeaver.local`)'
+                - 'traefik.http.routers.cloudbeaver.service=cloudbeaver'
+                - 'traefik.http.routers.cloudbeaver.entrypoints=web'
+                - 'traefik.http.services.cloudbeaver.loadbalancer.server.port=8978'
+                - 'traefik.docker.network=webapp'
 networks:
     traefik:
         driver: overlay
@@ -440,4 +432,5 @@ networks:
 
 volumes:
     dbdata: {}
-    portainer_data:
+    portainer_data: {}
+    cloudbeaver_data: {}

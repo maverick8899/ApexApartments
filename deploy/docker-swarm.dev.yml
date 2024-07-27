@@ -31,7 +31,7 @@ services:
                     memory: 256M
 
     backend:
-        image: maverick0809/apartment-backend:9.0.91-ubuntu-22.04-java11 #maverick0809/apartment-backend:8.5.100-ubuntu-22.04-java11
+        image: maverick0809/apartment-backend:9.0.91-ubuntu-22.04-java11 
         # ports:
         #     - target: 8080
         #       published: 8081

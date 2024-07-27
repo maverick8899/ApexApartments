@@ -17,8 +17,7 @@ services:
             # MYSQL_INIT_COMMAND: "SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));"
 
     backend:
-        # image: maverick0809/tomcat:8.5.100-ubuntu-22.04-java11  #? just tomcat for bind mount
-        image: maverick0809/apartment-backend:8.5.100-ubuntu-22.04-java11
+        image: maverick0809/apartment-backend:9.0.91-ubuntu-22.04-java11
         container_name: backend
         ports:
             - '8081:8080'

@@ -26,3 +26,5 @@ deploy/elk/data
 dist
 .vagrant
 gitlab_setup.sh
+outline.yml
+deploy/logs
