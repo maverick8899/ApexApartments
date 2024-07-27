@@ -74,15 +74,22 @@ _Coming Soon_
 ![enter image description here](https://res.cloudinary.com/dgiozc0lj/image/upload/v1721407530/neyv4p20bxbricrfu4y9.jpg)
 - Pipelines
 ![enter image description here](https://res.cloudinary.com/dgiozc0lj/image/upload/v1722062221/vns0qijycadfx5h20bbr.jpg)
+
 ### Jenkins jobs
-<div style="display: flex; flex-wrap: wrap; gap: 10px;"> <img src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1721748926/ikuz5xdtmexq4cffo2gc.jpg" width="40%" style="flex: 1;"> <img src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1721749222/jtths8qftbkg3os4ekvm.jpg" width="40%" style="flex: 1;"> <img src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1721749223/iyyqh5uc0ta8h9bfhev6.jpg" width="40%" style="flex: 1;"> <img src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1722062455/khrhtmimz3msmrnmhat8.jpg" width="40%" style="flex: 1;"> <img src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1722062454/y5p7u4bolcaazwh15rx7.jpg" width="40%" style="flex: 1;"> </div>
+<div style="display: flex; flex-wrap: wrap; gap: 10px;"> <img src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1721748926/ikuz5xdtmexq4cffo2gc.jpg" width="100%" style="flex: 1;"> <img src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1721749222/jtths8qftbkg3os4ekvm.jpg" width="100%" style="flex: 1;"> <img src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1721749223/iyyqh5uc0ta8h9bfhev6.jpg" width="100%" style="flex: 1;"> <img src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1722062455/khrhtmimz3msmrnmhat8.jpg" width="100%" style="flex: 1;"> <img src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1722062454/y5p7u4bolcaazwh15rx7.jpg" width="100%" style="flex: 1;"> </div>
 
 ### Gitlab CI/CD
-<div style="display: flex; flex-wrap: wrap; gap: 10px;"> <img src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1722062509/swuibf5jl5fvlxwj9wfn.png" width="50%" style="flex: 1;"> <img src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1722062509/gmjmwzwmtnljaciw6jz6.jpg" width="50%" style="flex: 1;"> </div>
+<div style="display: flex; flex-wrap: wrap; gap: 10px;"> <img src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1722062509/swuibf5jl5fvlxwj9wfn.png" width="100%" style="flex: 1;"> <img src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1722062509/gmjmwzwmtnljaciw6jz6.jpg" width="100%" style="flex: 1;"> </div>
 
 ## ⏱️Monitoring  
 
-<p>Monitor the performance of nodes and services within the Swarm cluster.</p> <div style="display: flex; flex-wrap: wrap; gap: 10px;"> <div style="flex: 1; max-width: 50%;"> <p>Nodes</p> <img src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1722063739/cow3avxgujgoasbx5blr.jpg" width="100%" alt="Nodes"> </div> <div style="flex: 1; max-width: 50%;"> <p>Swarm</p> <img src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1722063740/mw2tsvhpjoc6xpe994kp.jpg" width="100%" alt="Swarm"> </div> <div style="flex: 1; max-width: 50%;"> <p>Gateway</p> <img src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1722063739/eax4dwweknpatry1w9oh.jpg" width="100%" alt="Gateway"> </div> </div>
+<p>Monitor the performance of nodes and services within the Swarm cluster.</p> <div style="display: flex; flex-wrap: wrap; gap: 10px;"> <div style="flex: 1; max-width: 50%;"> 
+<p>Nodes</p> 
+<img src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1722063739/cow3avxgujgoasbx5blr.jpg" width="100%" alt="Nodes"> </div> <div style="flex: 1; max-width: 50%;"> 
+<p>Swarm</p> 
+<img src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1722063740/mw2tsvhpjoc6xpe994kp.jpg" width="100%" alt="Swarm"> </div> <div style="flex: 1; max-width: 50%;"> 
+<p>Gateway</p> 
+<img src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1722063739/eax4dwweknpatry1w9oh.jpg" width="100%" alt="Gateway"> </div> </div>
 
 ## ⏱️Logging
 <p>User request monitoring dashboard through Kibana.</p> 
@@ -91,7 +98,8 @@ _Coming Soon_
 ## 🛠️Prerequisites
 What you need to run the project:
 - Make sure your machine has Docker installed
-- To run the project, you need to add DNS entries to your local machine. You should add DNS entries such as: `backend.local, frontend.local, kibana.local, and grafana.local,...` Make sure these hosts point to the correct IP address of your machine.
+- To run the project, you need to add DNS entries to your local machine. You should add DNS entries such as: `backend.local`, `frontend.local`, `kibana.local`, and `grafana.local`, etc. Make sure these hosts point to the correct IP address of your machine. Alternatively, you can skip adding DNS entries by accessing the local machine address and appending the header `Host: <service.local>`. 
+	- For example: `curl -H 'Host: backend.local' http://IP:Port`
 
 ## 🚀Getting Started
 After installing Docker, run the following commands to start experiencing this project
@@ -100,7 +108,7 @@ git clone https://github.com/maverick8899/ApexApartments
 cd deploy
 docker compose up 
 ```
-At this time, you can now access the administration portal by navigating to http://localhost:8081/apartment_manager/. Alternatively, residents can log in to the resident site at http://localhost:3000/.   
+Enjoy! 
 
 ## 📧Contact
 Don't hesitate to contact me if you have any confusion or questions
