@@ -67,7 +67,7 @@
 
 ## 💻 Interface
 ### Admin
-<div style="display: flex; flex-wrap: wrap; gap: 10px;"> <img src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1722067635/kfqcvckyuwfmgocwbu3t.jpg" width="50%" style="flex: 1;"> <img src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1722067635/mebxd8mkww1hn8ejkoja.jpg" width="50%" style="flex: 1;"> <img src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1722067634/r0ayjssnbrspkhk9p1ai.jpg" width="50%" style="flex: 1;"> </div>
+<div style="display: flex; flex-wrap: wrap; gap: 10px;"> <img src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1722067635/kfqcvckyuwfmgocwbu3t.jpg" width="44%" style="flex: 1;"> <img src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1722067635/mebxd8mkww1hn8ejkoja.jpg" width="50%" style="flex: 1;"> <img src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1722067634/r0ayjssnbrspkhk9p1ai.jpg" width="100%" style="flex: 1;"> </div>
 
 ### Client
 <div style="display: flex; flex-wrap: wrap; gap: 10px;"> <img src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1722067634/rjx7cu0ky9wzbx5k08tt.jpg" width="100%" style="flex: 1;"> </div>
