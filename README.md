@@ -73,15 +73,15 @@ _Coming Soon_
 - Pipelines
 ![enter image description here](https://res.cloudinary.com/dgiozc0lj/image/upload/v1722062221/vns0qijycadfx5h20bbr.jpg)
 ### Jenkins jobs
-<img  src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1721748926/ikuz5xdtmexq4cffo2gc.jpg"  width="40%"></img>
-<img  src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1721749222/jtths8qftbkg3os4ekvm.jpg"  width="40%"></img>
-<img  src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1721749223/iyyqh5uc0ta8h9bfhev6.jpg"  width="40%"></img>
-<img  src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1722062455/khrhtmimz3msmrnmhat8.jpg"  width="40%"></img>
-<img  src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1722062454/y5p7u4bolcaazwh15rx7.jpg"  width="40%"></img>
+<img  src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1721748926/ikuz5xdtmexq4cffo2gc.jpg"  width="50%"></img>
+<img  src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1721749222/jtths8qftbkg3os4ekvm.jpg"  width="50%"></img>
+<img  src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1721749223/iyyqh5uc0ta8h9bfhev6.jpg"  width="50%"></img>
+<img  src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1722062455/khrhtmimz3msmrnmhat8.jpg"  width="50%"></img>
+<img  src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1722062454/y5p7u4bolcaazwh15rx7.jpg"  width="50%"></img>
 ### Gitlab CI/CD
-<img  src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1722062509/swuibf5jl5fvlxwj9wfn.png"  width="50%"></img>
+<img  src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1722062509/swuibf5jl5fvlxwj9wfn.png"  width="70%"></img>
 <img  
-src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1722062509/gmjmwzwmtnljaciw6jz6.jpg"  width="50%"></img>
+src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1722062509/gmjmwzwmtnljaciw6jz6.jpg"  width="70%"></img>
 ## 🛠️Prerequisites
 What you need to run the project:
 - Make sure your machine has Docker installed
