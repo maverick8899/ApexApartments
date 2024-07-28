@@ -1,0 +1,2338 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>
+        http://frontend.local/ ::
+        Arachni Web Application Security Report
+    </title>
+
+    <!--
+        Design by Tasos "Zapotek" Laskos <tasos.laskos@arachni-scanner.com>
+        Copyright (c) Arachni 2011-2015.
+     -->
+
+    
+        <script type="text/javascript" src="js/lib/jquery.min.js"></script>
+    
+        <script type="text/javascript" src="js/lib/bootstrap.min.js"></script>
+    
+        <script type="text/javascript" src="js/lib/d3.min.js"></script>
+    
+        <script type="text/javascript" src="js/lib/c3.min.js"></script>
+    
+        <script type="text/javascript" src="js/helpers.js"></script>
+    
+        <script type="text/javascript" src="js/init.js"></script>
+    
+        <script type="text/javascript" src="js/charts.js"></script>
+    
+        <script type="text/javascript" src="js/configuration.js"></script>
+    
+
+    
+        <link href="css/lib/font-awesome.min.css" type="text/css" rel="stylesheet" />
+    
+        <link href="css/lib/bootstrap.min.css" type="text/css" rel="stylesheet" />
+    
+        <link href="css/lib/c3.css" type="text/css" rel="stylesheet" />
+    
+        <link href="css/main.css" type="text/css" rel="stylesheet" />
+    
+
+</head>
+<body>
+
+<nav class="navbar navbar-inverse navbar-default" role="navigation">
+    <div class="container">
+        <a class="navbar-brand" href="http://www.arachni-scanner.com">
+            Arachni v1.4
+        </a>
+
+        <div class="navbar-header">
+            <ul class="nav navbar-nav">
+                <li class="dropdown">
+                    <a href="#!/summary">
+                        Summary
+
+                        
+                        <b class="fa fa-caret-down"></b>
+                        
+                    </a>
+
+                    
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="#!/summary/charts">
+                                Charts
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#!/summary/issues">
+                                Issues
+                            </a>
+                        </li>
+                    </ul>
+                    
+                </li>
+
+                
+                <li class="dropdown">
+                    <a href="#!/issues" class="dropdown-toggle">
+                        Issues
+
+                        <span class="badge">
+                            2
+                        </span>
+
+                        <b class="fa fa-caret-down"></b>
+                    </a>
+
+                    <ul class="dropdown-menu">
+                        
+                            <li class="dropdown">
+                                <a href="#!/issues/trusted">
+                                    Trusted
+
+                                    <span class="badge">
+                                        2
+                                    </span>
+
+                                    <b class="fa fa-caret-right"></b>
+                                </a>
+
+                                <ul class="dropdown-menu">
+                                    
+                                        <li class="dropdown">
+                                            <a href="#!/issues/trusted/severity/low">
+                                                Low
+
+                                                <span class="badge">
+                                                    1
+                                                </span>
+
+                                                <b class="fa fa-caret-right"></b>
+                                            </a>
+
+                                            <ul class="dropdown-menu">
+                                                
+                                                    <li class="dropdown">
+                                                        <a href="#!/issues/trusted/severity/low/x_frame_options">
+                                                            Missing &#39;X-Frame-Options&#39; header
+
+                                                            <span class="badge">
+                                                                1
+                                                            </span>
+                                                        </a>
+                                                    </li>
+                                                
+                                            </ul>
+                                        </li>
+                                    
+                                        <li class="dropdown">
+                                            <a href="#!/issues/trusted/severity/informational">
+                                                Informational
+
+                                                <span class="badge">
+                                                    1
+                                                </span>
+
+                                                <b class="fa fa-caret-right"></b>
+                                            </a>
+
+                                            <ul class="dropdown-menu">
+                                                
+                                                    <li class="dropdown">
+                                                        <a href="#!/issues/trusted/severity/informational/interesting_responses">
+                                                            Interesting response
+
+                                                            <span class="badge">
+                                                                1
+                                                            </span>
+                                                        </a>
+                                                    </li>
+                                                
+                                            </ul>
+                                        </li>
+                                    
+                                </ul>
+                            </li>
+                        
+                    </ul>
+                </li>
+                
+
+                
+                <li class="dropdown">
+                    <a href="#!/plugins">
+                        Plugin results
+
+                        <span class="badge">1</span>
+                        <b class="fa fa-caret-down"></b>
+                    </a>
+
+                    <ul class="dropdown-menu">
+                        
+                            <li>
+                                <a href="#!/plugins/healthmap">
+                                    Health map
+                                </a>
+                            </li>
+                        
+                    </ul>
+                </li>
+                
+
+                <li>
+                    <a href="#!/sitemap">
+                        Sitemap
+
+                        <span class="badge">1</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#!/configuration">Configuration</a>
+                </li>
+            </ul>
+        </div>
+
+        <p class="navbar-text navbar-right">
+            (Found a false positive?
+
+            <a class="navbar-link" href="https://github.com/Arachni/arachni/issues">
+                Please let us know.</a>)
+        </p>
+    </div>
+</nav>
+
+
+<div class="container-fluid">
+    <div class="page-header">
+        <h1>
+            http://frontend.local/
+            <small>Generated on 2024-07-26 18:28:05 +0000</small>
+        </h1>
+    </div>
+
+    <div class="tab-content">
+        <div class="tab-pane active" id="summary">
+            <h2>Summary</h2>
+
+<div id="summary-tabs">
+    
+        <ul class="nav nav-tabs">
+            <li class="active">
+                <a href="#!/summary/charts">Charts</a>
+            </li>
+            <li>
+                <a href="#!/summary/issues">
+                    Issues
+
+                    <span class="badge">
+                        2
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a href="#!/summary/owasp_top_10">OWASP Top 10</a>
+            </li>
+        </ul>
+
+        <div class="tab-content">
+            <div class="tab-pane active" id="summary-charts">
+                <div class="row">
+    <div id="bars">
+        <div class="col-md-12">
+            <h3>
+                Issues
+
+                <small>
+                    by type, trust, and severity
+                </small>
+            </h3>
+
+            <p class="text-muted">
+                (Click on the bars or line points for details on the relevant issues.)
+            </p>
+
+            <div id='chart-issues'>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div id="pies">
+        <div class="col-md-4">
+            <h3>
+                Severities
+
+                <small>of issues based on possible impact</small>
+            </h3>
+
+            <p class="text-muted">
+                (Click to see relevant <a href="#!/summary/issues/trusted">Trusted</a> issues.)
+            </p>
+
+            <div id="chart-severities">
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <h3>
+                Elements
+                <small>with issues, by type</small>
+            </h3>
+
+            <p>&nbsp;</p>
+            <div id="chart-elements">
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <h3>
+                Trust
+                <small>
+                    evaluation
+                    (<a href="#!/summary/issues/trusted">Trusted</a> vs.
+                    <a href="#!/summary/issues/untrusted">Untrusted</a>) of
+                    issues
+                </small>
+            </h3>
+
+            <p class="text-muted">(Click to see relevant issues.)</p>
+
+            <div id="chart-trust">
+            </div>
+        </div>
+    </div>
+</div>
+
+            </div>
+
+            <div class="tab-pane" id="summary-issues">
+                
+    
+
+    <h3>
+        <a
+            id="summary-issues-trusted"
+            href="#!/summary/issues/trusted"
+        >
+
+            Trusted
+
+            <span class="badge">
+                2
+            </span>
+        </a>
+    </h3>
+
+    
+
+        <h4>
+            <a
+                id="summary-issues-trusted-severity-low"
+                href="#!/summary/issues/trusted/severity/low"
+            >
+                Low severity
+
+                <span class="badge">
+                    1
+                </span>
+            </a>
+        </h4>
+
+        <div class="row">
+            
+    <div class="col-md-6">
+        <div class="issue-summary">
+
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <strong>
+                        <a
+                        id="summary-issues-trusted-severity-low-x_frame_options"
+                        href="#!/summary/issues/trusted/severity/low/x_frame_options"
+                        >
+                            Missing 'X-Frame-Options' header
+
+                            <span class="badge">
+                                1
+                            </span>
+                        </a>
+                    </strong>
+                </div>
+
+                <div class="panel-body">
+                    
+                        <div class="markdown">
+                            
+<p>Clickjacking (User Interface redress attack, UI redress attack, UI redressing)
+is a malicious technique of tricking a Web user into clicking on something different
+from what the user perceives they are clicking on, thus potentially revealing
+confidential information or taking control of their computer while clicking on
+seemingly innocuous web pages.</p>
+
+<p>The server didn’t return an <code>X-Frame-Options</code> header which means that this website
+could be at risk of a clickjacking attack.</p>
+
+<p>The <code>X-Frame-Options</code> HTTP response header can be used to indicate whether or not
+a browser should be allowed to render a page inside a frame or iframe. Sites can
+use this to avoid clickjacking attacks, by ensuring that their content is not
+embedded into other sites.</p>
+
+                        </div>
+                    
+
+                    <table class="table table-condensed">
+                        <tr>
+                            <th></th>
+                            <th>
+                                Vector type
+                            </th>
+
+                            
+
+                            
+                                <th>
+                                    HTTP method
+                                </th>
+                            
+
+                            <th>
+                                Action
+                            </th>
+                        </tr>
+
+                        
+                            <tr>
+                                <td>
+                                    <a class="btn btn-xs btn-info"
+                                       href="#!/issues/trusted/severity/low/x_frame_options/406436707"
+                                       title="Inspect issue"
+                                    >
+                                        <i class="fa fa-eye"></i>
+                                    </a>
+                                </td>
+                                <td>
+                                    <code>server</code>
+                                </td>
+
+                                
+
+                                
+                                    <td>
+                                        <code>GET</code>
+                                    </td>
+                                
+
+                                <td>
+                                    <a href="http://frontend.local/">
+                                        http://frontend.local/
+                                    </a>
+                                </td>
+                            </tr>
+                        
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+        </div>
+
+        <hr/>
+    
+
+        <h4>
+            <a
+                id="summary-issues-trusted-severity-informational"
+                href="#!/summary/issues/trusted/severity/informational"
+            >
+                Informational severity
+
+                <span class="badge">
+                    1
+                </span>
+            </a>
+        </h4>
+
+        <div class="row">
+            
+    <div class="col-md-6">
+        <div class="issue-summary">
+
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <strong>
+                        <a
+                        id="summary-issues-trusted-severity-informational-interesting_responses"
+                        href="#!/summary/issues/trusted/severity/informational/interesting_responses"
+                        >
+                            Interesting response
+
+                            <span class="badge">
+                                1
+                            </span>
+                        </a>
+                    </strong>
+                </div>
+
+                <div class="panel-body">
+                    
+                        <div class="markdown">
+                            
+<p>The server responded with a non 200 (OK) nor 404 (Not Found) status code.
+This is a non-issue, however exotic HTTP response status codes can provide useful
+insights into the behavior of the web application and assist with the penetration test.</p>
+
+                        </div>
+                    
+
+                    <table class="table table-condensed">
+                        <tr>
+                            <th></th>
+                            <th>
+                                Vector type
+                            </th>
+
+                            
+
+                            
+                                <th>
+                                    HTTP method
+                                </th>
+                            
+
+                            <th>
+                                Action
+                            </th>
+                        </tr>
+
+                        
+                            <tr>
+                                <td>
+                                    <a class="btn btn-xs btn-info"
+                                       href="#!/issues/trusted/severity/informational/interesting_responses/4232206448"
+                                       title="Inspect issue"
+                                    >
+                                        <i class="fa fa-eye"></i>
+                                    </a>
+                                </td>
+                                <td>
+                                    <code>server</code>
+                                </td>
+
+                                
+
+                                
+                                    <td>
+                                        <code>TRACE</code>
+                                    </td>
+                                
+
+                                <td>
+                                    <a href="http://frontend.local/">
+                                        http://frontend.local/
+                                    </a>
+                                </td>
+                            </tr>
+                        
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+        </div>
+
+        <hr/>
+    
+
+
+            </div>
+
+            <div class="tab-pane" id="summary-owasp_top_10">
+                <p>
+    (<a href="https://www.owasp.org/index.php/Top_10_2013-Top_10">About the OWASP Top 10 list</a>)
+</p>
+
+
+
+            </div>
+        </div>
+    
+</div>
+
+        </div>
+
+        <div class="tab-pane" id="configuration">
+            <h2>
+    Configuration
+
+    <a id="configuration-download" class="btn btn-sm btn-primary">
+        Download
+    </a>
+</h2>
+
+<dl class="dl-horizontal">
+    <dt>Version</dt>
+    <dd>1.4</dd>
+    <dt>Audit started on</dt>
+    <dd>2024-07-26 18:27:53 +0000</dd>
+    <dt>Audit finished on</dt>
+    <dd>2024-07-26 18:28:02 +0000</dd>
+    <dt>Runtime</dt>
+    <dd>00:00:09</dd>
+</dl>
+
+<h3>
+    <a
+    id="configuration-general"
+    href="#!/configuration/general"
+    >
+        General
+    </a>
+</h3>
+
+<dl class="dl-horizontal">
+    <dt>URL</dt>
+    <dd>
+        <a href="http://frontend.local/">
+            http://frontend.local/
+        </a>
+    </dd>
+
+    
+        <dt>Checks</dt>
+        <dd>
+            <code>allowed_methods</code>, <code>backdoors</code>, <code>backup_directories</code>, <code>backup_files</code>, <code>captcha</code>, <code>code_injection</code>, <code>code_injection_php_input_wrapper</code>, <code>code_injection_timing</code>, <code>common_admin_interfaces</code>, <code>common_directories</code>, <code>common_files</code>, <code>cookie_set_for_parent_domain</code>, <code>credit_card</code>, <code>csrf</code>, <code>cvs_svn_users</code>, <code>directory_listing</code>, <code>emails</code>, <code>file_inclusion</code>, <code>form_upload</code>, <code>hsts</code>, <code>htaccess_limit</code>, <code>html_objects</code>, <code>http_only_cookies</code>, <code>http_put</code>, <code>insecure_client_access_policy</code>, <code>insecure_cookies</code>, <code>insecure_cors_policy</code>, <code>insecure_cross_domain_policy_access</code>, <code>insecure_cross_domain_policy_headers</code>, <code>interesting_responses</code>, <code>ldap_injection</code>, <code>localstart_asp</code>, <code>mixed_resource</code>, <code>no_sql_injection</code>, <code>no_sql_injection_differential</code>, <code>origin_spoof_access_restriction_bypass</code>, <code>os_cmd_injection</code>, <code>os_cmd_injection_timing</code>, <code>password_autocomplete</code>, <code>path_traversal</code>, <code>private_ip</code>, <code>response_splitting</code>, <code>rfi</code>, <code>session_fixation</code>, <code>source_code_disclosure</code>, <code>sql_injection</code>, <code>sql_injection_differential</code>, <code>sql_injection_timing</code>, <code>ssn</code>, <code>trainer</code>, <code>unencrypted_password_forms</code>, <code>unvalidated_redirect</code>, <code>unvalidated_redirect_dom</code>, <code>webdav</code>, <code>x_frame_options</code>, <code>xpath_injection</code>, <code>xss</code>, <code>xss_dom</code>, <code>xss_dom_script_context</code>, <code>xss_event</code>, <code>xss_path</code>, <code>xss_script_context</code>, <code>xss_tag</code>, <code>xst</code>, <code>xxe</code>
+        </dd>
+    
+
+    
+
+    
+</dl>
+
+
+    <hr/>
+
+    <h3>
+        <a
+            id="configuration-audit"
+            href="#!/configuration/audit"
+        >
+            Audit
+        </a>
+    </h3>
+
+    <table class="table table-condensed">
+    <col width="15%"/>
+
+    
+        <tr>
+            <th>
+                <code>&quot;parameter_values&quot;</code>
+            </th>
+            <td>
+                
+                    <code>true</code>
+                
+            </td>
+        </tr>
+    
+        <tr>
+            <th>
+                <code>&quot;exclude_vector_patterns&quot;</code>
+            </th>
+            <td>
+                
+                    <code>[]</code>
+                
+            </td>
+        </tr>
+    
+        <tr>
+            <th>
+                <code>&quot;include_vector_patterns&quot;</code>
+            </th>
+            <td>
+                
+                    <code>[]</code>
+                
+            </td>
+        </tr>
+    
+        <tr>
+            <th>
+                <code>&quot;link_templates&quot;</code>
+            </th>
+            <td>
+                
+                    <code>[]</code>
+                
+            </td>
+        </tr>
+    
+        <tr>
+            <th>
+                <code>&quot;links&quot;</code>
+            </th>
+            <td>
+                
+                    <code>true</code>
+                
+            </td>
+        </tr>
+    
+        <tr>
+            <th>
+                <code>&quot;forms&quot;</code>
+            </th>
+            <td>
+                
+                    <code>true</code>
+                
+            </td>
+        </tr>
+    
+        <tr>
+            <th>
+                <code>&quot;cookies&quot;</code>
+            </th>
+            <td>
+                
+                    <code>true</code>
+                
+            </td>
+        </tr>
+    
+        <tr>
+            <th>
+                <code>&quot;ui_inputs&quot;</code>
+            </th>
+            <td>
+                
+                    <code>true</code>
+                
+            </td>
+        </tr>
+    
+        <tr>
+            <th>
+                <code>&quot;ui_forms&quot;</code>
+            </th>
+            <td>
+                
+                    <code>true</code>
+                
+            </td>
+        </tr>
+    
+        <tr>
+            <th>
+                <code>&quot;jsons&quot;</code>
+            </th>
+            <td>
+                
+                    <code>true</code>
+                
+            </td>
+        </tr>
+    
+        <tr>
+            <th>
+                <code>&quot;xmls&quot;</code>
+            </th>
+            <td>
+                
+                    <code>true</code>
+                
+            </td>
+        </tr>
+    
+</table>
+
+
+
+    <hr/>
+
+    <h3>
+        <a
+            id="configuration-scope"
+            href="#!/configuration/scope"
+        >
+            Scope
+        </a>
+    </h3>
+
+    <table class="table table-condensed">
+    <col width="15%"/>
+
+    
+        <tr>
+            <th>
+                <code>&quot;redundant_path_patterns&quot;</code>
+            </th>
+            <td>
+                
+                    
+                        <code>{}</code>
+                    
+                
+            </td>
+        </tr>
+    
+        <tr>
+            <th>
+                <code>&quot;dom_depth_limit&quot;</code>
+            </th>
+            <td>
+                
+                    <code>5</code>
+                
+            </td>
+        </tr>
+    
+        <tr>
+            <th>
+                <code>&quot;exclude_file_extensions&quot;</code>
+            </th>
+            <td>
+                
+                    <code>[]</code>
+                
+            </td>
+        </tr>
+    
+        <tr>
+            <th>
+                <code>&quot;exclude_path_patterns&quot;</code>
+            </th>
+            <td>
+                
+                    <code>[]</code>
+                
+            </td>
+        </tr>
+    
+        <tr>
+            <th>
+                <code>&quot;exclude_content_patterns&quot;</code>
+            </th>
+            <td>
+                
+                    <code>[]</code>
+                
+            </td>
+        </tr>
+    
+        <tr>
+            <th>
+                <code>&quot;include_path_patterns&quot;</code>
+            </th>
+            <td>
+                
+                    <code>[]</code>
+                
+            </td>
+        </tr>
+    
+        <tr>
+            <th>
+                <code>&quot;restrict_paths&quot;</code>
+            </th>
+            <td>
+                
+                    <code>[]</code>
+                
+            </td>
+        </tr>
+    
+        <tr>
+            <th>
+                <code>&quot;extend_paths&quot;</code>
+            </th>
+            <td>
+                
+                    <code>[]</code>
+                
+            </td>
+        </tr>
+    
+        <tr>
+            <th>
+                <code>&quot;url_rewrites&quot;</code>
+            </th>
+            <td>
+                
+                    
+                        <code>{}</code>
+                    
+                
+            </td>
+        </tr>
+    
+        <tr>
+            <th>
+                <code>&quot;include_subdomains&quot;</code>
+            </th>
+            <td>
+                
+                    <code>true</code>
+                
+            </td>
+        </tr>
+    
+</table>
+
+
+
+    <hr/>
+
+    <h3>
+        <a
+            id="configuration-datastore"
+            href="#!/configuration/datastore"
+        >
+            Datastore
+        </a>
+    </h3>
+
+    <table class="table table-condensed">
+    <col width="15%"/>
+
+    
+        <tr>
+            <th>
+                <code>&quot;report_path&quot;</code>
+            </th>
+            <td>
+                
+                    <code>&quot;/tmp/security_scan_image_apartment_frontend_v1_80bb0f0f_report&quot;</code>
+                
+            </td>
+        </tr>
+    
+</table>
+
+
+
+    <hr/>
+
+    <h3>
+        <a
+            id="configuration-browser_cluster"
+            href="#!/configuration/browser_cluster"
+        >
+            Browser cluster
+        </a>
+    </h3>
+
+    <table class="table table-condensed">
+    <col width="15%"/>
+
+    
+        <tr>
+            <th>
+                <code>&quot;local_storage&quot;</code>
+            </th>
+            <td>
+                
+                    
+                        <code>{}</code>
+                    
+                
+            </td>
+        </tr>
+    
+        <tr>
+            <th>
+                <code>&quot;wait_for_elements&quot;</code>
+            </th>
+            <td>
+                
+                    
+                        <code>{}</code>
+                    
+                
+            </td>
+        </tr>
+    
+        <tr>
+            <th>
+                <code>&quot;pool_size&quot;</code>
+            </th>
+            <td>
+                
+                    <code>6</code>
+                
+            </td>
+        </tr>
+    
+        <tr>
+            <th>
+                <code>&quot;job_timeout&quot;</code>
+            </th>
+            <td>
+                
+                    <code>25</code>
+                
+            </td>
+        </tr>
+    
+        <tr>
+            <th>
+                <code>&quot;worker_time_to_live&quot;</code>
+            </th>
+            <td>
+                
+                    <code>100</code>
+                
+            </td>
+        </tr>
+    
+        <tr>
+            <th>
+                <code>&quot;ignore_images&quot;</code>
+            </th>
+            <td>
+                
+                    <code>false</code>
+                
+            </td>
+        </tr>
+    
+        <tr>
+            <th>
+                <code>&quot;screen_width&quot;</code>
+            </th>
+            <td>
+                
+                    <code>1600</code>
+                
+            </td>
+        </tr>
+    
+        <tr>
+            <th>
+                <code>&quot;screen_height&quot;</code>
+            </th>
+            <td>
+                
+                    <code>1200</code>
+                
+            </td>
+        </tr>
+    
+</table>
+
+
+
+    <hr/>
+
+    <h3>
+        <a
+            id="configuration-input"
+            href="#!/configuration/input"
+        >
+            Input
+        </a>
+    </h3>
+
+    <table class="table table-condensed">
+    <col width="15%"/>
+
+    
+        <tr>
+            <th>
+                <code>&quot;values&quot;</code>
+            </th>
+            <td>
+                
+                    
+                        <code>{}</code>
+                    
+                
+            </td>
+        </tr>
+    
+        <tr>
+            <th>
+                <code>&quot;default_values&quot;</code>
+            </th>
+            <td>
+                
+                    
+                        <table class="table table-condensed">
+    <col width="15%"/>
+
+    
+        <tr>
+            <th>
+                <code>&quot;name&quot;</code>
+            </th>
+            <td>
+                
+                    <code>&quot;arachni_name&quot;</code>
+                
+            </td>
+        </tr>
+    
+        <tr>
+            <th>
+                <code>&quot;user&quot;</code>
+            </th>
+            <td>
+                
+                    <code>&quot;arachni_user&quot;</code>
+                
+            </td>
+        </tr>
+    
+        <tr>
+            <th>
+                <code>&quot;usr&quot;</code>
+            </th>
+            <td>
+                
+                    <code>&quot;arachni_user&quot;</code>
+                
+            </td>
+        </tr>
+    
+        <tr>
+            <th>
+                <code>&quot;pass&quot;</code>
+            </th>
+            <td>
+                
+                    <code>&quot;5543!%arachni_secret&quot;</code>
+                
+            </td>
+        </tr>
+    
+        <tr>
+            <th>
+                <code>&quot;txt&quot;</code>
+            </th>
+            <td>
+                
+                    <code>&quot;arachni_text&quot;</code>
+                
+            </td>
+        </tr>
+    
+        <tr>
+            <th>
+                <code>&quot;num&quot;</code>
+            </th>
+            <td>
+                
+                    <code>&quot;132&quot;</code>
+                
+            </td>
+        </tr>
+    
+        <tr>
+            <th>
+                <code>&quot;amount&quot;</code>
+            </th>
+            <td>
+                
+                    <code>&quot;100&quot;</code>
+                
+            </td>
+        </tr>
+    
+        <tr>
+            <th>
+                <code>&quot;mail&quot;</code>
+            </th>
+            <td>
+                
+                    <code>&quot;arachni@email.gr&quot;</code>
+                
+            </td>
+        </tr>
+    
+        <tr>
+            <th>
+                <code>&quot;account&quot;</code>
+            </th>
+            <td>
+                
+                    <code>&quot;12&quot;</code>
+                
+            </td>
+        </tr>
+    
+        <tr>
+            <th>
+                <code>&quot;id&quot;</code>
+            </th>
+            <td>
+                
+                    <code>&quot;1&quot;</code>
+                
+            </td>
+        </tr>
+    
+</table>
+
+                    
+                
+            </td>
+        </tr>
+    
+        <tr>
+            <th>
+                <code>&quot;without_defaults&quot;</code>
+            </th>
+            <td>
+                
+                    <code>false</code>
+                
+            </td>
+        </tr>
+    
+        <tr>
+            <th>
+                <code>&quot;force&quot;</code>
+            </th>
+            <td>
+                
+                    <code>false</code>
+                
+            </td>
+        </tr>
+    
+</table>
+
+
+
+    <hr/>
+
+    <h3>
+        <a
+            id="configuration-http"
+            href="#!/configuration/http"
+        >
+            Http
+        </a>
+    </h3>
+
+    <table class="table table-condensed">
+    <col width="15%"/>
+
+    
+        <tr>
+            <th>
+                <code>&quot;user_agent&quot;</code>
+            </th>
+            <td>
+                
+                    <code>&quot;Arachni/v1.4&quot;</code>
+                
+            </td>
+        </tr>
+    
+        <tr>
+            <th>
+                <code>&quot;request_timeout&quot;</code>
+            </th>
+            <td>
+                
+                    <code>10000</code>
+                
+            </td>
+        </tr>
+    
+        <tr>
+            <th>
+                <code>&quot;request_redirect_limit&quot;</code>
+            </th>
+            <td>
+                
+                    <code>5</code>
+                
+            </td>
+        </tr>
+    
+        <tr>
+            <th>
+                <code>&quot;request_concurrency&quot;</code>
+            </th>
+            <td>
+                
+                    <code>20</code>
+                
+            </td>
+        </tr>
+    
+        <tr>
+            <th>
+                <code>&quot;request_queue_size&quot;</code>
+            </th>
+            <td>
+                
+                    <code>100</code>
+                
+            </td>
+        </tr>
+    
+        <tr>
+            <th>
+                <code>&quot;request_headers&quot;</code>
+            </th>
+            <td>
+                
+                    
+                        <code>{}</code>
+                    
+                
+            </td>
+        </tr>
+    
+        <tr>
+            <th>
+                <code>&quot;response_max_size&quot;</code>
+            </th>
+            <td>
+                
+                    <code>500000</code>
+                
+            </td>
+        </tr>
+    
+        <tr>
+            <th>
+                <code>&quot;cookies&quot;</code>
+            </th>
+            <td>
+                
+                    
+                        <code>{}</code>
+                    
+                
+            </td>
+        </tr>
+    
+</table>
+
+
+
+
+        </div>
+
+        
+        <div class="tab-pane" id="issues">
+            <h2>Issues</h2>
+
+<ul class="nav nav-tabs">
+    
+    <li
+        class='active'
+    >
+        <a class="tab-trusted" href="#!/issues/trusted" >
+            Trusted
+
+            <span class="badge">
+                2
+            </span>
+        </a>
+    </li>
+    
+</ul>
+
+<div class="tab-content">
+    
+    <div class="tab-pane active" id="issues-trusted">
+        <p class="well">
+            At the time these issues were logged there were no abnormal
+            interferences or anomalous server behavior.<br/>
+            These issues are considered trusted and accurate.
+        </p>
+
+        <div id="issues-trusted-severities-tabs">
+    <ul class="nav nav-tabs">
+
+        
+            <li class="active" >
+                <a class="tab-severity-low"
+                   href="#!/issues/trusted/severity/low">
+                    Low
+
+                    <span class="badge">
+                        1
+                    </span>
+                </a>
+            </li>
+        
+            <li  >
+                <a class="tab-severity-informational"
+                   href="#!/issues/trusted/severity/informational">
+                    Informational
+
+                    <span class="badge">
+                        1
+                    </span>
+                </a>
+            </li>
+        
+    </ul>
+</div>
+
+<div class="tab-content">
+    
+        <div class="tab-pane active"
+             id="issues-trusted-severity-low">
+
+            
+                
+
+                <div class="row">
+                    <div class="col-md-10">
+                        <h3>
+                            <a id="issues-trusted-severity-low-x_frame_options"
+                               href="#!/issues/trusted/severity/low/x_frame_options"
+                            >
+                                Missing 'X-Frame-Options' header
+                            </a>
+
+                            <span class="badge">
+                                1
+                            </span>
+
+                            <small>
+                                <span class="label label-default">
+                                    x_frame_options
+                                </span>
+                            </small>
+                        </h3>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="issue-description markdown">
+                                    
+<p>Clickjacking (User Interface redress attack, UI redress attack, UI redressing)
+is a malicious technique of tricking a Web user into clicking on something different
+from what the user perceives they are clicking on, thus potentially revealing
+confidential information or taking control of their computer while clicking on
+seemingly innocuous web pages.</p>
+
+<p>The server didn’t return an <code>X-Frame-Options</code> header which means that this website
+could be at risk of a clickjacking attack.</p>
+
+<p>The <code>X-Frame-Options</code> HTTP response header can be used to indicate whether or not
+a browser should be allowed to render a page inside a frame or iframe. Sites can
+use this to avoid clickjacking attacks, by ensuring that their content is not
+embedded into other sites.</p>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        
+                        <div class="row">
+
+                            
+
+                            
+                            <div class="col-md-12">
+                                <h4>
+                                    <a id="issues-trusted-severity-low-x_frame_options-remedy_guidance"
+                                       href="#!/issues/trusted/severity/low/x_frame_options/remedy_guidance"
+                                    >
+                                        Remediation guidance
+                                    </a>
+                                </h4>
+
+                                <div class="issue-remedy_guidance markdown">
+                                    
+<p>Configure your web server to include an <code>X-Frame-Options</code> header.</p>
+
+                                </div>
+                            </div>
+                            
+
+                            
+                        </div>
+                        
+                    </div>
+
+                    
+                    <div class="col-md-2">
+                        <h4>
+                            <a id="issues-trusted-severity-low-x_frame_options-references"
+                               href="#!/issues/trusted/severity/low/x_frame_options/references"
+                            >
+                                References
+                            </a>
+                        </h4>
+
+                        <hr/>
+
+                        <ul class="list-unstyled">
+                            
+                                <li>
+                                    <a href="http://cwe.mitre.org/data/definitions/693.html">
+                                        CWE-693
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <hr/>
+                                </li>
+                            
+
+                            
+                                <li>
+                                    <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/X-Frame-Options"> MDN</a>
+                                </li>
+                            
+                                <li>
+                                    <a href="http://tools.ietf.org/html/rfc7034"> RFC</a>
+                                </li>
+                            
+                                <li>
+                                    <a href="https://www.owasp.org/index.php/Clickjacking"> OWASP</a>
+                                </li>
+                            
+                        </ul>
+                    </div>
+                    
+                </div>
+
+                
+                    <div id="issues-trusted-severity-low-x_frame_options-406436707">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a href="#!/issues/trusted/severity/low/x_frame_options/406436707">
+                            In <code>server</code>
+
+                            
+
+                            
+                                using
+                                <code>GET</code>
+                            
+                        </a>
+
+                        at
+
+                        <a href="http://frontend.local/">
+                            http://frontend.local/
+                        </a>
+
+                        pointing to
+                        <a href="http://frontend.local/">
+                            http://frontend.local/
+                        </a>.
+                    </h4>
+                </div>
+
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            
+
+
+
+
+
+
+
+<table class="table table-condensed table-fixed">
+    <thead>
+    <tr>
+        
+
+        
+
+        
+            <th>
+                Proof
+
+                <a href="#" rel="tooltip"
+                   title="This string was used to verify the existence of the issue.">
+                    <i class="fa fa-info"></i>
+                </a>
+            </th>
+        
+
+    </tr>
+    </thead>
+    <tr>
+
+        
+
+        
+
+        
+            <td class="wrap">
+                <pre class='code-container'>HTTP/1.1 502 Bad Gateway</pre>
+            </td>
+        
+    </tr>
+</table>
+
+
+                        </div>
+                    </div>
+
+                    <div class="panel-group">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a href="#!/issues/trusted/severity/low/x_frame_options/406436707/vector">
+                    <i class="fa fa-link"></i>
+                </a>
+
+                <a data-toggle="collapse" href="#issues-trusted-severity-low-x_frame_options-406436707-vector">
+                    Vector information
+                </a>
+            </h4>
+        </div>
+        <div id="issues-trusted-severity-low-x_frame_options-406436707-vector" class="panel-collapse collapse">
+            <div class="panel-body">
+                
+
+<table class="table">
+    <tr>
+        <th>Type</th>
+        <th>In</th>
+        <th>Action</th>
+
+        
+    </tr>
+    <tr>
+        <td><code>server</code></td>
+        <td>
+            <a href="http://frontend.local/">
+                http://frontend.local/
+            </a>
+        </td>
+        <td>
+            <a href="http://frontend.local/">
+                http://frontend.local/
+            </a>
+        </td>
+
+        
+    </tr>
+</table>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a href="#!/issues/trusted/severity/low/x_frame_options/406436707/affected_page">
+                    <i class="fa fa-link"></i>
+                </a>
+
+                <a data-toggle="collapse" href="#issues-trusted-severity-low-x_frame_options-406436707-affected_page">
+                    Affected page:
+
+                    <code>http://frontend.local/</code>
+                </a>
+            </h4>
+        </div>
+        <div id="issues-trusted-severity-low-x_frame_options-406436707-affected_page" class="panel-collapse collapse">
+            <div class="panel-body">
+                
+
+
+
+
+
+<div class="row">
+    <div class="col-md-6">
+        <strong>
+            <a
+            id="issues-trusted-severity-low-x_frame_options-406436707-affected_page-http_request"
+            href="#!/issues/trusted/severity/low/x_frame_options/406436707/affected_page/http_request">
+                HTTP request
+            </a>
+        </strong>
+
+        <p class="text-muted">
+            Raw HTTP request used to retrieve the page.
+        </p>
+
+        <pre class="code-container">GET / HTTP/1.1
+Host: frontend.local
+Accept-Encoding: gzip, deflate
+User-Agent: Arachni/v1.4
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-US,en;q=0.8,he;q=0.6
+
+</pre>
+    </div>
+
+    <div class="col-md-6">
+        <strong>
+            <a
+            id="issues-trusted-severity-low-x_frame_options-406436707-affected_page-http_response"
+            href="#!/issues/trusted/severity/low/x_frame_options/406436707/affected_page/http_response">
+                HTTP response
+            </a>
+        </strong>
+
+        <p class="text-muted">
+            Raw HTTP response used as the page basis.
+
+            (Binary bodies will not be displayed.)
+        </p>
+
+        
+            <pre class="code-container"><span class="issue-proof-highlight">HTTP/1.1 502 Bad Gateway</span>
+Accept-Ranges: bytes
+Content-Length: 13180
+Content-Type: text/html
+Date: Fri, 26 Jul 2024 18:28:00 GMT
+Etag: &quot;5f1fd941-337c&quot;
+Last-Modified: Tue, 28 Jul 2020 07:52:33 GMT
+Server: nginx/1.19.1
+
+&lt;!doctype html&gt;&lt;html lang=&quot;en&quot;&gt;&lt;head&gt;&lt;title&gt;Bad Gateway&lt;/title&gt;&lt;meta charset=&quot;utf-8&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1, shrink-to-fit=no&quot;&gt;&lt;link href=&quot;https://fonts.googleapis.com/css?family=Nunito&amp;display=swap&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot;&gt; &lt;style rel=&quot;stylesheet&quot; type=&quot;text/css&quot; integrity=&quot;sha256-TIMoU8JpKBLmQBdF8noc2hLopLeH4p7lQhqPcmSnYDs=&quot; crossorigin=&quot;anonymous&quot;&gt;html{line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}header,nav,section{display:block}figcaption,main{display:block}a{background-color:transparent;-webkit-text-decoration-skip:objects}strong{font-weight:inherit}strong{font-weight:bolder}code{font-family:monospace, monospace;font-size:1em}dfn{font-style:italic}svg:not(:root){overflow:hidden}button,input{font-family:sans-serif;font-size:100%;line-height:1.15;margin:0}button,input{overflow:visible}button{text-transform:none}button,html [type=&quot;button&quot;],[type=&quot;reset&quot;],[type=&quot;submit&quot;]{-webkit-appearance:button}button::-moz-focus-inner,[type=&quot;button&quot;]::-moz-focus-inner,[type=&quot;reset&quot;]::-moz-focus-inner,[type=&quot;submit&quot;]::-moz-focus-inner{border-style:none;padding:0}button:-moz-focusring,[type=&quot;button&quot;]:-moz-focusring,[type=&quot;reset&quot;]:-moz-focusring,[type=&quot;submit&quot;]:-moz-focusring{outline:1px dotted ButtonText}legend{-webkit-box-sizing:border-box;box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal}[type=&quot;checkbox&quot;],[type=&quot;radio&quot;]{-webkit-box-sizing:border-box;box-sizing:border-box;padding:0}[type=&quot;number&quot;]::-webkit-inner-spin-button,[type=&quot;number&quot;]::-webkit-outer-spin-button{height:auto}[type=&quot;search&quot;]{-webkit-appearance:textfield;outline-offset:-2px}[type=&quot;search&quot;]::-webkit-search-cancel-button,[type=&quot;search&quot;]::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}menu{display:block}canvas{display:inline-block}template{display:none}[hidden]{display:none}html{-webkit-box-sizing:border-box;box-sizing:border-box;font-family:sans-serif}*,*::before,*::after{-webkit-box-sizing:inherit;box-sizing:inherit}p{margin:0}button{background:transparent;padding:0}button:focus{outline:1px dotted;outline:5px auto -webkit-focus-ring-color}*,*::before,*::after{border-width:0;border-style:solid;border-color:#dae1e7}button,[type=&quot;button&quot;],[type=&quot;reset&quot;],[type=&quot;submit&quot;]{border-radius:0}button,input{font-family:inherit}input::-webkit-input-placeholder{color:inherit;opacity:.5}input:-ms-input-placeholder{color:inherit;opacity:.5}input::-ms-input-placeholder{color:inherit;opacity:.5}input::placeholder{color:inherit;opacity:.5}button,[role=button]{cursor:pointer}.bg-transparent{background-color:transparent}.bg-white{background-color:#fff}.bg-teal-light{background-color:#64d5ca}.bg-blue-dark{background-color:#2779bd}.bg-indigo-light{background-color:#7886d7}.bg-purple-light{background-color:#a779e9}.bg-no-repeat{background-repeat:no-repeat}.bg-cover{background-size:cover}.border-grey-light{border-color:#dae1e7}.hover\:border-grey:hover{border-color:#b8c2cc}.rounded-lg{border-radius:.5rem}.border-2{border-width:2px}.hidden{display:none}.flex{display:-webkit-box;display:-ms-flexbox;display:flex}.items-center{-webkit-box-align:center;-ms-flex-align:center;align-items:center}.justify-center{-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center}.font-sans{font-family:Nunito, sans-serif}.font-light{font-weight:300}.font-bold{font-weight:700}.font-black{font-weight:900}.h-1{height:.25rem}.leading-normal{line-height:1.5}.m-8{margin:2rem}.my-3{margin-top:.75rem;margin-bottom:.75rem}.mb-8{margin-bottom:2rem}.max-w-sm{max-width:30rem}.min-h-screen{min-height:100vh}.py-3{padding-top:.75rem;padding-bottom:.75rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.pb-full{padding-bottom:100%}.absolute{position:absolute}.relative{position:relative}.pin{top:0;right:0;bottom:0;left:0}.text-black{color:#22292f}.text-grey-darkest{color:#3d4852}.text-grey-darker{color:#606f7b}.text-2xl{font-size:1.5rem}.text-5xl{font-size:3rem}.uppercase{text-transform:uppercase}.antialiased{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.tracking-wide{letter-spacing:.05em}.w-16{width:4rem}.w-full{width:100%}@media (min-width: 768px){.md\:bg-left{background-position:left}.md\:bg-right{background-position:right}.md\:flex{display:-webkit-box;display:-ms-flexbox;display:flex}.md\:my-6{margin-top:1.5rem;margin-bottom:1.5rem}.md\:min-h-screen{min-height:100vh}.md\:pb-0{padding-bottom:0}.md\:text-3xl{font-size:1.875rem}.md\:text-15xl{font-size:9rem}.md\:w-1\/2{width:50%}}@media (min-width: 992px){.lg\:bg-center{background-position:center}}
+&lt;/style&gt;&lt;/head&gt;&lt;body class=&quot;antialiased font-sans&quot;&gt;&lt;div class=&quot;md:flex min-h-screen&quot;&gt;&lt;div class=&quot;w-full md:w-1/2 bg-white flex items-center justify-center&quot;&gt;&lt;div class=&quot;max-w-sm m-8&quot;&gt;&lt;div class=&quot;text-black text-5xl md:text-15xl font-black&quot;&gt; 502&lt;/div&gt;&lt;div class=&quot;w-16 h-1 bg-purple-light my-3 md:my-6&quot;&gt;&lt;/div&gt;&lt;p class=&quot;text-grey-darker text-2xl md:text-3xl font-light mb-8 leading-normal&quot;&gt; Sorry, the page you are looking for is not available. Please check back soon.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;relative pb-full md:flex md:pb-0 md:min-h-screen w-full md:w-1/2&quot;&gt;&lt;div style=&quot;background-image:url(&#39;data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5z%0AOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2aWV3Qm94%0APSIwIDAgMTAyNCAxMDI0Ij48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImEi%0AIHgxPSI1MC4zMSUiIHgyPSI1MCUiIHkxPSI3NC43NCUiIHkyPSIwJSI%2BPHN0%0Ab3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI0UyNkI2QiIvPjxzdG9wIG9m%0AZnNldD0iNTAuMjglIiBzdG9wLWNvbG9yPSIjRjVCQ0Y0Ii8%2BPHN0b3Agb2Zm%0Ac2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjODY5MEUxIi8%2BPC9saW5lYXJHcmFk%0AaWVudD48bGluZWFyR3JhZGllbnQgaWQ9ImIiIHgxPSI1MCUiIHgyPSI1MCUi%0AIHkxPSIwJSIgeTI9IjEwMCUiPjxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29s%0Ab3I9IiM4QzlDRTciLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9%0AIiM0MzUzQTQiLz48L2xpbmVhckdyYWRpZW50PjxsaW5lYXJHcmFkaWVudCBp%0AZD0iYyIgeDE9IjUwJSIgeDI9IjUwJSIgeTE9IjAlIiB5Mj0iMTAwJSI%2BPHN0%0Ab3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI0QxRDlGRiIvPjxzdG9wIG9m%0AZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzgzOTVFQiIvPjwvbGluZWFyR3Jh%0AZGllbnQ%2BPGNpcmNsZSBpZD0iZSIgY3g9IjYyMiIgY3k9IjY2MyIgcj0iNjAi%0ALz48ZmlsdGVyIGlkPSJkIiB3aWR0aD0iMjYwJSIgaGVpZ2h0PSIyNjAlIiB4%0APSItODAlIiB5PSItODAlIiBmaWx0ZXJVbml0cz0ib2JqZWN0Qm91bmRpbmdC%0Ab3giPjxmZU9mZnNldCBpbj0iU291cmNlQWxwaGEiIHJlc3VsdD0ic2hhZG93%0AT2Zmc2V0T3V0ZXIxIi8%2BPGZlR2F1c3NpYW5CbHVyIGluPSJzaGFkb3dPZmZz%0AZXRPdXRlcjEiIHJlc3VsdD0ic2hhZG93Qmx1ck91dGVyMSIgc3RkRGV2aWF0%0AaW9uPSIzMiIvPjxmZUNvbG9yTWF0cml4IGluPSJzaGFkb3dCbHVyT3V0ZXIx%0AIiB2YWx1ZXM9IjAgMCAwIDAgMSAwIDAgMCAwIDEgMCAwIDAgMCAxIDAgMCAw%0AIDEgMCIvPjwvZmlsdGVyPjxsaW5lYXJHcmFkaWVudCBpZD0iZiIgeDE9IjQ5%0ALjg3JSIgeDI9IjQ5Ljg3JSIgeTE9IjMuNjIlIiB5Mj0iNzcuNzUlIj48c3Rv%0AcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjQjBEREYxIi8%2BPHN0b3Agb2Zm%0Ac2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMzI1QzgyIi8%2BPC9saW5lYXJHcmFk%0AaWVudD48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIxMDAlIiB4Mj0iNzIu%0ANDUlIiB5MT0iMCUiIHkyPSI4NS4yJSI%2BPHN0b3Agb2Zmc2V0PSIwJSIgc3Rv%0AcC1jb2xvcj0iIzFEM0E2RCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1j%0Ab2xvcj0iIzQ2Nzk5NCIvPjwvbGluZWFyR3JhZGllbnQ%2BPGxpbmVhckdyYWRp%0AZW50IGlkPSJoIiB4MT0iNDkuNDglIiB4Mj0iNDkuODclIiB5MT0iMTEuNjYl%0AIiB5Mj0iNzcuNzUlIj48c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIj%0AQjlDOUY3Ii8%2BPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMzAx%0AODYzIi8%2BPC9saW5lYXJHcmFkaWVudD48bGluZWFyR3JhZGllbnQgaWQ9Imki%0AIHgxPSI5MS41OSUiIHgyPSI3MC45OCUiIHkxPSI1Ljg5JSIgeTI9Ijg4JSI%2B%0APHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzJEMzE3MyIvPjxzdG9w%0AIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzdGOTBFMCIvPjwvbGluZWFy%0AR3JhZGllbnQ%2BPGxpbmVhckdyYWRpZW50IGlkPSJqIiB4MT0iNzAuOTglIiB4%0AMj0iNzAuOTglIiB5MT0iOS44OCUiIHkyPSI4OCUiPjxzdG9wIG9mZnNldD0i%0AMCUiIHN0b3AtY29sb3I9IiMyRDMxNzMiLz48c3RvcCBvZmZzZXQ9IjEwMCUi%0AIHN0b3AtY29sb3I9IiM3RjkwRTAiLz48L2xpbmVhckdyYWRpZW50PjwvZGVm%0Acz48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxyZWN0IHdp%0AZHRoPSIxMDI0IiBoZWlnaHQ9IjEwMjQiIGZpbGw9InVybCgjYSkiLz48ZyB0%0AcmFuc2Zvcm09InRyYW5zbGF0ZSgyMTEgNDIwKSI%2BPHBhdGggZmlsbD0iIzhD%0AOUNFNyIgZD0iTTY1IDBhMiAyIDAgMCAxIDIgMnYyM2gtNFYyYzAtMS4xLjkt%0AMiAyLTJ6Ii8%2BPHBhdGggZmlsbD0iIzUyNjNCOCIgZD0iTTY0IDI0aDJhMyAz%0AIDAgMCAxIDMgM3YyaC04di0yYTMgMyAwIDAgMSAzLTN6Ii8%2BPHBhdGggZmls%0AbD0idXJsKCNiKSIgZD0iTTY1IDEwOGg0MFY2OGE0MCA0MCAwIDEgMC04MCAw%0AdjQwaDQweiIvPjxwb2x5Z29uIGZpbGw9IiMyRTNEODciIHBvaW50cz0iMCAx%0AMTggMzAgMTEyIDMwIDIxOCAwIDIxOCIvPjxwb2x5Z29uIGZpbGw9IiMzMDE4%0ANjIiIHBvaW50cz0iNjAgMTE4IDMwIDExMiAzMCAyMTggNjAgMjE4Ii8%2BPHBh%0AdGggZmlsbD0idXJsKCNjKSIgZD0iTTQ1IDEwN1Y2OGE0MC4wMiA0MC4wMiAw%0AIDAgMSAzMC4wMy0zOC43NUM5Mi4yNyAzMy42NSAxMDUgNDkuMTEgMTA1IDY3%0ALjVWMTA3SDQ1eiIvPjxwb2x5Z29uIGZpbGw9IiM0MzUzQTQiIHBvaW50cz0i%0AMTUgNzggNjUgNjggNjcgNzAgNjcgMTc4IDE1IDE3OCIvPjxwb2x5Z29uIGZp%0AbGw9IiM4QzlDRTciIHBvaW50cz0iMTE1IDc4IDY1IDY4IDY1IDcwIDY1IDE3%0AOCAxMTUgMTc4Ii8%2BPHBvbHlnb24gZmlsbD0iIzQzNTNBNCIgcG9pbnRzPSI3%0ANSAxMTggMTA1IDExMiAxMDUgMjE4IDc1IDIxOCIvPjxwb2x5Z29uIGZpbGw9%0AIiM4QzlDRTciIHBvaW50cz0iMTM1IDExOCAxMDUgMTEyIDEwNSAyMTggMTM1%0AIDIxOCIvPjwvZz48dXNlIGZpbGw9ImJsYWNrIiBmaWx0ZXI9InVybCgjZCki%0AIHhsaW5rOmhyZWY9IiNlIi8%2BPHVzZSBmaWxsPSIjRkZGRkZGIiB4bGluazpo%0AcmVmPSIjZSIvPjxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE0NiAyNDUpIj48%0AcGF0aCBmaWxsPSJ1cmwoI2YpIiBkPSJNMTY5LjEyIDQ1MC41N0MxOTIuMjIg%0ANDY0LjA0IDE0My44NSA1MzIuNTIgMjQgNjU2aDY0OUMzMjguOTQgNTE0LjMg%0AMTYwLjk4IDQ0NS44MyAxNjkuMTIgNDUwLjU3eiIvPjxwYXRoIGZpbGw9InVy%0AbCgjZykiIGQ9Ik0xNzguNSA1MzguNUMxMzcuODMgNTY3LjE3IDE5OS42NyA2%0AMDYuMzMgMzY0IDY1NkgwbDE3OC41LTExNy41eiIvPjwvZz48ZyB0cmFuc2Zv%0Acm09InRyYW5zbGF0ZSgwIDI1NSkiPjxwYXRoIGZpbGw9InVybCgjaCkiIGQ9%0AIk0xMDI0IDY4NUgwVjQwMC4wOEM3Ny4zIDM2Ni40IDE1NS4yNiAzMzAgMjk3%0ALjQgMzMwYzI1MCAwIDI1MC43NiAxMjUuMjUgNTAwIDEyNSA4NC4wMy0uMDgg%0AMTYwLjAyLTE4LjIgMjI2LjYtNDAuOTNWNjg1eiIvPjwvZz48cGF0aCBmaWxs%0APSIjMUYyQTY4IiBkPSJNMjUxIDUwNmE4IDggMCAwIDEgOCA4djE1bC0xNiAx%0Adi0xNmE4IDggMCAwIDEgOC04eiIvPjxwYXRoIGZpbGw9IiM3QzhDREEiIGQ9%0AIk0yNTMgNTA2LjI1YTggOCAwIDAgMC02IDcuNzV2MTUuNzVsLTQgLjI1di0x%0ANmE4IDggMCAwIDEgMTAtNy43NXoiLz48cGF0aCBmaWxsPSIjMUYyQTY4IiBk%0APSJNMjUxIDU0NmE4IDggMCAwIDEgOCA4djE1bC0xNiAxdi0xNmE4IDggMCAw%0AIDEgOC04eiIvPjxwYXRoIGZpbGw9IiM3QzhDREEiIGQ9Ik0yNTMgNTQ2LjI1%0AYTggOCAwIDAgMC02IDcuNzV2MTUuNzVsLTQgLjI1di0xNmE4IDggMCAwIDEg%0AMTAtNy43NXoiLz48cGF0aCBmaWxsPSIjNTI2M0I4IiBkPSJNMzAxIDUwNmE4%0AIDggMCAwIDEgOCA4djE2bC0xNi0xdi0xNWE4IDggMCAwIDEgOC04eiIvPjxw%0AYXRoIGZpbGw9IiMyOTM3ODEiIGQ9Ik0zMDUgNTI5Ljc1VjUxNGE4IDggMCAw%0AIDAtNi03Ljc1IDguMDEgOC4wMSAwIDAgMSAxMCA3Ljc1djE2bC00LS4yNXoi%0ALz48ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwIDYzNikiPjxwYXRoIGZpbGw9%0AInVybCgjaCkiIGQ9Ik0xMDI0IDM1NkgwVjE4NS44MmMxMzcuNTEtMTUuNCAy%0AMDMuMS01MC40OSAzNTYuNjctNjAuMUM1NTUuMjQgMTEzLjMgNjA2LjcxLjU5%0AIDg1Ni43NC41OSA5MjkuNTIuNTggOTgxLjE4IDExLjIgMTAyNCAyNi4yNlYz%0ANTZ6Ii8%2BPHBhdGggZmlsbD0idXJsKCNpKSIgZD0iTTEwMjQgMjYuMjFWMzI2%0ASDg1Ni45MWM5OS4zMS04Ni41IDExMi42My0xNDAuNzUgMzkuOTctMTYyLjc4%0AQzcxMC4yNCAxMDYuNjQgNzk1LjEyLjU4IDg1Ni45LjU4YzcyLjcgMCAxMjQu%0AMyAxMC42IDE2Ny4wOSAyNS42M3oiLz48cGF0aCBmaWxsPSJ1cmwoI2kpIiBk%0APSJNMTAyNCAxOTkuMzJWMzI2SDg1N2M5OS4zMS04Ni42IDExMi42My0xNDAu%0AOTQgMzkuOTctMTYzTDEwMjQgMTk5LjMyeiIvPjwvZz48Y2lyY2xlIGN4PSI1%0ANjYiIGN5PSI1OTkiIHI9IjExMCIgZmlsbD0iI0ZGRkZGRiIgb3BhY2l0eT0i%0ALjEiLz48Y2lyY2xlIGN4PSI2NjkiIGN5PSI1MzkiIHI9IjYwIiBmaWxsPSIj%0ARkZGRkZGIiBvcGFjaXR5PSIuMSIvPjxnIHRyYW5zZm9ybT0idHJhbnNsYXRl%0AKDAgNzA1KSI%2BPHBhdGggZmlsbD0idXJsKCNoKSIgZD0iTTAgMzE5VjY4Ljkz%0AQzY3LjEyIDM1LjY5IDEyOS41NSAwIDI2MyAwYzI1MCAwIDMzMS40NiAxNjIu%0ANiA1MzAgMTc1IDEwNy40MiA2LjcxIDE2My0yNi43NyAyMzEtNTguOTJWMzE5%0ASDB6Ii8%2BPHBhdGggZmlsbD0idXJsKCNpKSIgZD0iTTM1My4wMiAzMTlIMFY2%0AOC45M0M2Ny4xMiAzNS42OSAxMjkuNTUgMCAyNjMgMGM3MS4xNCAwIDE1MS41%0AIDEyLjc2IDE1MS41IDcwLjUgMCA1NC41LTQ1LjUgNzkuNzItMTEyLjUgMTA5%0ALTgyLjI2IDM1Ljk1LTU0LjU3IDExMS42OCA1MS4wMiAxMzkuNXoiLz48cGF0%0AaCBmaWxsPSJ1cmwoI2opIiBkPSJNMzUzLjAyIDMxOUgwdi0xNC44bDMwMi0x%0AMjQuN2MtODIuMjYgMzUuOTUtNTQuNTcgMTExLjY4IDUxLjAyIDEzOS41eiIv%0APjwvZz48Y2lyY2xlIGN4PSI0MTQiIGN5PSI3OTkiIHI9IjcwIiBmaWxsPSIj%0ARkZGRkZGIiBvcGFjaXR5PSIuMSIvPjxjaXJjbGUgY3g9IjQ3OSIgY3k9Ijc0%0ANSIgcj0iMzAiIGZpbGw9IiNGRkZGRkYiIG9wYWNpdHk9Ii4xIi8%2BPGcgZmls%0AbD0iI0ZGRkZGRiIgb3BhY2l0eT0iLjE1IiB0cmFuc2Zvcm09InRyYW5zbGF0%0AZSg0OSAyMTQpIj48cGF0aCBkPSJNNTU0LjY3IDEzMS40OGE5LjQ2IDkuNDYg%0AMCAwIDEgMTMuMzMgMCA5LjQ2IDkuNDYgMCAwIDAgMTMuMzMgMGwxMy4zMy0x%0AMy4yNGEyOC4zOSAyOC4zOSAwIDAgMSA0MCAwbDEwIDkuOTNhMTQuMiAxNC4y%0AIDAgMCAwIDIwIDAgMTQuMiAxNC4yIDAgMCAxIDIwIDBsLjYuNmEzMS44IDMx%0ALjggMCAwIDEgOS40IDIyLjU2SDU0OHYtMy44NGMwLTYuMDEgMi40LTExLjc4%0AIDYuNjctMTYuMDF6TTc1MSA4LjI1YzExLjA3LTExIDI4LjkzLTExIDQwIDBs%0AMTAgOS45NGExNC4xOSAxNC4xOSAwIDAgMCAyMCAwIDE0LjE5IDE0LjE5IDAg%0AMCAxIDIwIDAgMTYuMzYgMTYuMzYgMCAwIDAgMjEuMyAxLjVsOC43LTYuNDdh%0AMzMuNDcgMzMuNDcgMCAwIDEgNDAgMGw0LjA2IDMuMDNBMzkuNiAzOS42IDAg%0AMCAxIDkzMSA0OEg3MzFjMC0xMi43MiA4LjkzLTI4Ljc1IDIwLTM5Ljc1ek0x%0ANC4xIDc1LjE0bC45LS45YTIxLjI5IDIxLjI5IDAgMCAxIDMwIDAgMjEuMjkg%0AMjEuMjkgMCAwIDAgMzAgMGwxMC05LjkzYTM1LjQ4IDM1LjQ4IDAgMCAxIDUw%0AIDBsMTUgMTQuOWExNC4yIDE0LjIgMCAwIDAgMjAgMCAxNC4yIDE0LjIgMCAw%0AIDEgMjAgMGM2LjQgNi4zNSAxMCAxNSAxMCAyNC4wMlYxMDlIMGMwLTEyLjcx%0AIDUuMDctMjQuOSAxNC4xLTMzLjg2eiIvPjwvZz48L2c%2BPC9zdmc%2B%0A&#39;)&quot; class=&quot;absolute pin bg-cover bg-no-repeat md:bg-left lg:bg-center&quot;&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;</pre>
+        
+    </div>
+</div>
+
+
+
+
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a href="#!/issues/trusted/severity/low/x_frame_options/406436707/referring_page">
+                    <i class="fa fa-link"></i>
+                </a>
+
+                <a data-toggle="collapse" href="#issues-trusted-severity-low-x_frame_options-406436707-referring_page">
+                    Referring page:
+
+                    <code>http://frontend.local/</code>
+                </a>
+            </h4>
+        </div>
+        <div id="issues-trusted-severity-low-x_frame_options-406436707-referring_page" class="panel-collapse collapse">
+            <div class="panel-body">
+                
+
+
+
+
+
+<div class="row">
+    <div class="col-md-6">
+        <strong>
+            <a
+            id="issues-trusted-severity-low-x_frame_options-406436707-referring_page-http_request"
+            href="#!/issues/trusted/severity/low/x_frame_options/406436707/referring_page/http_request">
+                HTTP request
+            </a>
+        </strong>
+
+        <p class="text-muted">
+            Raw HTTP request used to retrieve the page.
+        </p>
+
+        <pre class="code-container">GET / HTTP/1.1
+Host: frontend.local
+Accept-Encoding: gzip, deflate
+User-Agent: Arachni/v1.4
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-US,en;q=0.8,he;q=0.6
+
+</pre>
+    </div>
+
+    <div class="col-md-6">
+        <strong>
+            <a
+            id="issues-trusted-severity-low-x_frame_options-406436707-referring_page-http_response"
+            href="#!/issues/trusted/severity/low/x_frame_options/406436707/referring_page/http_response">
+                HTTP response
+            </a>
+        </strong>
+
+        <p class="text-muted">
+            Raw HTTP response used as the page basis.
+
+            (Binary bodies will not be displayed.)
+        </p>
+
+        
+            <pre class="code-container"><span class="issue-proof-highlight">HTTP/1.1 502 Bad Gateway</span>
+Accept-Ranges: bytes
+Content-Length: 13180
+Content-Type: text/html
+Date: Fri, 26 Jul 2024 18:28:00 GMT
+Etag: &quot;5f1fd941-337c&quot;
+Last-Modified: Tue, 28 Jul 2020 07:52:33 GMT
+Server: nginx/1.19.1
+
+&lt;!doctype html&gt;&lt;html lang=&quot;en&quot;&gt;&lt;head&gt;&lt;title&gt;Bad Gateway&lt;/title&gt;&lt;meta charset=&quot;utf-8&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1, shrink-to-fit=no&quot;&gt;&lt;link href=&quot;https://fonts.googleapis.com/css?family=Nunito&amp;display=swap&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot;&gt; &lt;style rel=&quot;stylesheet&quot; type=&quot;text/css&quot; integrity=&quot;sha256-TIMoU8JpKBLmQBdF8noc2hLopLeH4p7lQhqPcmSnYDs=&quot; crossorigin=&quot;anonymous&quot;&gt;html{line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}header,nav,section{display:block}figcaption,main{display:block}a{background-color:transparent;-webkit-text-decoration-skip:objects}strong{font-weight:inherit}strong{font-weight:bolder}code{font-family:monospace, monospace;font-size:1em}dfn{font-style:italic}svg:not(:root){overflow:hidden}button,input{font-family:sans-serif;font-size:100%;line-height:1.15;margin:0}button,input{overflow:visible}button{text-transform:none}button,html [type=&quot;button&quot;],[type=&quot;reset&quot;],[type=&quot;submit&quot;]{-webkit-appearance:button}button::-moz-focus-inner,[type=&quot;button&quot;]::-moz-focus-inner,[type=&quot;reset&quot;]::-moz-focus-inner,[type=&quot;submit&quot;]::-moz-focus-inner{border-style:none;padding:0}button:-moz-focusring,[type=&quot;button&quot;]:-moz-focusring,[type=&quot;reset&quot;]:-moz-focusring,[type=&quot;submit&quot;]:-moz-focusring{outline:1px dotted ButtonText}legend{-webkit-box-sizing:border-box;box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal}[type=&quot;checkbox&quot;],[type=&quot;radio&quot;]{-webkit-box-sizing:border-box;box-sizing:border-box;padding:0}[type=&quot;number&quot;]::-webkit-inner-spin-button,[type=&quot;number&quot;]::-webkit-outer-spin-button{height:auto}[type=&quot;search&quot;]{-webkit-appearance:textfield;outline-offset:-2px}[type=&quot;search&quot;]::-webkit-search-cancel-button,[type=&quot;search&quot;]::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}menu{display:block}canvas{display:inline-block}template{display:none}[hidden]{display:none}html{-webkit-box-sizing:border-box;box-sizing:border-box;font-family:sans-serif}*,*::before,*::after{-webkit-box-sizing:inherit;box-sizing:inherit}p{margin:0}button{background:transparent;padding:0}button:focus{outline:1px dotted;outline:5px auto -webkit-focus-ring-color}*,*::before,*::after{border-width:0;border-style:solid;border-color:#dae1e7}button,[type=&quot;button&quot;],[type=&quot;reset&quot;],[type=&quot;submit&quot;]{border-radius:0}button,input{font-family:inherit}input::-webkit-input-placeholder{color:inherit;opacity:.5}input:-ms-input-placeholder{color:inherit;opacity:.5}input::-ms-input-placeholder{color:inherit;opacity:.5}input::placeholder{color:inherit;opacity:.5}button,[role=button]{cursor:pointer}.bg-transparent{background-color:transparent}.bg-white{background-color:#fff}.bg-teal-light{background-color:#64d5ca}.bg-blue-dark{background-color:#2779bd}.bg-indigo-light{background-color:#7886d7}.bg-purple-light{background-color:#a779e9}.bg-no-repeat{background-repeat:no-repeat}.bg-cover{background-size:cover}.border-grey-light{border-color:#dae1e7}.hover\:border-grey:hover{border-color:#b8c2cc}.rounded-lg{border-radius:.5rem}.border-2{border-width:2px}.hidden{display:none}.flex{display:-webkit-box;display:-ms-flexbox;display:flex}.items-center{-webkit-box-align:center;-ms-flex-align:center;align-items:center}.justify-center{-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center}.font-sans{font-family:Nunito, sans-serif}.font-light{font-weight:300}.font-bold{font-weight:700}.font-black{font-weight:900}.h-1{height:.25rem}.leading-normal{line-height:1.5}.m-8{margin:2rem}.my-3{margin-top:.75rem;margin-bottom:.75rem}.mb-8{margin-bottom:2rem}.max-w-sm{max-width:30rem}.min-h-screen{min-height:100vh}.py-3{padding-top:.75rem;padding-bottom:.75rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.pb-full{padding-bottom:100%}.absolute{position:absolute}.relative{position:relative}.pin{top:0;right:0;bottom:0;left:0}.text-black{color:#22292f}.text-grey-darkest{color:#3d4852}.text-grey-darker{color:#606f7b}.text-2xl{font-size:1.5rem}.text-5xl{font-size:3rem}.uppercase{text-transform:uppercase}.antialiased{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.tracking-wide{letter-spacing:.05em}.w-16{width:4rem}.w-full{width:100%}@media (min-width: 768px){.md\:bg-left{background-position:left}.md\:bg-right{background-position:right}.md\:flex{display:-webkit-box;display:-ms-flexbox;display:flex}.md\:my-6{margin-top:1.5rem;margin-bottom:1.5rem}.md\:min-h-screen{min-height:100vh}.md\:pb-0{padding-bottom:0}.md\:text-3xl{font-size:1.875rem}.md\:text-15xl{font-size:9rem}.md\:w-1\/2{width:50%}}@media (min-width: 992px){.lg\:bg-center{background-position:center}}
+&lt;/style&gt;&lt;/head&gt;&lt;body class=&quot;antialiased font-sans&quot;&gt;&lt;div class=&quot;md:flex min-h-screen&quot;&gt;&lt;div class=&quot;w-full md:w-1/2 bg-white flex items-center justify-center&quot;&gt;&lt;div class=&quot;max-w-sm m-8&quot;&gt;&lt;div class=&quot;text-black text-5xl md:text-15xl font-black&quot;&gt; 502&lt;/div&gt;&lt;div class=&quot;w-16 h-1 bg-purple-light my-3 md:my-6&quot;&gt;&lt;/div&gt;&lt;p class=&quot;text-grey-darker text-2xl md:text-3xl font-light mb-8 leading-normal&quot;&gt; Sorry, the page you are looking for is not available. Please check back soon.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;relative pb-full md:flex md:pb-0 md:min-h-screen w-full md:w-1/2&quot;&gt;&lt;div style=&quot;background-image:url(&#39;data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5z%0AOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2aWV3Qm94%0APSIwIDAgMTAyNCAxMDI0Ij48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImEi%0AIHgxPSI1MC4zMSUiIHgyPSI1MCUiIHkxPSI3NC43NCUiIHkyPSIwJSI%2BPHN0%0Ab3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI0UyNkI2QiIvPjxzdG9wIG9m%0AZnNldD0iNTAuMjglIiBzdG9wLWNvbG9yPSIjRjVCQ0Y0Ii8%2BPHN0b3Agb2Zm%0Ac2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjODY5MEUxIi8%2BPC9saW5lYXJHcmFk%0AaWVudD48bGluZWFyR3JhZGllbnQgaWQ9ImIiIHgxPSI1MCUiIHgyPSI1MCUi%0AIHkxPSIwJSIgeTI9IjEwMCUiPjxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29s%0Ab3I9IiM4QzlDRTciLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9%0AIiM0MzUzQTQiLz48L2xpbmVhckdyYWRpZW50PjxsaW5lYXJHcmFkaWVudCBp%0AZD0iYyIgeDE9IjUwJSIgeDI9IjUwJSIgeTE9IjAlIiB5Mj0iMTAwJSI%2BPHN0%0Ab3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI0QxRDlGRiIvPjxzdG9wIG9m%0AZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzgzOTVFQiIvPjwvbGluZWFyR3Jh%0AZGllbnQ%2BPGNpcmNsZSBpZD0iZSIgY3g9IjYyMiIgY3k9IjY2MyIgcj0iNjAi%0ALz48ZmlsdGVyIGlkPSJkIiB3aWR0aD0iMjYwJSIgaGVpZ2h0PSIyNjAlIiB4%0APSItODAlIiB5PSItODAlIiBmaWx0ZXJVbml0cz0ib2JqZWN0Qm91bmRpbmdC%0Ab3giPjxmZU9mZnNldCBpbj0iU291cmNlQWxwaGEiIHJlc3VsdD0ic2hhZG93%0AT2Zmc2V0T3V0ZXIxIi8%2BPGZlR2F1c3NpYW5CbHVyIGluPSJzaGFkb3dPZmZz%0AZXRPdXRlcjEiIHJlc3VsdD0ic2hhZG93Qmx1ck91dGVyMSIgc3RkRGV2aWF0%0AaW9uPSIzMiIvPjxmZUNvbG9yTWF0cml4IGluPSJzaGFkb3dCbHVyT3V0ZXIx%0AIiB2YWx1ZXM9IjAgMCAwIDAgMSAwIDAgMCAwIDEgMCAwIDAgMCAxIDAgMCAw%0AIDEgMCIvPjwvZmlsdGVyPjxsaW5lYXJHcmFkaWVudCBpZD0iZiIgeDE9IjQ5%0ALjg3JSIgeDI9IjQ5Ljg3JSIgeTE9IjMuNjIlIiB5Mj0iNzcuNzUlIj48c3Rv%0AcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjQjBEREYxIi8%2BPHN0b3Agb2Zm%0Ac2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMzI1QzgyIi8%2BPC9saW5lYXJHcmFk%0AaWVudD48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIxMDAlIiB4Mj0iNzIu%0ANDUlIiB5MT0iMCUiIHkyPSI4NS4yJSI%2BPHN0b3Agb2Zmc2V0PSIwJSIgc3Rv%0AcC1jb2xvcj0iIzFEM0E2RCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1j%0Ab2xvcj0iIzQ2Nzk5NCIvPjwvbGluZWFyR3JhZGllbnQ%2BPGxpbmVhckdyYWRp%0AZW50IGlkPSJoIiB4MT0iNDkuNDglIiB4Mj0iNDkuODclIiB5MT0iMTEuNjYl%0AIiB5Mj0iNzcuNzUlIj48c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIj%0AQjlDOUY3Ii8%2BPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMzAx%0AODYzIi8%2BPC9saW5lYXJHcmFkaWVudD48bGluZWFyR3JhZGllbnQgaWQ9Imki%0AIHgxPSI5MS41OSUiIHgyPSI3MC45OCUiIHkxPSI1Ljg5JSIgeTI9Ijg4JSI%2B%0APHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzJEMzE3MyIvPjxzdG9w%0AIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzdGOTBFMCIvPjwvbGluZWFy%0AR3JhZGllbnQ%2BPGxpbmVhckdyYWRpZW50IGlkPSJqIiB4MT0iNzAuOTglIiB4%0AMj0iNzAuOTglIiB5MT0iOS44OCUiIHkyPSI4OCUiPjxzdG9wIG9mZnNldD0i%0AMCUiIHN0b3AtY29sb3I9IiMyRDMxNzMiLz48c3RvcCBvZmZzZXQ9IjEwMCUi%0AIHN0b3AtY29sb3I9IiM3RjkwRTAiLz48L2xpbmVhckdyYWRpZW50PjwvZGVm%0Acz48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxyZWN0IHdp%0AZHRoPSIxMDI0IiBoZWlnaHQ9IjEwMjQiIGZpbGw9InVybCgjYSkiLz48ZyB0%0AcmFuc2Zvcm09InRyYW5zbGF0ZSgyMTEgNDIwKSI%2BPHBhdGggZmlsbD0iIzhD%0AOUNFNyIgZD0iTTY1IDBhMiAyIDAgMCAxIDIgMnYyM2gtNFYyYzAtMS4xLjkt%0AMiAyLTJ6Ii8%2BPHBhdGggZmlsbD0iIzUyNjNCOCIgZD0iTTY0IDI0aDJhMyAz%0AIDAgMCAxIDMgM3YyaC04di0yYTMgMyAwIDAgMSAzLTN6Ii8%2BPHBhdGggZmls%0AbD0idXJsKCNiKSIgZD0iTTY1IDEwOGg0MFY2OGE0MCA0MCAwIDEgMC04MCAw%0AdjQwaDQweiIvPjxwb2x5Z29uIGZpbGw9IiMyRTNEODciIHBvaW50cz0iMCAx%0AMTggMzAgMTEyIDMwIDIxOCAwIDIxOCIvPjxwb2x5Z29uIGZpbGw9IiMzMDE4%0ANjIiIHBvaW50cz0iNjAgMTE4IDMwIDExMiAzMCAyMTggNjAgMjE4Ii8%2BPHBh%0AdGggZmlsbD0idXJsKCNjKSIgZD0iTTQ1IDEwN1Y2OGE0MC4wMiA0MC4wMiAw%0AIDAgMSAzMC4wMy0zOC43NUM5Mi4yNyAzMy42NSAxMDUgNDkuMTEgMTA1IDY3%0ALjVWMTA3SDQ1eiIvPjxwb2x5Z29uIGZpbGw9IiM0MzUzQTQiIHBvaW50cz0i%0AMTUgNzggNjUgNjggNjcgNzAgNjcgMTc4IDE1IDE3OCIvPjxwb2x5Z29uIGZp%0AbGw9IiM4QzlDRTciIHBvaW50cz0iMTE1IDc4IDY1IDY4IDY1IDcwIDY1IDE3%0AOCAxMTUgMTc4Ii8%2BPHBvbHlnb24gZmlsbD0iIzQzNTNBNCIgcG9pbnRzPSI3%0ANSAxMTggMTA1IDExMiAxMDUgMjE4IDc1IDIxOCIvPjxwb2x5Z29uIGZpbGw9%0AIiM4QzlDRTciIHBvaW50cz0iMTM1IDExOCAxMDUgMTEyIDEwNSAyMTggMTM1%0AIDIxOCIvPjwvZz48dXNlIGZpbGw9ImJsYWNrIiBmaWx0ZXI9InVybCgjZCki%0AIHhsaW5rOmhyZWY9IiNlIi8%2BPHVzZSBmaWxsPSIjRkZGRkZGIiB4bGluazpo%0AcmVmPSIjZSIvPjxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE0NiAyNDUpIj48%0AcGF0aCBmaWxsPSJ1cmwoI2YpIiBkPSJNMTY5LjEyIDQ1MC41N0MxOTIuMjIg%0ANDY0LjA0IDE0My44NSA1MzIuNTIgMjQgNjU2aDY0OUMzMjguOTQgNTE0LjMg%0AMTYwLjk4IDQ0NS44MyAxNjkuMTIgNDUwLjU3eiIvPjxwYXRoIGZpbGw9InVy%0AbCgjZykiIGQ9Ik0xNzguNSA1MzguNUMxMzcuODMgNTY3LjE3IDE5OS42NyA2%0AMDYuMzMgMzY0IDY1NkgwbDE3OC41LTExNy41eiIvPjwvZz48ZyB0cmFuc2Zv%0Acm09InRyYW5zbGF0ZSgwIDI1NSkiPjxwYXRoIGZpbGw9InVybCgjaCkiIGQ9%0AIk0xMDI0IDY4NUgwVjQwMC4wOEM3Ny4zIDM2Ni40IDE1NS4yNiAzMzAgMjk3%0ALjQgMzMwYzI1MCAwIDI1MC43NiAxMjUuMjUgNTAwIDEyNSA4NC4wMy0uMDgg%0AMTYwLjAyLTE4LjIgMjI2LjYtNDAuOTNWNjg1eiIvPjwvZz48cGF0aCBmaWxs%0APSIjMUYyQTY4IiBkPSJNMjUxIDUwNmE4IDggMCAwIDEgOCA4djE1bC0xNiAx%0Adi0xNmE4IDggMCAwIDEgOC04eiIvPjxwYXRoIGZpbGw9IiM3QzhDREEiIGQ9%0AIk0yNTMgNTA2LjI1YTggOCAwIDAgMC02IDcuNzV2MTUuNzVsLTQgLjI1di0x%0ANmE4IDggMCAwIDEgMTAtNy43NXoiLz48cGF0aCBmaWxsPSIjMUYyQTY4IiBk%0APSJNMjUxIDU0NmE4IDggMCAwIDEgOCA4djE1bC0xNiAxdi0xNmE4IDggMCAw%0AIDEgOC04eiIvPjxwYXRoIGZpbGw9IiM3QzhDREEiIGQ9Ik0yNTMgNTQ2LjI1%0AYTggOCAwIDAgMC02IDcuNzV2MTUuNzVsLTQgLjI1di0xNmE4IDggMCAwIDEg%0AMTAtNy43NXoiLz48cGF0aCBmaWxsPSIjNTI2M0I4IiBkPSJNMzAxIDUwNmE4%0AIDggMCAwIDEgOCA4djE2bC0xNi0xdi0xNWE4IDggMCAwIDEgOC04eiIvPjxw%0AYXRoIGZpbGw9IiMyOTM3ODEiIGQ9Ik0zMDUgNTI5Ljc1VjUxNGE4IDggMCAw%0AIDAtNi03Ljc1IDguMDEgOC4wMSAwIDAgMSAxMCA3Ljc1djE2bC00LS4yNXoi%0ALz48ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwIDYzNikiPjxwYXRoIGZpbGw9%0AInVybCgjaCkiIGQ9Ik0xMDI0IDM1NkgwVjE4NS44MmMxMzcuNTEtMTUuNCAy%0AMDMuMS01MC40OSAzNTYuNjctNjAuMUM1NTUuMjQgMTEzLjMgNjA2LjcxLjU5%0AIDg1Ni43NC41OSA5MjkuNTIuNTggOTgxLjE4IDExLjIgMTAyNCAyNi4yNlYz%0ANTZ6Ii8%2BPHBhdGggZmlsbD0idXJsKCNpKSIgZD0iTTEwMjQgMjYuMjFWMzI2%0ASDg1Ni45MWM5OS4zMS04Ni41IDExMi42My0xNDAuNzUgMzkuOTctMTYyLjc4%0AQzcxMC4yNCAxMDYuNjQgNzk1LjEyLjU4IDg1Ni45LjU4YzcyLjcgMCAxMjQu%0AMyAxMC42IDE2Ny4wOSAyNS42M3oiLz48cGF0aCBmaWxsPSJ1cmwoI2kpIiBk%0APSJNMTAyNCAxOTkuMzJWMzI2SDg1N2M5OS4zMS04Ni42IDExMi42My0xNDAu%0AOTQgMzkuOTctMTYzTDEwMjQgMTk5LjMyeiIvPjwvZz48Y2lyY2xlIGN4PSI1%0ANjYiIGN5PSI1OTkiIHI9IjExMCIgZmlsbD0iI0ZGRkZGRiIgb3BhY2l0eT0i%0ALjEiLz48Y2lyY2xlIGN4PSI2NjkiIGN5PSI1MzkiIHI9IjYwIiBmaWxsPSIj%0ARkZGRkZGIiBvcGFjaXR5PSIuMSIvPjxnIHRyYW5zZm9ybT0idHJhbnNsYXRl%0AKDAgNzA1KSI%2BPHBhdGggZmlsbD0idXJsKCNoKSIgZD0iTTAgMzE5VjY4Ljkz%0AQzY3LjEyIDM1LjY5IDEyOS41NSAwIDI2MyAwYzI1MCAwIDMzMS40NiAxNjIu%0ANiA1MzAgMTc1IDEwNy40MiA2LjcxIDE2My0yNi43NyAyMzEtNTguOTJWMzE5%0ASDB6Ii8%2BPHBhdGggZmlsbD0idXJsKCNpKSIgZD0iTTM1My4wMiAzMTlIMFY2%0AOC45M0M2Ny4xMiAzNS42OSAxMjkuNTUgMCAyNjMgMGM3MS4xNCAwIDE1MS41%0AIDEyLjc2IDE1MS41IDcwLjUgMCA1NC41LTQ1LjUgNzkuNzItMTEyLjUgMTA5%0ALTgyLjI2IDM1Ljk1LTU0LjU3IDExMS42OCA1MS4wMiAxMzkuNXoiLz48cGF0%0AaCBmaWxsPSJ1cmwoI2opIiBkPSJNMzUzLjAyIDMxOUgwdi0xNC44bDMwMi0x%0AMjQuN2MtODIuMjYgMzUuOTUtNTQuNTcgMTExLjY4IDUxLjAyIDEzOS41eiIv%0APjwvZz48Y2lyY2xlIGN4PSI0MTQiIGN5PSI3OTkiIHI9IjcwIiBmaWxsPSIj%0ARkZGRkZGIiBvcGFjaXR5PSIuMSIvPjxjaXJjbGUgY3g9IjQ3OSIgY3k9Ijc0%0ANSIgcj0iMzAiIGZpbGw9IiNGRkZGRkYiIG9wYWNpdHk9Ii4xIi8%2BPGcgZmls%0AbD0iI0ZGRkZGRiIgb3BhY2l0eT0iLjE1IiB0cmFuc2Zvcm09InRyYW5zbGF0%0AZSg0OSAyMTQpIj48cGF0aCBkPSJNNTU0LjY3IDEzMS40OGE5LjQ2IDkuNDYg%0AMCAwIDEgMTMuMzMgMCA5LjQ2IDkuNDYgMCAwIDAgMTMuMzMgMGwxMy4zMy0x%0AMy4yNGEyOC4zOSAyOC4zOSAwIDAgMSA0MCAwbDEwIDkuOTNhMTQuMiAxNC4y%0AIDAgMCAwIDIwIDAgMTQuMiAxNC4yIDAgMCAxIDIwIDBsLjYuNmEzMS44IDMx%0ALjggMCAwIDEgOS40IDIyLjU2SDU0OHYtMy44NGMwLTYuMDEgMi40LTExLjc4%0AIDYuNjctMTYuMDF6TTc1MSA4LjI1YzExLjA3LTExIDI4LjkzLTExIDQwIDBs%0AMTAgOS45NGExNC4xOSAxNC4xOSAwIDAgMCAyMCAwIDE0LjE5IDE0LjE5IDAg%0AMCAxIDIwIDAgMTYuMzYgMTYuMzYgMCAwIDAgMjEuMyAxLjVsOC43LTYuNDdh%0AMzMuNDcgMzMuNDcgMCAwIDEgNDAgMGw0LjA2IDMuMDNBMzkuNiAzOS42IDAg%0AMCAxIDkzMSA0OEg3MzFjMC0xMi43MiA4LjkzLTI4Ljc1IDIwLTM5Ljc1ek0x%0ANC4xIDc1LjE0bC45LS45YTIxLjI5IDIxLjI5IDAgMCAxIDMwIDAgMjEuMjkg%0AMjEuMjkgMCAwIDAgMzAgMGwxMC05LjkzYTM1LjQ4IDM1LjQ4IDAgMCAxIDUw%0AIDBsMTUgMTQuOWExNC4yIDE0LjIgMCAwIDAgMjAgMCAxNC4yIDE0LjIgMCAw%0AIDEgMjAgMGM2LjQgNi4zNSAxMCAxNSAxMCAyNC4wMlYxMDlIMGMwLTEyLjcx%0AIDUuMDctMjQuOSAxNC4xLTMzLjg2eiIvPjwvZz48L2c%2BPC9zdmc%2B%0A&#39;)&quot; class=&quot;absolute pin bg-cover bg-no-repeat md:bg-left lg:bg-center&quot;&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;</pre>
+        
+    </div>
+</div>
+
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+                
+            
+        </div>
+    
+        <div class="tab-pane "
+             id="issues-trusted-severity-informational">
+
+            
+                
+
+                <div class="row">
+                    <div class="col-md-10">
+                        <h3>
+                            <a id="issues-trusted-severity-informational-interesting_responses"
+                               href="#!/issues/trusted/severity/informational/interesting_responses"
+                            >
+                                Interesting response
+                            </a>
+
+                            <span class="badge">
+                                1
+                            </span>
+
+                            <small>
+                                <span class="label label-default">
+                                    interesting_responses
+                                </span>
+                            </small>
+                        </h3>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="issue-description markdown">
+                                    
+<p>The server responded with a non 200 (OK) nor 404 (Not Found) status code.
+This is a non-issue, however exotic HTTP response status codes can provide useful
+insights into the behavior of the web application and assist with the penetration test.</p>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        
+                    </div>
+
+                    
+                    <div class="col-md-2">
+                        <h4>
+                            <a id="issues-trusted-severity-informational-interesting_responses-references"
+                               href="#!/issues/trusted/severity/informational/interesting_responses/references"
+                            >
+                                References
+                            </a>
+                        </h4>
+
+                        <hr/>
+
+                        <ul class="list-unstyled">
+                            
+
+                            
+                                <li>
+                                    <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html"> w3.org</a>
+                                </li>
+                            
+                        </ul>
+                    </div>
+                    
+                </div>
+
+                
+                    <div id="issues-trusted-severity-informational-interesting_responses-4232206448">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a href="#!/issues/trusted/severity/informational/interesting_responses/4232206448">
+                            In <code>server</code>
+
+                            
+
+                            
+                                using
+                                <code>TRACE</code>
+                            
+                        </a>
+
+                        at
+
+                        <a href="http://frontend.local/">
+                            http://frontend.local/
+                        </a>
+
+                        pointing to
+                        <a href="http://frontend.local/">
+                            http://frontend.local/
+                        </a>.
+                    </h4>
+                </div>
+
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            
+
+
+
+
+
+
+
+<table class="table table-condensed table-fixed">
+    <thead>
+    <tr>
+        
+
+        
+
+        
+            <th>
+                Proof
+
+                <a href="#" rel="tooltip"
+                   title="This string was used to verify the existence of the issue.">
+                    <i class="fa fa-info"></i>
+                </a>
+            </th>
+        
+
+    </tr>
+    </thead>
+    <tr>
+
+        
+
+        
+
+        
+            <td class="wrap">
+                <pre class='code-container'>HTTP/1.1 405 Method Not Allowed</pre>
+            </td>
+        
+    </tr>
+</table>
+
+
+                        </div>
+                    </div>
+
+                    <div class="panel-group">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a href="#!/issues/trusted/severity/informational/interesting_responses/4232206448/vector">
+                    <i class="fa fa-link"></i>
+                </a>
+
+                <a data-toggle="collapse" href="#issues-trusted-severity-informational-interesting_responses-4232206448-vector">
+                    Vector information
+                </a>
+            </h4>
+        </div>
+        <div id="issues-trusted-severity-informational-interesting_responses-4232206448-vector" class="panel-collapse collapse">
+            <div class="panel-body">
+                
+
+<table class="table">
+    <tr>
+        <th>Type</th>
+        <th>In</th>
+        <th>Action</th>
+
+        
+    </tr>
+    <tr>
+        <td><code>server</code></td>
+        <td>
+            <a href="http://frontend.local/">
+                http://frontend.local/
+            </a>
+        </td>
+        <td>
+            <a href="http://frontend.local/">
+                http://frontend.local/
+            </a>
+        </td>
+
+        
+    </tr>
+</table>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a href="#!/issues/trusted/severity/informational/interesting_responses/4232206448/affected_page">
+                    <i class="fa fa-link"></i>
+                </a>
+
+                <a data-toggle="collapse" href="#issues-trusted-severity-informational-interesting_responses-4232206448-affected_page">
+                    Affected page:
+
+                    <code>http://frontend.local/</code>
+                </a>
+            </h4>
+        </div>
+        <div id="issues-trusted-severity-informational-interesting_responses-4232206448-affected_page" class="panel-collapse collapse">
+            <div class="panel-body">
+                
+
+
+
+
+
+<div class="row">
+    <div class="col-md-6">
+        <strong>
+            <a
+            id="issues-trusted-severity-informational-interesting_responses-4232206448-affected_page-http_request"
+            href="#!/issues/trusted/severity/informational/interesting_responses/4232206448/affected_page/http_request">
+                HTTP request
+            </a>
+        </strong>
+
+        <p class="text-muted">
+            Raw HTTP request used to retrieve the page.
+        </p>
+
+        <pre class="code-container">TRACE / HTTP/1.1
+Host: frontend.local
+Accept-Encoding: gzip, deflate
+User-Agent: Arachni/v1.4
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-US,en;q=0.8,he;q=0.6
+
+</pre>
+    </div>
+
+    <div class="col-md-6">
+        <strong>
+            <a
+            id="issues-trusted-severity-informational-interesting_responses-4232206448-affected_page-http_response"
+            href="#!/issues/trusted/severity/informational/interesting_responses/4232206448/affected_page/http_response">
+                HTTP response
+            </a>
+        </strong>
+
+        <p class="text-muted">
+            Raw HTTP response used as the page basis.
+
+            (Binary bodies will not be displayed.)
+        </p>
+
+        
+            <pre class="code-container"><span class="issue-proof-highlight">HTTP/1.1 405 Method Not Allowed</span>
+Content-Length: 145
+Content-Type: text/html
+Date: Fri, 26 Jul 2024 18:28:02 GMT
+Location: ./404.html
+Server: nginx/1.19.1
+
+&lt;html&gt;
+&lt;head&gt;&lt;title&gt;302 Found&lt;/title&gt;&lt;/head&gt;
+&lt;body&gt;
+&lt;center&gt;&lt;h1&gt;302 Found&lt;/h1&gt;&lt;/center&gt;
+&lt;hr&gt;&lt;center&gt;nginx/1.19.1&lt;/center&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+        
+    </div>
+</div>
+
+
+
+
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a href="#!/issues/trusted/severity/informational/interesting_responses/4232206448/referring_page">
+                    <i class="fa fa-link"></i>
+                </a>
+
+                <a data-toggle="collapse" href="#issues-trusted-severity-informational-interesting_responses-4232206448-referring_page">
+                    Referring page:
+
+                    <code>http://frontend.local/</code>
+                </a>
+            </h4>
+        </div>
+        <div id="issues-trusted-severity-informational-interesting_responses-4232206448-referring_page" class="panel-collapse collapse">
+            <div class="panel-body">
+                
+
+
+
+
+
+<div class="row">
+    <div class="col-md-6">
+        <strong>
+            <a
+            id="issues-trusted-severity-informational-interesting_responses-4232206448-referring_page-http_request"
+            href="#!/issues/trusted/severity/informational/interesting_responses/4232206448/referring_page/http_request">
+                HTTP request
+            </a>
+        </strong>
+
+        <p class="text-muted">
+            Raw HTTP request used to retrieve the page.
+        </p>
+
+        <pre class="code-container">GET / HTTP/1.1
+Host: frontend.local
+Accept-Encoding: gzip, deflate
+User-Agent: Arachni/v1.4
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-US,en;q=0.8,he;q=0.6
+
+</pre>
+    </div>
+
+    <div class="col-md-6">
+        <strong>
+            <a
+            id="issues-trusted-severity-informational-interesting_responses-4232206448-referring_page-http_response"
+            href="#!/issues/trusted/severity/informational/interesting_responses/4232206448/referring_page/http_response">
+                HTTP response
+            </a>
+        </strong>
+
+        <p class="text-muted">
+            Raw HTTP response used as the page basis.
+
+            (Binary bodies will not be displayed.)
+        </p>
+
+        
+            <pre class="code-container">HTTP/1.1 502 Bad Gateway
+Accept-Ranges: bytes
+Content-Length: 13180
+Content-Type: text/html
+Date: Fri, 26 Jul 2024 18:28:00 GMT
+Etag: &quot;5f1fd941-337c&quot;
+Last-Modified: Tue, 28 Jul 2020 07:52:33 GMT
+Server: nginx/1.19.1
+
+&lt;!doctype html&gt;&lt;html lang=&quot;en&quot;&gt;&lt;head&gt;&lt;title&gt;Bad Gateway&lt;/title&gt;&lt;meta charset=&quot;utf-8&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1, shrink-to-fit=no&quot;&gt;&lt;link href=&quot;https://fonts.googleapis.com/css?family=Nunito&amp;display=swap&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot;&gt; &lt;style rel=&quot;stylesheet&quot; type=&quot;text/css&quot; integrity=&quot;sha256-TIMoU8JpKBLmQBdF8noc2hLopLeH4p7lQhqPcmSnYDs=&quot; crossorigin=&quot;anonymous&quot;&gt;html{line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}header,nav,section{display:block}figcaption,main{display:block}a{background-color:transparent;-webkit-text-decoration-skip:objects}strong{font-weight:inherit}strong{font-weight:bolder}code{font-family:monospace, monospace;font-size:1em}dfn{font-style:italic}svg:not(:root){overflow:hidden}button,input{font-family:sans-serif;font-size:100%;line-height:1.15;margin:0}button,input{overflow:visible}button{text-transform:none}button,html [type=&quot;button&quot;],[type=&quot;reset&quot;],[type=&quot;submit&quot;]{-webkit-appearance:button}button::-moz-focus-inner,[type=&quot;button&quot;]::-moz-focus-inner,[type=&quot;reset&quot;]::-moz-focus-inner,[type=&quot;submit&quot;]::-moz-focus-inner{border-style:none;padding:0}button:-moz-focusring,[type=&quot;button&quot;]:-moz-focusring,[type=&quot;reset&quot;]:-moz-focusring,[type=&quot;submit&quot;]:-moz-focusring{outline:1px dotted ButtonText}legend{-webkit-box-sizing:border-box;box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal}[type=&quot;checkbox&quot;],[type=&quot;radio&quot;]{-webkit-box-sizing:border-box;box-sizing:border-box;padding:0}[type=&quot;number&quot;]::-webkit-inner-spin-button,[type=&quot;number&quot;]::-webkit-outer-spin-button{height:auto}[type=&quot;search&quot;]{-webkit-appearance:textfield;outline-offset:-2px}[type=&quot;search&quot;]::-webkit-search-cancel-button,[type=&quot;search&quot;]::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}menu{display:block}canvas{display:inline-block}template{display:none}[hidden]{display:none}html{-webkit-box-sizing:border-box;box-sizing:border-box;font-family:sans-serif}*,*::before,*::after{-webkit-box-sizing:inherit;box-sizing:inherit}p{margin:0}button{background:transparent;padding:0}button:focus{outline:1px dotted;outline:5px auto -webkit-focus-ring-color}*,*::before,*::after{border-width:0;border-style:solid;border-color:#dae1e7}button,[type=&quot;button&quot;],[type=&quot;reset&quot;],[type=&quot;submit&quot;]{border-radius:0}button,input{font-family:inherit}input::-webkit-input-placeholder{color:inherit;opacity:.5}input:-ms-input-placeholder{color:inherit;opacity:.5}input::-ms-input-placeholder{color:inherit;opacity:.5}input::placeholder{color:inherit;opacity:.5}button,[role=button]{cursor:pointer}.bg-transparent{background-color:transparent}.bg-white{background-color:#fff}.bg-teal-light{background-color:#64d5ca}.bg-blue-dark{background-color:#2779bd}.bg-indigo-light{background-color:#7886d7}.bg-purple-light{background-color:#a779e9}.bg-no-repeat{background-repeat:no-repeat}.bg-cover{background-size:cover}.border-grey-light{border-color:#dae1e7}.hover\:border-grey:hover{border-color:#b8c2cc}.rounded-lg{border-radius:.5rem}.border-2{border-width:2px}.hidden{display:none}.flex{display:-webkit-box;display:-ms-flexbox;display:flex}.items-center{-webkit-box-align:center;-ms-flex-align:center;align-items:center}.justify-center{-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center}.font-sans{font-family:Nunito, sans-serif}.font-light{font-weight:300}.font-bold{font-weight:700}.font-black{font-weight:900}.h-1{height:.25rem}.leading-normal{line-height:1.5}.m-8{margin:2rem}.my-3{margin-top:.75rem;margin-bottom:.75rem}.mb-8{margin-bottom:2rem}.max-w-sm{max-width:30rem}.min-h-screen{min-height:100vh}.py-3{padding-top:.75rem;padding-bottom:.75rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.pb-full{padding-bottom:100%}.absolute{position:absolute}.relative{position:relative}.pin{top:0;right:0;bottom:0;left:0}.text-black{color:#22292f}.text-grey-darkest{color:#3d4852}.text-grey-darker{color:#606f7b}.text-2xl{font-size:1.5rem}.text-5xl{font-size:3rem}.uppercase{text-transform:uppercase}.antialiased{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.tracking-wide{letter-spacing:.05em}.w-16{width:4rem}.w-full{width:100%}@media (min-width: 768px){.md\:bg-left{background-position:left}.md\:bg-right{background-position:right}.md\:flex{display:-webkit-box;display:-ms-flexbox;display:flex}.md\:my-6{margin-top:1.5rem;margin-bottom:1.5rem}.md\:min-h-screen{min-height:100vh}.md\:pb-0{padding-bottom:0}.md\:text-3xl{font-size:1.875rem}.md\:text-15xl{font-size:9rem}.md\:w-1\/2{width:50%}}@media (min-width: 992px){.lg\:bg-center{background-position:center}}
+&lt;/style&gt;&lt;/head&gt;&lt;body class=&quot;antialiased font-sans&quot;&gt;&lt;div class=&quot;md:flex min-h-screen&quot;&gt;&lt;div class=&quot;w-full md:w-1/2 bg-white flex items-center justify-center&quot;&gt;&lt;div class=&quot;max-w-sm m-8&quot;&gt;&lt;div class=&quot;text-black text-5xl md:text-15xl font-black&quot;&gt; 502&lt;/div&gt;&lt;div class=&quot;w-16 h-1 bg-purple-light my-3 md:my-6&quot;&gt;&lt;/div&gt;&lt;p class=&quot;text-grey-darker text-2xl md:text-3xl font-light mb-8 leading-normal&quot;&gt; Sorry, the page you are looking for is not available. Please check back soon.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;relative pb-full md:flex md:pb-0 md:min-h-screen w-full md:w-1/2&quot;&gt;&lt;div style=&quot;background-image:url(&#39;data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5z%0AOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2aWV3Qm94%0APSIwIDAgMTAyNCAxMDI0Ij48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImEi%0AIHgxPSI1MC4zMSUiIHgyPSI1MCUiIHkxPSI3NC43NCUiIHkyPSIwJSI%2BPHN0%0Ab3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI0UyNkI2QiIvPjxzdG9wIG9m%0AZnNldD0iNTAuMjglIiBzdG9wLWNvbG9yPSIjRjVCQ0Y0Ii8%2BPHN0b3Agb2Zm%0Ac2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjODY5MEUxIi8%2BPC9saW5lYXJHcmFk%0AaWVudD48bGluZWFyR3JhZGllbnQgaWQ9ImIiIHgxPSI1MCUiIHgyPSI1MCUi%0AIHkxPSIwJSIgeTI9IjEwMCUiPjxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29s%0Ab3I9IiM4QzlDRTciLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9%0AIiM0MzUzQTQiLz48L2xpbmVhckdyYWRpZW50PjxsaW5lYXJHcmFkaWVudCBp%0AZD0iYyIgeDE9IjUwJSIgeDI9IjUwJSIgeTE9IjAlIiB5Mj0iMTAwJSI%2BPHN0%0Ab3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI0QxRDlGRiIvPjxzdG9wIG9m%0AZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzgzOTVFQiIvPjwvbGluZWFyR3Jh%0AZGllbnQ%2BPGNpcmNsZSBpZD0iZSIgY3g9IjYyMiIgY3k9IjY2MyIgcj0iNjAi%0ALz48ZmlsdGVyIGlkPSJkIiB3aWR0aD0iMjYwJSIgaGVpZ2h0PSIyNjAlIiB4%0APSItODAlIiB5PSItODAlIiBmaWx0ZXJVbml0cz0ib2JqZWN0Qm91bmRpbmdC%0Ab3giPjxmZU9mZnNldCBpbj0iU291cmNlQWxwaGEiIHJlc3VsdD0ic2hhZG93%0AT2Zmc2V0T3V0ZXIxIi8%2BPGZlR2F1c3NpYW5CbHVyIGluPSJzaGFkb3dPZmZz%0AZXRPdXRlcjEiIHJlc3VsdD0ic2hhZG93Qmx1ck91dGVyMSIgc3RkRGV2aWF0%0AaW9uPSIzMiIvPjxmZUNvbG9yTWF0cml4IGluPSJzaGFkb3dCbHVyT3V0ZXIx%0AIiB2YWx1ZXM9IjAgMCAwIDAgMSAwIDAgMCAwIDEgMCAwIDAgMCAxIDAgMCAw%0AIDEgMCIvPjwvZmlsdGVyPjxsaW5lYXJHcmFkaWVudCBpZD0iZiIgeDE9IjQ5%0ALjg3JSIgeDI9IjQ5Ljg3JSIgeTE9IjMuNjIlIiB5Mj0iNzcuNzUlIj48c3Rv%0AcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjQjBEREYxIi8%2BPHN0b3Agb2Zm%0Ac2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMzI1QzgyIi8%2BPC9saW5lYXJHcmFk%0AaWVudD48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIxMDAlIiB4Mj0iNzIu%0ANDUlIiB5MT0iMCUiIHkyPSI4NS4yJSI%2BPHN0b3Agb2Zmc2V0PSIwJSIgc3Rv%0AcC1jb2xvcj0iIzFEM0E2RCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1j%0Ab2xvcj0iIzQ2Nzk5NCIvPjwvbGluZWFyR3JhZGllbnQ%2BPGxpbmVhckdyYWRp%0AZW50IGlkPSJoIiB4MT0iNDkuNDglIiB4Mj0iNDkuODclIiB5MT0iMTEuNjYl%0AIiB5Mj0iNzcuNzUlIj48c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIj%0AQjlDOUY3Ii8%2BPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMzAx%0AODYzIi8%2BPC9saW5lYXJHcmFkaWVudD48bGluZWFyR3JhZGllbnQgaWQ9Imki%0AIHgxPSI5MS41OSUiIHgyPSI3MC45OCUiIHkxPSI1Ljg5JSIgeTI9Ijg4JSI%2B%0APHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzJEMzE3MyIvPjxzdG9w%0AIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzdGOTBFMCIvPjwvbGluZWFy%0AR3JhZGllbnQ%2BPGxpbmVhckdyYWRpZW50IGlkPSJqIiB4MT0iNzAuOTglIiB4%0AMj0iNzAuOTglIiB5MT0iOS44OCUiIHkyPSI4OCUiPjxzdG9wIG9mZnNldD0i%0AMCUiIHN0b3AtY29sb3I9IiMyRDMxNzMiLz48c3RvcCBvZmZzZXQ9IjEwMCUi%0AIHN0b3AtY29sb3I9IiM3RjkwRTAiLz48L2xpbmVhckdyYWRpZW50PjwvZGVm%0Acz48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxyZWN0IHdp%0AZHRoPSIxMDI0IiBoZWlnaHQ9IjEwMjQiIGZpbGw9InVybCgjYSkiLz48ZyB0%0AcmFuc2Zvcm09InRyYW5zbGF0ZSgyMTEgNDIwKSI%2BPHBhdGggZmlsbD0iIzhD%0AOUNFNyIgZD0iTTY1IDBhMiAyIDAgMCAxIDIgMnYyM2gtNFYyYzAtMS4xLjkt%0AMiAyLTJ6Ii8%2BPHBhdGggZmlsbD0iIzUyNjNCOCIgZD0iTTY0IDI0aDJhMyAz%0AIDAgMCAxIDMgM3YyaC04di0yYTMgMyAwIDAgMSAzLTN6Ii8%2BPHBhdGggZmls%0AbD0idXJsKCNiKSIgZD0iTTY1IDEwOGg0MFY2OGE0MCA0MCAwIDEgMC04MCAw%0AdjQwaDQweiIvPjxwb2x5Z29uIGZpbGw9IiMyRTNEODciIHBvaW50cz0iMCAx%0AMTggMzAgMTEyIDMwIDIxOCAwIDIxOCIvPjxwb2x5Z29uIGZpbGw9IiMzMDE4%0ANjIiIHBvaW50cz0iNjAgMTE4IDMwIDExMiAzMCAyMTggNjAgMjE4Ii8%2BPHBh%0AdGggZmlsbD0idXJsKCNjKSIgZD0iTTQ1IDEwN1Y2OGE0MC4wMiA0MC4wMiAw%0AIDAgMSAzMC4wMy0zOC43NUM5Mi4yNyAzMy42NSAxMDUgNDkuMTEgMTA1IDY3%0ALjVWMTA3SDQ1eiIvPjxwb2x5Z29uIGZpbGw9IiM0MzUzQTQiIHBvaW50cz0i%0AMTUgNzggNjUgNjggNjcgNzAgNjcgMTc4IDE1IDE3OCIvPjxwb2x5Z29uIGZp%0AbGw9IiM4QzlDRTciIHBvaW50cz0iMTE1IDc4IDY1IDY4IDY1IDcwIDY1IDE3%0AOCAxMTUgMTc4Ii8%2BPHBvbHlnb24gZmlsbD0iIzQzNTNBNCIgcG9pbnRzPSI3%0ANSAxMTggMTA1IDExMiAxMDUgMjE4IDc1IDIxOCIvPjxwb2x5Z29uIGZpbGw9%0AIiM4QzlDRTciIHBvaW50cz0iMTM1IDExOCAxMDUgMTEyIDEwNSAyMTggMTM1%0AIDIxOCIvPjwvZz48dXNlIGZpbGw9ImJsYWNrIiBmaWx0ZXI9InVybCgjZCki%0AIHhsaW5rOmhyZWY9IiNlIi8%2BPHVzZSBmaWxsPSIjRkZGRkZGIiB4bGluazpo%0AcmVmPSIjZSIvPjxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE0NiAyNDUpIj48%0AcGF0aCBmaWxsPSJ1cmwoI2YpIiBkPSJNMTY5LjEyIDQ1MC41N0MxOTIuMjIg%0ANDY0LjA0IDE0My44NSA1MzIuNTIgMjQgNjU2aDY0OUMzMjguOTQgNTE0LjMg%0AMTYwLjk4IDQ0NS44MyAxNjkuMTIgNDUwLjU3eiIvPjxwYXRoIGZpbGw9InVy%0AbCgjZykiIGQ9Ik0xNzguNSA1MzguNUMxMzcuODMgNTY3LjE3IDE5OS42NyA2%0AMDYuMzMgMzY0IDY1NkgwbDE3OC41LTExNy41eiIvPjwvZz48ZyB0cmFuc2Zv%0Acm09InRyYW5zbGF0ZSgwIDI1NSkiPjxwYXRoIGZpbGw9InVybCgjaCkiIGQ9%0AIk0xMDI0IDY4NUgwVjQwMC4wOEM3Ny4zIDM2Ni40IDE1NS4yNiAzMzAgMjk3%0ALjQgMzMwYzI1MCAwIDI1MC43NiAxMjUuMjUgNTAwIDEyNSA4NC4wMy0uMDgg%0AMTYwLjAyLTE4LjIgMjI2LjYtNDAuOTNWNjg1eiIvPjwvZz48cGF0aCBmaWxs%0APSIjMUYyQTY4IiBkPSJNMjUxIDUwNmE4IDggMCAwIDEgOCA4djE1bC0xNiAx%0Adi0xNmE4IDggMCAwIDEgOC04eiIvPjxwYXRoIGZpbGw9IiM3QzhDREEiIGQ9%0AIk0yNTMgNTA2LjI1YTggOCAwIDAgMC02IDcuNzV2MTUuNzVsLTQgLjI1di0x%0ANmE4IDggMCAwIDEgMTAtNy43NXoiLz48cGF0aCBmaWxsPSIjMUYyQTY4IiBk%0APSJNMjUxIDU0NmE4IDggMCAwIDEgOCA4djE1bC0xNiAxdi0xNmE4IDggMCAw%0AIDEgOC04eiIvPjxwYXRoIGZpbGw9IiM3QzhDREEiIGQ9Ik0yNTMgNTQ2LjI1%0AYTggOCAwIDAgMC02IDcuNzV2MTUuNzVsLTQgLjI1di0xNmE4IDggMCAwIDEg%0AMTAtNy43NXoiLz48cGF0aCBmaWxsPSIjNTI2M0I4IiBkPSJNMzAxIDUwNmE4%0AIDggMCAwIDEgOCA4djE2bC0xNi0xdi0xNWE4IDggMCAwIDEgOC04eiIvPjxw%0AYXRoIGZpbGw9IiMyOTM3ODEiIGQ9Ik0zMDUgNTI5Ljc1VjUxNGE4IDggMCAw%0AIDAtNi03Ljc1IDguMDEgOC4wMSAwIDAgMSAxMCA3Ljc1djE2bC00LS4yNXoi%0ALz48ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwIDYzNikiPjxwYXRoIGZpbGw9%0AInVybCgjaCkiIGQ9Ik0xMDI0IDM1NkgwVjE4NS44MmMxMzcuNTEtMTUuNCAy%0AMDMuMS01MC40OSAzNTYuNjctNjAuMUM1NTUuMjQgMTEzLjMgNjA2LjcxLjU5%0AIDg1Ni43NC41OSA5MjkuNTIuNTggOTgxLjE4IDExLjIgMTAyNCAyNi4yNlYz%0ANTZ6Ii8%2BPHBhdGggZmlsbD0idXJsKCNpKSIgZD0iTTEwMjQgMjYuMjFWMzI2%0ASDg1Ni45MWM5OS4zMS04Ni41IDExMi42My0xNDAuNzUgMzkuOTctMTYyLjc4%0AQzcxMC4yNCAxMDYuNjQgNzk1LjEyLjU4IDg1Ni45LjU4YzcyLjcgMCAxMjQu%0AMyAxMC42IDE2Ny4wOSAyNS42M3oiLz48cGF0aCBmaWxsPSJ1cmwoI2kpIiBk%0APSJNMTAyNCAxOTkuMzJWMzI2SDg1N2M5OS4zMS04Ni42IDExMi42My0xNDAu%0AOTQgMzkuOTctMTYzTDEwMjQgMTk5LjMyeiIvPjwvZz48Y2lyY2xlIGN4PSI1%0ANjYiIGN5PSI1OTkiIHI9IjExMCIgZmlsbD0iI0ZGRkZGRiIgb3BhY2l0eT0i%0ALjEiLz48Y2lyY2xlIGN4PSI2NjkiIGN5PSI1MzkiIHI9IjYwIiBmaWxsPSIj%0ARkZGRkZGIiBvcGFjaXR5PSIuMSIvPjxnIHRyYW5zZm9ybT0idHJhbnNsYXRl%0AKDAgNzA1KSI%2BPHBhdGggZmlsbD0idXJsKCNoKSIgZD0iTTAgMzE5VjY4Ljkz%0AQzY3LjEyIDM1LjY5IDEyOS41NSAwIDI2MyAwYzI1MCAwIDMzMS40NiAxNjIu%0ANiA1MzAgMTc1IDEwNy40MiA2LjcxIDE2My0yNi43NyAyMzEtNTguOTJWMzE5%0ASDB6Ii8%2BPHBhdGggZmlsbD0idXJsKCNpKSIgZD0iTTM1My4wMiAzMTlIMFY2%0AOC45M0M2Ny4xMiAzNS42OSAxMjkuNTUgMCAyNjMgMGM3MS4xNCAwIDE1MS41%0AIDEyLjc2IDE1MS41IDcwLjUgMCA1NC41LTQ1LjUgNzkuNzItMTEyLjUgMTA5%0ALTgyLjI2IDM1Ljk1LTU0LjU3IDExMS42OCA1MS4wMiAxMzkuNXoiLz48cGF0%0AaCBmaWxsPSJ1cmwoI2opIiBkPSJNMzUzLjAyIDMxOUgwdi0xNC44bDMwMi0x%0AMjQuN2MtODIuMjYgMzUuOTUtNTQuNTcgMTExLjY4IDUxLjAyIDEzOS41eiIv%0APjwvZz48Y2lyY2xlIGN4PSI0MTQiIGN5PSI3OTkiIHI9IjcwIiBmaWxsPSIj%0ARkZGRkZGIiBvcGFjaXR5PSIuMSIvPjxjaXJjbGUgY3g9IjQ3OSIgY3k9Ijc0%0ANSIgcj0iMzAiIGZpbGw9IiNGRkZGRkYiIG9wYWNpdHk9Ii4xIi8%2BPGcgZmls%0AbD0iI0ZGRkZGRiIgb3BhY2l0eT0iLjE1IiB0cmFuc2Zvcm09InRyYW5zbGF0%0AZSg0OSAyMTQpIj48cGF0aCBkPSJNNTU0LjY3IDEzMS40OGE5LjQ2IDkuNDYg%0AMCAwIDEgMTMuMzMgMCA5LjQ2IDkuNDYgMCAwIDAgMTMuMzMgMGwxMy4zMy0x%0AMy4yNGEyOC4zOSAyOC4zOSAwIDAgMSA0MCAwbDEwIDkuOTNhMTQuMiAxNC4y%0AIDAgMCAwIDIwIDAgMTQuMiAxNC4yIDAgMCAxIDIwIDBsLjYuNmEzMS44IDMx%0ALjggMCAwIDEgOS40IDIyLjU2SDU0OHYtMy44NGMwLTYuMDEgMi40LTExLjc4%0AIDYuNjctMTYuMDF6TTc1MSA4LjI1YzExLjA3LTExIDI4LjkzLTExIDQwIDBs%0AMTAgOS45NGExNC4xOSAxNC4xOSAwIDAgMCAyMCAwIDE0LjE5IDE0LjE5IDAg%0AMCAxIDIwIDAgMTYuMzYgMTYuMzYgMCAwIDAgMjEuMyAxLjVsOC43LTYuNDdh%0AMzMuNDcgMzMuNDcgMCAwIDEgNDAgMGw0LjA2IDMuMDNBMzkuNiAzOS42IDAg%0AMCAxIDkzMSA0OEg3MzFjMC0xMi43MiA4LjkzLTI4Ljc1IDIwLTM5Ljc1ek0x%0ANC4xIDc1LjE0bC45LS45YTIxLjI5IDIxLjI5IDAgMCAxIDMwIDAgMjEuMjkg%0AMjEuMjkgMCAwIDAgMzAgMGwxMC05LjkzYTM1LjQ4IDM1LjQ4IDAgMCAxIDUw%0AIDBsMTUgMTQuOWExNC4yIDE0LjIgMCAwIDAgMjAgMCAxNC4yIDE0LjIgMCAw%0AIDEgMjAgMGM2LjQgNi4zNSAxMCAxNSAxMCAyNC4wMlYxMDlIMGMwLTEyLjcx%0AIDUuMDctMjQuOSAxNC4xLTMzLjg2eiIvPjwvZz48L2c%2BPC9zdmc%2B%0A&#39;)&quot; class=&quot;absolute pin bg-cover bg-no-repeat md:bg-left lg:bg-center&quot;&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;</pre>
+        
+    </div>
+</div>
+
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+                
+            
+        </div>
+    
+</div>
+
+    </div>
+    
+
+    
+</div>
+
+        </div>
+        
+
+        
+        <div class="tab-pane" id="plugins">
+            <h2>Plugin results</h2>
+
+<div id="plugin-tabs">
+    <ul class="nav nav-tabs">
+        
+            <li class="active" >
+                <a href="#!/plugins/healthmap">
+                    Health map
+                </a>
+            </li>
+        
+    </ul>
+
+    <div class="tab-content">
+    
+        <div class="tab-pane active"
+             id="plugins-healthmap">
+
+            <div class="plugin-description markdown">
+                <p>Generates a simple list of safe/unsafe URLs.</p>
+
+            </div>
+
+            <div class="plugin-results">
+                            <style type="text/css">
+                a.without_issues {
+                    color: blue;
+                }
+                a.with_issues {
+                    color: red;
+                }
+            </style>
+
+            <div class="row">
+                <div class="col-md-2">
+                    <dl class="dl-horizontal">
+                        <dt>
+                            Total
+                        </dt>
+                        <dd>
+                            1
+                        </dd>
+
+                        <dt>
+                            Without issues
+                        </dt>
+                        <dd>
+                            0
+                        </dd>
+
+                        <dt>
+                            With issues
+                        </dt>
+                        <dd>
+                            1
+                        </dd>
+
+                        <dt>
+                            Issue percentage
+                        </dt>
+                        <dd>
+                            100
+                        </dd>
+                    </dl>
+                </div>
+
+                <div class="col-md-10">
+                    <ul class="list-unstyled">
+                    
+
+                        <li>
+                            <a class="text-danger"
+                                href="http://frontend.local/">
+                                http://frontend.local/
+                            </a>
+                        </li>
+                    
+
+                    </ul>
+                </div>
+            </div>
+
+            </div>
+        </div>
+    
+    </div>
+
+</div>
+
+        </div>
+        
+
+        <div class="tab-pane" id="sitemap">
+            <h2>
+    <a href="#!/sitemap">
+        Sitemap
+
+        <span class="badge">1</span>
+    </a>
+</h2>
+
+<div id="sitemap">
+
+    <table class="table table-condensed">
+        <tr>
+            <th>HTTP status code</th>
+            <th>URL</th>
+        </tr>
+
+        
+            <tr>
+                <th>502</th>
+                <td>
+                    <a href="http://frontend.local/">
+                        http://frontend.local/
+                    </a>
+                </td>
+            </tr>
+        
+    </table>
+
+</div>
+
+        </div>
+
+    </div>
+</div>
+</body>
+</html>
