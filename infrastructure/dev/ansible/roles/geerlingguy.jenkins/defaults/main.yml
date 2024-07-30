@@ -20,9 +20,11 @@ jenkins_options: ''
 jenkins_java_options: '-Djenkins.install.runSetupWizard=false'
 
 # Plugin list can use the plugin name, or a name/version dict.
-jenkins_plugins: []
-# jenkins_plugins:
-    # - blueocean  #! fail when provisioning
+# jenkins_plugins: []
+jenkins_plugins:   #! fail when provisioning
+    - blueocean:1.27.13
+    - ssh-agent
+    - ansible
 #  - name: influxdb
 #    version: "1.12.1"
 

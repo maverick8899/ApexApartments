@@ -150,7 +150,7 @@
 - import_tasks: list-configured-runners-unix.yml
 
 
-#@ HTTPS for gitlab.local
+#@ custom HTTPS for gitlab.local
 - name: Config rootCA local for gitlab.local
   debug:
       msg: 'echo https_local: {{ https_local }}, gitlab_project_token: {{ gitlab_runner_registration_token }}'
@@ -162,14 +162,14 @@
   when: https_local == true
 
 - name: Add host for gitlab.local
-  shell: echo "192.168.140.31  gitlab.local" >> /etc/hosts
+  shell: echo "{{ gitlab_ip }} {{ gitlab_host }}" >> /etc/hosts
   when: https_local == true
 
 - name: Update RootCA for gitlab.local
   shell: sudo update-ca-certificates
   when: https_local == true
 #@----------------------------------------------------------------
-#@ custom
+
 - name: Register runner to GitLab
   command: >
     {{ register_runner_cmd }}

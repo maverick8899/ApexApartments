@@ -3,7 +3,7 @@
   hosts: swarm
   become: yes
   vars:
-      portainer: true #@ custom
+      portainer: false #@ custom
   roles:
       - docker
       - swarm

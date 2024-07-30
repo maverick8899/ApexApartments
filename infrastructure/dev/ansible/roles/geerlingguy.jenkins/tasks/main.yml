@@ -1,21 +1,21 @@
 ---
 # Variable setup.
 - name: Include OS-Specific variables
-  include_vars: "{{ ansible_os_family }}.yml"
+  include_vars: '{{ ansible_os_family }}.yml'
 
 - name: Define jenkins_repo_url
   set_fact:
-    jenkins_repo_url: "{{ __jenkins_repo_url }}"
+      jenkins_repo_url: '{{ __jenkins_repo_url }}'
   when: jenkins_repo_url is not defined
 
 - name: Define jenkins_repo_key_url
   set_fact:
-    jenkins_repo_key_url: "{{ __jenkins_repo_key_url }}"
+      jenkins_repo_key_url: '{{ __jenkins_repo_key_url }}'
   when: jenkins_repo_key_url is not defined
 
 - name: Define jenkins_pkg_url
   set_fact:
-    jenkins_pkg_url: "{{ __jenkins_pkg_url }}"
+      jenkins_pkg_url: '{{ __jenkins_pkg_url }}'
   when: jenkins_pkg_url is not defined
 
 # Setup/install tasks.
@@ -34,25 +34,25 @@
 
 - name: Wait for Jenkins to start up before proceeding.
   uri:
-    # url: "http://{{ jenkins_hostname }}:{{ jenkins_http_port }}/whoAmI/api/json?tree=authenticated"
-    url: "http://{{ jenkins_hostname }}:{{ jenkins_http_port }}{{ jenkins_url_prefix }}/cli/"
-    method: GET
-    return_content: "yes"
-    timeout: 5
-    body_format: raw
-    follow_redirects: "no"
-    status_code: 200,403
+      # url: "http://{{ jenkins_hostname }}:{{ jenkins_http_port }}/whoAmI/api/json?tree=authenticated"
+      url: 'http://{{ jenkins_hostname }}:{{ jenkins_http_port }}{{ jenkins_url_prefix }}/cli/'
+      method: GET
+      return_content: 'yes'
+      timeout: 5
+      body_format: raw
+      follow_redirects: 'no'
+      status_code: 200,403
   register: result
   until: (result.status == 403 or result.status == 200) and (result.content.find("Please wait while") == -1)
-  retries: "{{ jenkins_connection_retries }}"
-  delay: "{{ jenkins_connection_delay }}"
+  retries: '{{ jenkins_connection_retries }}'
+  delay: '{{ jenkins_connection_delay }}'
   changed_when: false
   check_mode: false
 
 - name: Get the jenkins-cli jarfile from the Jenkins server.
   get_url:
-    url: "http://{{ jenkins_hostname }}:{{ jenkins_http_port }}{{ jenkins_url_prefix }}/jnlpJars/jenkins-cli.jar"
-    dest: "{{ jenkins_jar_location }}"
+      url: 'http://{{ jenkins_hostname }}:{{ jenkins_http_port }}{{ jenkins_url_prefix }}/jnlpJars/jenkins-cli.jar'
+      dest: '{{ jenkins_jar_location }}'
   register: jarfile_get
   until: "'OK' in jarfile_get.msg or '304' in jarfile_get.msg or 'file already exists' in jarfile_get.msg"
   retries: 5
@@ -61,8 +61,8 @@
 
 - name: Remove Jenkins security init scripts after first startup.
   file:
-    path: "{{ jenkins_home }}/init.groovy.d/basic-security.groovy"
-    state: absent
+      path: '{{ jenkins_home }}/init.groovy.d/basic-security.groovy'
+      state: absent
 
 # Update Jenkins and install configured plugins.
 - include_tasks: plugins.yml
