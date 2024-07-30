@@ -33,8 +33,6 @@
     <img src="https://img.shields.io/badge/Jenkins-D24939?logo=jenkins&logoColor=fff&style=for-the-badge" alt="Jenkins">
     <img src="https://img.shields.io/badge/GitLab-FC6D26?logo=gitlab&logoColor=fff&style=for-the-badge" alt="GitLab">
     <img src="https://img.shields.io/badge/Harbor-60B932?logo=harbor&logoColor=fff&style=for-the-badge" alt="Harbor">
-    <img src="https://img.shields.io/badge/Amazon%20EC2-F90?logo=amazonec2&logoColor=fff&style=for-the-badge" alt="Amazon EC2">
-       <img src="https://img.shields.io/badge/Amazon%20Route%2053-8C4FFF?logo=amazonroute53&logoColor=fff&style=for-the-badge" alt="Amazon Route53">
 </p>  
 
 ## ApexApartment
