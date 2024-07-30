@@ -1,0 +1,38 @@
+- name: Check NFS Server
+  hosts: nfs_srv
+  tasks:
+      - name: Check if NFS mount is present
+        command: sudo showmount -e 192.168.140.30
+        register:
+            nfs_mounts
+            # Thay đổi changed_when để tránh đánh dấu task là changed khi chỉ kiểm tra
+        changed_when: false
+
+      - name: Display NFS mounts
+        debug:
+            msg: 'NFS Mounts: {{ nfs_mounts.stdout }}'
+
+      - name: Assert NFS is mounted
+        assert:
+            that:
+                - nfs_mounts.stdout != ""
+            fail_msg: 'NFS is not mounted!'
+            success_msg: 'NFS is mounted.'
+
+- name: Check NFS Mount Client
+  hosts: swarm
+  tasks:
+      - name: Check if NFS mount is present
+        shell: mount | grep nfs
+        register: nfs_mounts
+        
+      - name: Display NFS mounts
+        debug:
+            msg: 'NFS Mounts: {{ nfs_mounts.stdout }}'
+
+      - name: Assert NFS is mounted
+        assert:
+            that:
+                - nfs_mounts.stdout != ""
+            fail_msg: 'NFS is not mounted!'
+            success_msg: 'NFS is mounted.'

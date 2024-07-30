@@ -1,0 +1,27 @@
+- name: Check Docker Swarm Status
+  hosts: master1
+  tasks:
+      - name: Check Docker Swarm status
+        shell: docker node ls;
+        register: swarm_status
+        changed_when: false
+
+      - name: Docker Swarm status 
+        debug: 
+          msg: |
+            Docker Swarm Status:
+            {{ swarm_status.stdout_lines | join('\n') }}
+
+      - name: Check if any nodes are in 'Ready' state
+        assert:
+            that:
+                - "'Ready' in swarm_status.stdout"
+            fail_msg: "No nodes are in 'Ready' state!"
+            success_msg: "At least one node is in 'Ready' state."
+
+      - name: Check if there is a Leader node
+        assert:
+            that:
+                - "'Leader' in swarm_status.stdout"
+            fail_msg: 'No Leader node found!'
+            success_msg: 'Leader node is present.'
