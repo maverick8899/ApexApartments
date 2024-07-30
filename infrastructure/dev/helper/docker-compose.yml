@@ -11,6 +11,7 @@ services:
             - /usr/bin/docker:/usr/bin/docker
             - ../ansible:/data/ansible
             - ../terraform:/data/terraform
+            - ../helper:/data/helper
         # command: 
 
 volumes:
