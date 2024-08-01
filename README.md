@@ -84,7 +84,7 @@ _Coming Soon_
 - Virtual Machine Specifications
 ![enter image description here](https://res.cloudinary.com/dgiozc0lj/image/upload/v1721407530/neyv4p20bxbricrfu4y9.jpg)
 - Pipeline Workflow
-![enter image description here](https://res.cloudinary.com/dgiozc0lj/image/upload/v1722086684/fhrmlgdepdtafl8xzxst.jpg)
+![enter image description here](https://res.cloudinary.com/dgiozc0lj/image/upload/v1722476759/wqb1w9oxsgvzrvp1nej9.jpg)
 
 ## Pipelines 
 
