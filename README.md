@@ -1,4 +1,5 @@
 
+
 <h2>Web Development Technologies & Deployment Technologies</h2>
 <p>
     <a href="https://spring.io/">
@@ -68,7 +69,7 @@
 
 ## 💻 Interface
 ### Admin
-<div style="display: flex; flex-wrap: wrap; gap: 10px;"> <img src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1722067635/kfqcvckyuwfmgocwbu3t.jpg" width="44%" style="flex: 1;"> <img src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1722067635/mebxd8mkww1hn8ejkoja.jpg" width="50%" style="flex: 1;"> <img src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1722067634/r0ayjssnbrspkhk9p1ai.jpg" width="100%" style="flex: 1;"> </div>
+<div style="display: flex; flex-wrap: wrap; gap: 10px;"> <img src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1722067635/kfqcvckyuwfmgocwbu3t.jpg" width="46%" style="flex: 1;"> <img src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1722067635/mebxd8mkww1hn8ejkoja.jpg" width="53%" style="flex: 1;"> <img src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1722067634/r0ayjssnbrspkhk9p1ai.jpg" width="100%" style="flex: 1;"> </div>
 
 ### Client
 <div style="display: flex; flex-wrap: wrap; gap: 10px;"> <img src="https://res.cloudinary.com/dgiozc0lj/image/upload/v1722067634/rjx7cu0ky9wzbx5k08tt.jpg" width="100%" style="flex: 1;"> </div>
@@ -84,7 +85,7 @@ _Coming Soon_
 - Virtual Machine Specifications
 ![enter image description here](https://res.cloudinary.com/dgiozc0lj/image/upload/v1721407530/neyv4p20bxbricrfu4y9.jpg)
 - Pipeline Workflow
-![enter image description here](https://res.cloudinary.com/dgiozc0lj/image/upload/v1722476759/wqb1w9oxsgvzrvp1nej9.jpg)
+![enter image description here](https://res.cloudinary.com/dgiozc0lj/image/upload/v1723513797/kg8v8j7azfnn9jysbhej.jpg)
 
 ## Pipelines 
 
