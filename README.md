@@ -39,7 +39,8 @@
 ## ApexApartment
 
 **ApexApartment** is an innovative condominium management project aimed at enhancing the quality of life and residential experience in upscale residential areas. With a mission to create a harmonious, peaceful, and convenient living environment, ApexApartment combines modern technology and attentive resident care services to provide the best living experience for all residents.
-
+### Demo
+	https://www.youtube.com/playlist?list=PL-5TwCMojc33diITKt5oJtTSzHmv0cvpG
 ## Table of contents
 * 🏛️[Technology Architecture](#architecture-diagram)
 * 📅[Database schema diagram](#database-schema-diagram)
